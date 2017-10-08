@@ -51,11 +51,12 @@ public class TimeController : MonoBehaviour {
     private void PrintTime()
     {
         int seconds, minutes;
-        minutes = (int)timeRemaining / 60;
-        seconds = (int)timeRemaining % 60;
+        minutes = (int) timeRemaining / 60;
+        seconds = (int) timeRemaining % 60;
         string niceTime = string.Format("{00:00}:{1:00}", minutes, seconds);
         timerText.text = niceTime;
-        timerText.color = player1Turn ? Color.blue : Color.red;
+        Image parent = timerText.transform.parent.GetComponent<Image>();
+        parent.color = player1Turn ? Color.blue : Color.red;
     }
 
     //Change Turn of players
@@ -78,7 +79,7 @@ public class TimeController : MonoBehaviour {
         StopTime();
         //Provisional, es informativo
         string surrenderText = "00:00";
-        surrenderText += player1Turn ? "\nPlayer 1 Surrended" : "\nPlayer 2 Surrended";
+        surrenderText += player1Turn ? "\n\nPlayer 1 Surrended" : "\n\nPlayer 2 Surrended";
         timerText.text = surrenderText;
     }
 }
