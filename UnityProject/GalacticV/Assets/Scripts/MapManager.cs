@@ -24,13 +24,15 @@ public class MapManager : MonoBehaviour {
     void Start()
     {
         CreateLevel();
+        GameObject map = GameObject.Find("Map");
+        map.transform.Rotate(0, 0, 45f);
     }
 
     private void CreateLevel()
     {
         Tiles = new Dictionary<Point, CellScript>();
 
-        Vector3 worldStart = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height));
+        Vector3 worldStart = Camera.main.ScreenToWorldPoint(new Vector3((Screen.width ) / 3, (Screen.height*3)/4));
         for (int y = 0; y < rows; y++)
         {
             for (int x = 0; x < columns; x++)
