@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CellScript : MonoBehaviour {
 
@@ -48,7 +49,10 @@ public class CellScript : MonoBehaviour {
 
     private void OnMouseExit()
     {
-        spriteRenderer.color = Color.white;
+        if (tag != "Border")
+        {
+            spriteRenderer.color = Color.white;
+        }
     }
 
     public bool GetIsEmpty()
@@ -59,5 +63,10 @@ public class CellScript : MonoBehaviour {
     public void SetIsEmpty(bool _isEmpty)
     {
         this.isEmpty = _isEmpty;
+    }
+
+    private void OnMouseDown()
+    {
+        Debug.Log(GridPosition.X + " " + GridPosition.Y);
     }
 }
