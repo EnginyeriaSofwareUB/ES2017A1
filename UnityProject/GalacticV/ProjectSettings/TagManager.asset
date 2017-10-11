@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Timer
+  - Border
+  - Ground
   layers:
   - Default
   - TransparentFX
