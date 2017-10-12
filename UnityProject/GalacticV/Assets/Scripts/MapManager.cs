@@ -123,7 +123,7 @@ public class MapManager : MonoBehaviour {
         }
     }
 
-    private void ClearCurrentRange()
+    public void ClearCurrentRange()
     {
         foreach (var point in currentRange)
         {

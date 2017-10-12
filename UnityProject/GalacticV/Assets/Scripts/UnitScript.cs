@@ -32,10 +32,20 @@ public class UnitScript : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        //This is needed because the script is inside another game object
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-        isSelected = true;
-        manager.ShowRange(this.currentPosition, this.movementRange, this);
+        if (!isSelected)
+        {
+            //This is needed because the script is inside another game object
+            isSelected = true;
+            manager.ShowRange(this.currentPosition, this.movementRange, this);
+        }
+        else
+        {
+            isSelected = false;
+            manager.ClearCurrentRange();
+        }
+
+        
     }
 
     public void MoveTo(Point point, Vector3 worldPos)
