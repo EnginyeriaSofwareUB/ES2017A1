@@ -52,5 +52,6 @@ public class UnitScript : MonoBehaviour {
     {
         this.currentPosition = point;
         transform.position = worldPos;
+        this.isSelected = false;
     }
 }
