@@ -8,8 +8,9 @@ public class CellScript : MonoBehaviour {
     public Point GridPosition { get; private set; }
 
     private Color32 emptyColor = new Color32(96, 255, 90, 255);
+    private Color previousColor = Color.white;
     private SpriteRenderer spriteRenderer;
-    private bool isEmpty;
+    private bool isEmpty = true;
 
     public Vector2 WorldPosition
     {
@@ -23,7 +24,6 @@ public class CellScript : MonoBehaviour {
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        isEmpty = true;
     }
 
     // Update is called once per frame
@@ -43,6 +43,7 @@ public class CellScript : MonoBehaviour {
     {
         if (tag != "Border")
         {
+            previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
             spriteRenderer.color = emptyColor;
         }
     }
@@ -51,7 +52,7 @@ public class CellScript : MonoBehaviour {
     {
         if (tag != "Border")
         {
-            spriteRenderer.color = Color.white;
+            spriteRenderer.color = previousColor;
         }
     }
 
@@ -67,6 +68,16 @@ public class CellScript : MonoBehaviour {
 
     private void OnMouseDown()
     {
-        Debug.Log(GridPosition.X + " " + GridPosition.Y);
+        //Debug.Log(GridPosition.X + " " + GridPosition.Y);
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        if (isEmpty)
+            manager.RecievedClickOnCell(GridPosition);
+
     }
+
+    public void SetColor(Color color)
+    {
+        spriteRenderer.color = color;
+    }
+
 }
