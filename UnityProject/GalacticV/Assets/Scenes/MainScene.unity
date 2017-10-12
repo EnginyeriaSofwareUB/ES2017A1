@@ -412,6 +412,11 @@ Prefab:
       propertyPath: tile.Array.size
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114271025699743372, guid: 62ee8cf715a16c14eb5e7628001b2e26,
+        type: 2}
+      propertyPath: unit.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4354011462745598, guid: 62ee8cf715a16c14eb5e7628001b2e26, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -497,6 +502,16 @@ Prefab:
       value: 
       objectReference: {fileID: 1948191282770120, guid: b7d462f4e39609d4e8e666aed5b3a4fc,
         type: 2}
+    - target: {fileID: 114271025699743372, guid: 62ee8cf715a16c14eb5e7628001b2e26,
+        type: 2}
+      propertyPath: unit.Array.data[0]
+      value: 
+      objectReference: {fileID: 1439003250645752, guid: 99db09f8bd6393a4ab08a9452812320f,
+        type: 2}
+    - target: {fileID: 1130014766280612, guid: 62ee8cf715a16c14eb5e7628001b2e26, type: 2}
+      propertyPath: m_TagString
+      value: GameController
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62ee8cf715a16c14eb5e7628001b2e26, type: 2}
   m_IsPrefabParent: 0
