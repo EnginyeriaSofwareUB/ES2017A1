@@ -15,7 +15,6 @@ public class loadsceneOnClick : MonoBehaviour {
     }
     // Use this for initialization
     public void LoadByIndex(){
-        Debug.Log(index);
 		SceneManager.LoadScene (index);
 	}
 }

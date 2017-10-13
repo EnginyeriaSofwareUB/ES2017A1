@@ -21,6 +21,7 @@ public class MapManager : MonoBehaviour {
     private List<Point> currentRange = new List<Point>();
     private int columns = 30;
     private int rows = 30;
+    private int rangeToSpawn = 3;
 
     public float TileSize
     {
@@ -31,6 +32,7 @@ public class MapManager : MonoBehaviour {
     void Start()
     {
         CreateLevel();
+        SpawnUnits();
         GameObject map = GameObject.Find("Map");
         map.transform.Rotate(0, 0, 45f);
     }
@@ -56,7 +58,7 @@ public class MapManager : MonoBehaviour {
         }
 
         units = new List<UnitScript>();
-        PlaceUnit(0, 5, 4); //hardcoded units to test movement
+        //PlaceUnit(0, 5, 4); //hardcoded units to test movement
         //PlaceUnit(1, 24, 23);
     }
 
@@ -69,7 +71,7 @@ public class MapManager : MonoBehaviour {
         Tiles.Add(new Point(x, y), newTile);
     }
 
-    private void PlaceUnit(int team, int x, int y)
+    /*private void PlaceUnit(int team, int x, int y)
     {
         UnitScript newUnit = Instantiate(unit[team]).GetComponent<UnitScript>();
         Point position = new Point(x, y);
@@ -77,7 +79,7 @@ public class MapManager : MonoBehaviour {
         units.Add(newUnit);
         Tiles[position].SetIsEmpty(false);
 
-    }
+    }*/
 
     private bool IsValidTile(Point point)
     {
@@ -145,5 +147,48 @@ public class MapManager : MonoBehaviour {
                 ClearCurrentRange();
             }
         }
+    }
+
+    public void SpawnUnits()
+    {
+        for(int i = 0; i < unit.Length; ++i)
+        {
+            SpawnBlueUnits();
+            SpawnRedUnits();
+        }
+    }
+
+    public void SpawnRedUnits()
+    {
+        int xRandom = Random.Range(rows-rangeToSpawn-2, rows-2);
+        int yRandom = Random.Range(columns-rangeToSpawn-2, columns-2);
+        UnitScript newUnit = Instantiate(unit[0]).GetComponent<UnitScript>();
+        Point position = new Point(xRandom, yRandom);
+        while (!Tiles[position].GetIsEmpty())
+        {
+            yRandom = Random.Range(rows - rangeToSpawn - 2, rows - 2);
+            xRandom = Random.Range(columns - rangeToSpawn - 2, columns - 2);
+            position = new Point(xRandom, yRandom);
+        }
+        newUnit.Setup(position, Tiles[position].transform.position, map);
+        units.Add(newUnit);
+        Tiles[position].SetIsEmpty(false);
+    }
+
+    public void SpawnBlueUnits()
+    {
+        int yRandom = Random.Range(1, rangeToSpawn+1);
+        int xRandom = Random.Range(1, rangeToSpawn+1);
+        UnitScript newUnit = Instantiate(unit[1]).GetComponent<UnitScript>();
+        Point position = new Point(xRandom, yRandom);
+        while(!Tiles[position].GetIsEmpty())
+        {
+            yRandom = Random.Range(1, rangeToSpawn+1);
+            xRandom = Random.Range(1, rangeToSpawn+1);
+            position = new Point(xRandom, yRandom);
+        }
+        newUnit.Setup(position, Tiles[position].transform.position, map);
+        units.Add(newUnit);
+        Tiles[position].SetIsEmpty(false);
     }
 }

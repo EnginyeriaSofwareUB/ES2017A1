@@ -43,6 +43,10 @@ public class CameraMovement : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             Camera.main.orthographicSize -= 1f;
+            if(Camera.main.orthographicSize < 1f)
+            {
+                Camera.main.orthographicSize = 1f;
+            }
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
