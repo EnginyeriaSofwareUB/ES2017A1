@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class TimeController : MonoBehaviour {
@@ -9,14 +7,17 @@ public class TimeController : MonoBehaviour {
     private float timeRemaining; //In seconds
     private bool countdownActivate;
     public Text timerText;
+    public Text manaText;
 
     bool player1Turn;
     bool player2Turn;
+    float round;
 
     // Use this for initialization
 	void Start () {
         player1Turn = true;
         player2Turn = false;
+        round = 1;
         StartTime();
     }
 	
@@ -38,6 +39,7 @@ public class TimeController : MonoBehaviour {
     {
         countdownActivate = true;
         timeRemaining = TIME;
+        PrintMana();
     }
 
     //Stop Timer
@@ -69,8 +71,20 @@ public class TimeController : MonoBehaviour {
     //Function called when player end turn
     public void EndTurn()
     {
-        StartTime();
-        ChangeTurn();
+        if (countdownActivate)
+        {
+            StartTime();
+            ChangeTurn();
+            round += 0.5f;
+            PrintMana();
+        }
+    }
+
+    // Function called to print mana
+    public void PrintMana()
+    {
+        int mana = Mathf.Min((int)round, 10);
+        manaText.text = string.Format("{00:00}", mana) + " / 10";
     }
 
     //Function called when player surrender
