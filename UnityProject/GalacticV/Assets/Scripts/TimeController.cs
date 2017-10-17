@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+
 
 public class TimeController : MonoBehaviour {
 
@@ -95,5 +99,11 @@ public class TimeController : MonoBehaviour {
         string surrenderText = "00:00";
         surrenderText += player1Turn ? "\n\nPlayer 1 Surrended" : "\n\nPlayer 2 Surrended";
         timerText.text = surrenderText;
+        StartCoroutine(EndGame());
+    }
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        SceneManager.LoadScene(0);
     }
 }
