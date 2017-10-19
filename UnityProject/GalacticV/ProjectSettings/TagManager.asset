@@ -7,6 +7,9 @@ TagManager:
   - Timer
   - Border
   - Ground
+  - MainController
+  - Blue
+  - Red
   layers:
   - Default
   - TransparentFX

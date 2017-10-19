@@ -11,13 +11,16 @@ public class MapManager : MonoBehaviour {
     private Transform map;
 
     [SerializeField]
-    private GameObject[] unit;
+    private GameObject[] blueUnits;
 
+    [SerializeField]
+    private GameObject[] redUnits;
+
+    [SerializeField]
     public Dictionary<Point, CellScript> Tiles { get; set; }
 
     public List<UnitScript> units;
-
-    private UnitScript currentUnit;
+    private GameController gameController;
     private List<Point> currentRange = new List<Point>();
     private int columns = 30;
     private int rows = 30;
@@ -29,8 +32,9 @@ public class MapManager : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start()
+    public void Init()
     {
+        gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         CreateLevel();
         SpawnUnits();
         GameObject map = GameObject.Find("Map");
@@ -71,25 +75,13 @@ public class MapManager : MonoBehaviour {
         Tiles.Add(new Point(x, y), newTile);
     }
 
-    /*private void PlaceUnit(int team, int x, int y)
-    {
-        UnitScript newUnit = Instantiate(unit[team]).GetComponent<UnitScript>();
-        Point position = new Point(x, y);
-        newUnit.Setup(position, Tiles[position].transform.position, map);
-        units.Add(newUnit);
-        Tiles[position].SetIsEmpty(false);
-
-    }*/
-
     private bool IsValidTile(Point point)
     {
         return (point.X > 0 && point.X < columns - 1 && point.Y > 0 && point.Y < rows - 1 && Tiles[point].GetIsEmpty());
     }
 
-    public void ShowRange(Point position, int range, UnitScript unit)
+    public void ShowRange(Point position, int range)
     {
-        this.currentUnit = unit;
-        ClearCurrentRange();
         Point currentPoint;
         for (int i = 0; i <= range; ++i)
         {
@@ -132,18 +124,21 @@ public class MapManager : MonoBehaviour {
             Tiles[point].SetColor(Color.white);
         }
         currentRange = new List<Point>();
-
+        gameController.SetAbility("");
     }
 
     public void RecievedClickOnCell(Point point)
     {
-        if (currentUnit != null)
+        if (gameController.ActualUnit != null)
         {
             if (currentRange.Contains(point))
             {
-                Tiles[currentUnit.currentPosition].SetIsEmpty(true);
-                currentUnit.MoveTo(point, Tiles[point].transform.position);
+                gameController.ActualCell.PaintUnselected();
+                Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
+                gameController.ActualUnit.MoveTo(point, Tiles[point].transform.position);
                 Tiles[point].SetIsEmpty(false);
+                gameController.ActualCell = null;
+                gameController.ActualUnit = null;
                 ClearCurrentRange();
             }
         }
@@ -151,7 +146,7 @@ public class MapManager : MonoBehaviour {
 
     public void SpawnUnits()
     {
-        for(int i = 0; i < unit.Length; ++i)
+        for(int i = 0; i < blueUnits.Length; ++i)
         {
             SpawnBlueUnits();
             SpawnRedUnits();
@@ -162,7 +157,7 @@ public class MapManager : MonoBehaviour {
     {
         int xRandom = Random.Range(rows-rangeToSpawn-2, rows-2);
         int yRandom = Random.Range(columns-rangeToSpawn-2, columns-2);
-        UnitScript newUnit = Instantiate(unit[0]).GetComponent<UnitScript>();
+        UnitScript newUnit = Instantiate(redUnits[0]).GetComponent<UnitScript>();
         Point position = new Point(xRandom, yRandom);
         while (!Tiles[position].GetIsEmpty())
         {
@@ -179,7 +174,7 @@ public class MapManager : MonoBehaviour {
     {
         int yRandom = Random.Range(1, rangeToSpawn+1);
         int xRandom = Random.Range(1, rangeToSpawn+1);
-        UnitScript newUnit = Instantiate(unit[1]).GetComponent<UnitScript>();
+        UnitScript newUnit = Instantiate(blueUnits[0]).GetComponent<UnitScript>();
         Point position = new Point(xRandom, yRandom);
         while(!Tiles[position].GetIsEmpty())
         {

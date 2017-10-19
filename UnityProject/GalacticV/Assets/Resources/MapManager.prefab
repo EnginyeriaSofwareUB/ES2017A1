@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114271025699743372}
   m_Layer: 0
   m_Name: MapManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,6 +52,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile:
-  - {fileID: 1086622526448644, guid: 770daddd50e85ab4dbe21af6a76eb166, type: 2}
-  - {fileID: 1948191282770120, guid: b7d462f4e39609d4e8e666aed5b3a4fc, type: 2}
+  - {fileID: 1332213329056876, guid: 770daddd50e85ab4dbe21af6a76eb166, type: 2}
+  - {fileID: 1025670520990998, guid: b7d462f4e39609d4e8e666aed5b3a4fc, type: 2}
   map: {fileID: 0}
+  blueUnits:
+  - {fileID: 1211334949425636, guid: bee7388d237058848a83645eee48befc, type: 2}
+  - {fileID: 1211334949425636, guid: bee7388d237058848a83645eee48befc, type: 2}
+  redUnits:
+  - {fileID: 1843848617760638, guid: 12b3ceec86fac894bb8ccca38214f509, type: 2}
+  units: []

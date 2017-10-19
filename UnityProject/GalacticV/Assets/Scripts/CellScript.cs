@@ -11,6 +11,7 @@ public class CellScript : MonoBehaviour {
     private Color previousColor = Color.white;
     private SpriteRenderer spriteRenderer;
     private bool isEmpty = true;
+    private GameController gameController;
 
     public Vector2 WorldPosition
     {
@@ -23,6 +24,7 @@ public class CellScript : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -50,7 +52,8 @@ public class CellScript : MonoBehaviour {
 
     private void OnMouseExit()
     {
-        if (tag != "Border")
+        gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
+        if (tag != "Border" && gameController.ActualCell != this)
         {
             spriteRenderer.color = previousColor;
         }
@@ -80,4 +83,13 @@ public class CellScript : MonoBehaviour {
         spriteRenderer.color = color;
     }
 
+    public void PaintSelected()
+    {
+        spriteRenderer.color = emptyColor;
+    }
+
+    public void PaintUnselected()
+    {
+        spriteRenderer.color = Color.white;
+    }
 }

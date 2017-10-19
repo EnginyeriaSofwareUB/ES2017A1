@@ -10,9 +10,12 @@ public class UnitScript : MonoBehaviour {
     public bool isSelected = false;
     private int attackRange;
     private int movementRange;
-
+    private GameController gameController;
+    
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
+        gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         attackRange = 5;
         movementRange = 4;
@@ -32,20 +35,43 @@ public class UnitScript : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-        if (!isSelected)
+        if(gameController.GetHability() != "Move")
         {
-            //This is needed because the script is inside another game object
-            isSelected = true;
-            manager.ShowRange(this.currentPosition, this.movementRange, this);
-        }
-        else
-        {
-            isSelected = false;
-            manager.ClearCurrentRange();
-        }
+            MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+            if (gameController.ActualUnit != null && gameController.ActualUnit != this)
+            {
+                gameController.ActualCell.PaintUnselected();
+                gameController.ActualUnit.isSelected = false;
+            }
 
-        
+            if (!isSelected)
+            {
+                //This is needed because the script is inside another game object
+                isSelected = true;
+                gameController.ActualUnit = this;
+                gameController.ActualCell = manager.Tiles[this.currentPosition];
+                gameController.ActualCell.PaintSelected();
+                //manager.ShowRange(this.currentPosition, this.movementRange, this);
+            }
+            else
+            {
+                isSelected = false;
+                gameController.ActualCell.PaintUnselected();
+                gameController.ActualUnit = null;
+                gameController.ActualCell = null;
+                //manager.ClearCurrentRange();
+            }
+        } 
+    }
+
+    public int GetMovementRange()
+    {
+        return this.movementRange;
+    }
+
+    public void SetSelected(bool _selected)
+    {
+        isSelected = _selected;
     }
 
     public void MoveTo(Point point, Vector3 worldPos)
@@ -53,5 +79,6 @@ public class UnitScript : MonoBehaviour {
         this.currentPosition = point;
         transform.position = worldPos;
         this.isSelected = false;
+        gameController.SetCancelAction(false);
     }
 }
