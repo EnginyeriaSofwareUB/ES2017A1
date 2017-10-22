@@ -44,26 +44,21 @@ public class MapManager : MonoBehaviour {
     private void CreateLevel()
     {
         Tiles = new Dictionary<Point, CellScript>();
-
+        string[] mapData = ReadLevelText();
         Vector3 worldStart = Camera.main.ScreenToWorldPoint(new Vector3((Screen.width ) / 3, (Screen.height*3)/4));
-        for (int y = 0; y < rows; y++)
+        columns = mapData.Length;
+        rows = mapData[0].ToCharArray().Length;
+        for (int y = 0; y < columns; y++)
         {
-            for (int x = 0; x < columns; x++)
+            char[] newTiles = mapData[y].ToCharArray();
+
+            for (int x = 0; x < rows; x++)
             {
-                if (y == 0 || x == 0 || y == rows - 1 || x == columns - 1)
-                {
-                    PlaceTile("0", x, y, worldStart);
-                }
-                else
-                {
-                    PlaceTile("1", x, y, worldStart);
-                }
+                PlaceTile(newTiles[x].ToString(), x, y, worldStart);
             }
         }
 
         units = new List<UnitScript>();
-        //PlaceUnit(0, 5, 4); //hardcoded units to test movement
-        //PlaceUnit(1, 24, 23);
     }
 
     private void PlaceTile(string tileType, int x, int y, Vector3 worldStart)
@@ -155,14 +150,14 @@ public class MapManager : MonoBehaviour {
 
     public void SpawnRedUnits()
     {
-        int xRandom = Random.Range(rows-rangeToSpawn-2, rows-2);
-        int yRandom = Random.Range(columns-rangeToSpawn-2, columns-2);
+        int xRandom = Random.Range(rows-rangeToSpawn-1, rows-2);
+        int yRandom = Random.Range(columns-rangeToSpawn-1, columns-2);
         UnitScript newUnit = Instantiate(redUnits[0]).GetComponent<UnitScript>();
         Point position = new Point(xRandom, yRandom);
         while (!Tiles[position].GetIsEmpty())
         {
-            yRandom = Random.Range(rows - rangeToSpawn - 2, rows - 2);
-            xRandom = Random.Range(columns - rangeToSpawn - 2, columns - 2);
+            yRandom = Random.Range(rows - rangeToSpawn - 1, rows - 2);
+            xRandom = Random.Range(columns - rangeToSpawn - 1, columns - 2);
             position = new Point(xRandom, yRandom);
         }
         newUnit.Setup(position, Tiles[position].transform.position, map);
@@ -185,5 +180,12 @@ public class MapManager : MonoBehaviour {
         newUnit.Setup(position, Tiles[position].transform.position, map);
         units.Add(newUnit);
         Tiles[position].SetIsEmpty(false);
+    }
+
+    public string[] ReadLevelText()
+    {
+        TextAsset bindData = Resources.Load("LevelTest") as TextAsset;
+        string data = bindData.text.Replace(System.Environment.NewLine, string.Empty);
+        return data.Split('-');
     }
 }
