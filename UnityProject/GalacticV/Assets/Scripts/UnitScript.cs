@@ -8,18 +8,26 @@ public class UnitScript : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     public int team; //team id
     public bool isSelected = false;
-    private int attackRange;
-    private int movementRange;
     private GameController gameController;
-    
-	// Use this for initialization
-	void Start ()
+    /*Player attributes*/
+    private int movementRange;
+    private int healthPoints;
+    private int attackDamage;
+    private int defensePoints;
+    private int attackRange;
+
+
+    // Use this for initialization
+    void Start ()
     {
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         attackRange = 5;
         movementRange = 4;
-	}
+        healthPoints = 200;
+        attackDamage = 50;
+        defensePoints = 20;
+    }
 
     public void Setup(Point point, Vector3 worldPos, Transform parent)
     {
@@ -51,6 +59,9 @@ public class UnitScript : MonoBehaviour {
                 gameController.ActualUnit = this;
                 gameController.ActualCell = manager.Tiles[this.currentPosition];
                 gameController.ActualCell.PaintSelected();
+                gameController.ShowPlayerStats();
+                
+                //infopanel.GetComponent<InfoPanel>();
                 //manager.ShowRange(this.currentPosition, this.movementRange, this);
             }
             else
@@ -64,9 +75,31 @@ public class UnitScript : MonoBehaviour {
         } 
     }
 
+    #region Player Attribute Getters
     public int GetMovementRange()
     {
         return this.movementRange;
+    }
+
+    public int GetHealthPoints()
+    {
+        return this.healthPoints;
+    }
+
+    public int GetAttackDamage()
+    {
+        return this.attackDamage;
+    }
+
+    public int GetDefensePoints()
+    {
+        return this.defensePoints;
+    }
+    #endregion
+
+    public SpriteRenderer GetSpriteRenderer()
+    {
+        return spriteRenderer;
     }
 
     public void SetSelected(bool _selected)

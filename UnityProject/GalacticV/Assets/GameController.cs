@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -68,5 +69,12 @@ public class GameController : MonoBehaviour {
     public void SetCancelAction(bool _cancelAction)
     {
         cancellAction = _cancelAction;
+    }
+
+    public void ShowPlayerStats()
+    {
+        InfoPanelScript infoPanel = GameObject.FindGameObjectWithTag("Canvas").
+                                    transform.Find("InfoPanel").GetComponent<InfoPanelScript>();
+        infoPanel.ShowPanel(ActualUnit);
     }
 }

@@ -10,6 +10,7 @@ TagManager:
   - MainController
   - Blue
   - Red
+  - Canvas
   layers:
   - Default
   - TransparentFX
