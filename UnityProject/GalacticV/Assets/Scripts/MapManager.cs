@@ -19,7 +19,7 @@ public class MapManager : MonoBehaviour {
     [SerializeField]
     public Dictionary<Point, CellScript> Tiles { get; set; }
 
-    public List<UnitScript> units;
+    public List<IUnitScript> units;
     private GameController gameController;
     private List<Point> currentRange = new List<Point>();
     private int columns = 30;
@@ -58,7 +58,7 @@ public class MapManager : MonoBehaviour {
             }
         }
 
-        units = new List<UnitScript>();
+        units = new List<IUnitScript>();
     }
 
     private void PlaceTile(string tileType, int x, int y, Vector3 worldStart)
@@ -152,7 +152,7 @@ public class MapManager : MonoBehaviour {
     {
         int xRandom = Random.Range(rows-rangeToSpawn-1, rows-2);
         int yRandom = Random.Range(columns-rangeToSpawn-1, columns-2);
-        UnitScript newUnit = Instantiate(redUnits[0]).GetComponent<UnitScript>();
+        IUnitScript newUnit = Instantiate(redUnits[0]).GetComponent<IUnitScript>();
         Point position = new Point(xRandom, yRandom);
         while (!Tiles[position].GetIsEmpty())
         {
@@ -169,7 +169,7 @@ public class MapManager : MonoBehaviour {
     {
         int yRandom = Random.Range(1, rangeToSpawn+1);
         int xRandom = Random.Range(1, rangeToSpawn+1);
-        UnitScript newUnit = Instantiate(blueUnits[0]).GetComponent<UnitScript>();
+        IUnitScript newUnit = Instantiate(blueUnits[0]).GetComponent<IUnitScript>();
         Point position = new Point(xRandom, yRandom);
         while(!Tiles[position].GetIsEmpty())
         {

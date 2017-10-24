@@ -1,25 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitScript : MonoBehaviour {
+public class IUnitScript : MonoBehaviour {
 
     public Point currentPosition;
     private SpriteRenderer spriteRenderer;
     public int team; //team id
+
+
     public bool isSelected = false;
     private int attackRange;
     private int movementRange;
-    private GameController gameController;
-    
-	// Use this for initialization
-	void Start ()
-    {
+    protected GameController gameController;
+
+    // Use this for initialization
+    internal void Start (int attackRange, int movementRange) {
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        attackRange = 5;
-        movementRange = 4;
-	}
+        this.attackRange = attackRange;
+        this.movementRange = movementRange;
+    }
 
     public void Setup(Point point, Vector3 worldPos, Transform parent)
     {
@@ -28,41 +30,6 @@ public class UnitScript : MonoBehaviour {
         transform.SetParent(parent);
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
-
-    public void OnMouseDown()
-    {
-        if(gameController.GetHability() != "Move")
-        {
-            MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-            if (gameController.ActualUnit != null && gameController.ActualUnit != this)
-            {
-                gameController.ActualCell.PaintUnselected();
-                gameController.ActualUnit.isSelected = false;
-            }
-
-            if (!isSelected)
-            {
-                //This is needed because the script is inside another game object
-                isSelected = true;
-                gameController.ActualUnit = this;
-                gameController.ActualCell = manager.Tiles[this.currentPosition];
-                gameController.ActualCell.PaintSelected();
-                //manager.ShowRange(this.currentPosition, this.movementRange, this);
-            }
-            else
-            {
-                isSelected = false;
-                gameController.ActualCell.PaintUnselected();
-                gameController.ActualUnit = null;
-                gameController.ActualCell = null;
-                //manager.ClearCurrentRange();
-            }
-        } 
-    }
 
     public int GetMovementRange()
     {
@@ -81,4 +48,41 @@ public class UnitScript : MonoBehaviour {
         this.isSelected = false;
         gameController.SetCancelAction(false);
     }
+
+    public void OnMouseDown()
+    {
+        if (gameController.GetHability() != "Move")
+        {
+            MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+            if (gameController.ActualUnit != null && gameController.ActualUnit != this)
+            {
+                gameController.ActualCell.PaintUnselected();
+                gameController.ActualUnit.isSelected = false;
+            }
+
+            if (!isSelected)
+            {
+                //This is needed because the script is inside another game object
+                isSelected = true;
+                gameController.ActualUnit = this;
+                gameController.ActualCell = manager.Tiles[this.currentPosition];
+                gameController.ActualCell.PaintSelected();
+                manager.ShowRange(this.currentPosition, this.movementRange);
+            }
+            else
+            {
+                isSelected = false;
+                gameController.ActualCell.PaintUnselected();
+                gameController.ActualUnit = null;
+                gameController.ActualCell = null;
+                manager.ClearCurrentRange();
+            }
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
+		
+	}
+
 }
