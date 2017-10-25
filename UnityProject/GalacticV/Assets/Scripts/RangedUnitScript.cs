@@ -7,7 +7,7 @@ public class RangedUnitScript : IUnitScript {
 	// Use this for initialization
 	void Start ()
     {
-        base.Start(4, 5);
+        base.Start(4, 5, 10, 150, 1);
 	}
 
 

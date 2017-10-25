@@ -11,16 +11,23 @@ public class IUnitScript : MonoBehaviour {
 
 
     public bool isSelected = false;
-    private int attackRange;
-    private int movementRange;
+    protected int attackRange;
+    protected int movementRange;
+    protected double attackValue;
+    protected double lifeValue;
+    protected double defenseModifier;
     protected GameController gameController;
 
     // Use this for initialization
-    internal void Start (int attackRange, int movementRange) {
+    internal void Start (int attackRange, int movementRange, double attackValue, 
+                         double lifeValue, double defenseModifier) {
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         this.attackRange = attackRange;
         this.movementRange = movementRange;
+        this.attackValue = attackValue;
+        this.lifeValue = lifeValue;
+        this.defenseModifier = defenseModifier;
     }
 
     public void Setup(Point point, Vector3 worldPos, Transform parent)

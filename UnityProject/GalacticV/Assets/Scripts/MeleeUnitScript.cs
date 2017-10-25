@@ -7,7 +7,7 @@ public class MeleeUnitScript : IUnitScript {
     // Use this for initialization
     void Start()
     {
-        base.Start(1, 5);
+        base.Start(1, 5, 15, 200, 0.5);
     }
 
 
