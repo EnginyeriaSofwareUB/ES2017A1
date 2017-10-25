@@ -11,7 +11,7 @@ public class InfoPanelScript : MonoBehaviour
     [SerializeField]
     private Sprite[] sprites;
     [SerializeField]
-    private Image unitPreview;
+    private GameObject unitPreview;
     [SerializeField]
     private Text healthText;
     [SerializeField]
@@ -29,25 +29,29 @@ public class InfoPanelScript : MonoBehaviour
     {
         PrintStats(unit);
 		SetTeamImage(unit.gameObject.GetComponent<SpriteRenderer>());
+		//SetAnimator(unit.gameObject.GetComponent<Animator>());
 		Show ();
     }
 
 
     public void PrintStats(IUnitScript unit)
     {
-		this.healthText.text = "Health Points: " + unit.GetLifeValue ();
+		this.healthText.text = "Health Points: " + unit.GetLifeValue();
         this.attackText.text = "Attack: " + unit.GetAttackValue();
         this.defenseText.text = "Defense: " + unit.GetDefenseModifier();
     }
 
     public void SetTeamImage(SpriteRenderer spriteRenderer)
     {
-		this.unitPreview.sprite = spriteRenderer.sprite;
-		/*Animator anim = this.unitPreview.GetComponent<Animator>();
-		anim.runtimeAnimatorController = animator.runtimeAnimatorController;
-		anim.updateMode = AnimatorUpdateMode.UnscaledTime;*/
-
+		this.unitPreview.GetComponent<Image>().sprite = spriteRenderer.sprite;
     }
+
+	public void SetAnimator(Animator animator)
+	{
+		Animator anim = this.unitPreview.GetComponent<Animator>();
+		//anim = animator;
+		anim.runtimeAnimatorController = animator.runtimeAnimatorController;
+	}
 
 	public void HidePanel(){
 		Hide ();
