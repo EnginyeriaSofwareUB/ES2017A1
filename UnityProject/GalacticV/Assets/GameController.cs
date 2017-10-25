@@ -77,4 +77,11 @@ public class GameController : MonoBehaviour {
                                     transform.Find("InfoPanel").GetComponent<InfoPanelScript>();
         infoPanel.ShowPanel(ActualUnit);
     }
+
+	public void HidePlayerStats()
+	{
+		InfoPanelScript infoPanel = GameObject.FindGameObjectWithTag("Canvas").
+			transform.Find("InfoPanel").GetComponent<InfoPanelScript>();
+		infoPanel.HidePanel();
+	}
 }

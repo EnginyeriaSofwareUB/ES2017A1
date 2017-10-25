@@ -22,22 +22,22 @@ public class InfoPanelScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        gameObject.SetActive(false);
+		Hide ();
     }
 
     public void ShowPanel(UnitScript unit)
     {
         PrintStats(unit);
 		SetTeamImage(unit.gameObject.GetComponent<SpriteRenderer>());
-        gameObject.SetActive(true);
+		Show ();
     }
 
 
     public void PrintStats(UnitScript unit)
     {
-        /*this.healthText.text = "Health Points: " + unit.GetHealthPoints();
+        this.healthText.text = "Health Points: " + unit.GetHealthPoints();
         this.attackText.text = "Attack: " + unit.GetAttackDamage();
-        this.defenseText.text = "Defense: " + unit.GetDefensePoints();*/
+        this.defenseText.text = "Defense: " + unit.GetDefensePoints();
     }
 
     public void SetTeamImage(SpriteRenderer spriteRenderer)
@@ -48,4 +48,16 @@ public class InfoPanelScript : MonoBehaviour
 		anim.updateMode = AnimatorUpdateMode.UnscaledTime;*/
 
     }
+
+	public void HidePanel(){
+		Hide ();
+	}
+
+	public void Show() {
+		gameObject.SetActive(true);
+	}
+
+	public void Hide(){
+		gameObject.SetActive(false);
+	}
 }

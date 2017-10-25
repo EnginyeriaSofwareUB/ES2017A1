@@ -70,6 +70,7 @@ public class UnitScript : MonoBehaviour {
                 gameController.ActualCell.PaintUnselected();
                 gameController.ActualUnit = null;
                 gameController.ActualCell = null;
+				gameController.HidePlayerStats();
                 //manager.ClearCurrentRange();
             }
         } 
