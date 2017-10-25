@@ -45,8 +45,17 @@ public class CellScript : MonoBehaviour {
     {
         if (tag != "Border")
         {
-            previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
-            spriteRenderer.color = emptyColor;
+            switch (gameController.GetHability())
+            {
+                case "Attack":
+                    previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
+                    spriteRenderer.color = emptyColor;
+                    break;
+                default:
+                    previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
+                    spriteRenderer.color = emptyColor;
+                    break;
+            }
         }
     }
 

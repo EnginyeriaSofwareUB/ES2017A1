@@ -11,11 +11,28 @@ public class MeleeUnitScript : IUnitScript {
     }
 
 
-    // Update is called once per frame
-    void Update()
+    public override void OnMouseOver()
     {
-
+        
     }
 
+    public override void CancelAction(string actualAction)
+    {
+        
+    }
 
+    public override void AttackAction()
+    {
+       
+    }
+
+    public override void Attack()
+    {
+        
+    }
+
+    public override void CancelAttack()
+    {
+        
+    }
 }
