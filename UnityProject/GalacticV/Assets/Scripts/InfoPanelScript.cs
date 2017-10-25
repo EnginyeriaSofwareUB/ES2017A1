@@ -25,7 +25,7 @@ public class InfoPanelScript : MonoBehaviour
 		Hide ();
     }
 
-    public void ShowPanel(UnitScript unit)
+    public void ShowPanel(IUnitScript unit)
     {
         PrintStats(unit);
 		SetTeamImage(unit.gameObject.GetComponent<SpriteRenderer>());
@@ -33,11 +33,11 @@ public class InfoPanelScript : MonoBehaviour
     }
 
 
-    public void PrintStats(UnitScript unit)
+    public void PrintStats(IUnitScript unit)
     {
-        this.healthText.text = "Health Points: " + unit.GetHealthPoints();
-        this.attackText.text = "Attack: " + unit.GetAttackDamage();
-        this.defenseText.text = "Defense: " + unit.GetDefensePoints();
+		this.healthText.text = "Health Points: " + unit.GetLifeValue ();
+        this.attackText.text = "Attack: " + unit.GetAttackValue();
+        this.defenseText.text = "Defense: " + unit.GetDefenseModifier();
     }
 
     public void SetTeamImage(SpriteRenderer spriteRenderer)

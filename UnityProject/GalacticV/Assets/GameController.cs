@@ -6,13 +6,13 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
     [SerializeField]
-    private UnitScript actualUnit;
+    private IUnitScript actualUnit;
     [SerializeField]
     private CellScript actualCell;
     private string habilitySelected;
     private bool cancellAction;
     
-    public UnitScript ActualUnit
+    public IUnitScript ActualUnit
     {
         get { return actualUnit; }
         set { actualUnit = value; }
