@@ -40,4 +40,9 @@ public class MeleeUnitScript : IUnitScript {
     {
         return new Vector3(0,0,0);
     }
+
+    public override Vector3 GetDestinationPointRay()
+    {
+        return new Vector3(0, 0, 0);
+    }
 }

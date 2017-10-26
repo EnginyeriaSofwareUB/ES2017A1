@@ -146,4 +146,6 @@ public abstract class IUnitScript : MonoBehaviour
     public abstract void CancelAttack();
 
     public abstract Vector3 GetOriginRay();
+
+    public abstract Vector3 GetDestinationPointRay();
 }
