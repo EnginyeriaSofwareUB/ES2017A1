@@ -19,49 +19,59 @@ public class InfoPanelScript : MonoBehaviour
     [SerializeField]
     private Text defenseText;
 
-    // Use this for initialization
-    void Start()
+	[SerializeField]
+	private IUnitScript unit;
+
+	// Use this for initialization
+	void Start()
     {
 		Hide ();
     }
 
-    public void ShowPanel(IUnitScript unit)
+	private void Update()
+	{
+		if (this.gameObject.activeSelf && unit != null)
+		{
+			Sprite currentUnitPreviewSprite = this.unitPreview.GetComponent<Image>().sprite;//Sprite Actual de la Preview
+			Sprite currentUnitSprite = unit.gameObject.GetComponent<SpriteRenderer>().sprite; //Sprite actual de la unitat
+			if (currentUnitPreviewSprite != currentUnitSprite)//Si son diferents, l'actualitzem
+			{
+				SetTeamSprite(currentUnitSprite);
+			}
+		}
+	}
+
+	public void ShowPanel(IUnitScript unit)
     {
+		this.unit = unit;
         PrintStats(unit);
-		SetTeamImage(unit.gameObject.GetComponent<SpriteRenderer>());
-		//SetAnimator(unit.gameObject.GetComponent<Animator>());
-		Show ();
-    }
+		Show();
+	}
+
+	public void HidePanel()
+	{
+		Hide();
+		this.unit = null;
+	}
 
 
-    public void PrintStats(IUnitScript unit)
+	private void PrintStats(IUnitScript unit)
     {
 		this.healthText.text = "Health Points: " + unit.GetLifeValue();
         this.attackText.text = "Attack: " + unit.GetAttackValue();
         this.defenseText.text = "Defense: " + unit.GetDefenseModifier();
     }
 
-    public void SetTeamImage(SpriteRenderer spriteRenderer)
+	private void SetTeamSprite(Sprite sprite)
     {
-		this.unitPreview.GetComponent<Image>().sprite = spriteRenderer.sprite;
+		this.unitPreview.GetComponent<Image>().sprite = sprite;
     }
 
-	public void SetAnimator(Animator animator)
-	{
-		Animator anim = this.unitPreview.GetComponent<Animator>();
-		//anim = animator;
-		anim.runtimeAnimatorController = animator.runtimeAnimatorController;
-	}
-
-	public void HidePanel(){
-		Hide ();
-	}
-
-	public void Show() {
+	private void Show() {
 		gameObject.SetActive(true);
 	}
 
-	public void Hide(){
+	private void Hide(){
 		gameObject.SetActive(false);
 	}
 }
