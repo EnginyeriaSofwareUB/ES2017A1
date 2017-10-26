@@ -7,7 +7,7 @@ public class RangedUnitScript : IUnitScript {
 	// Use this for initialization
 	void Start ()
     {
-        base.Start(4, 5, 10, 150, 1);
+        base.Start(4, 5, 10, 8, 1);
 	}
     
     public override void OnMouseOver()
@@ -47,10 +47,42 @@ public class RangedUnitScript : IUnitScript {
 
     public override void Attack()
     {
-        //Disparar objecte cap a unitat destination i restejar
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-        manager.Tiles[gameController.DestinationUnit.currentPosition].SetColor(Color.white);
-        gameController.DestinationUnit = null;
+        Vector3 origin = GetOriginRay();
+        Vector3 heading = gameController.DestinationUnit.GetOriginRay() - origin;
+        float distance = heading.magnitude;
+        Vector3 direction = heading / distance;
+        int layerMask = 1 << 8;
+        bool firstUnit = false;
+        layerMask = ~layerMask;
+        RaycastHit2D[] hit = Physics2D.RaycastAll(origin, direction, Mathf.Infinity, layerMask);
+        foreach(RaycastHit2D h in hit)
+        {
+            if(!firstUnit && (h.transform.tag != this.transform.tag))
+            {
+                firstUnit = true;
+                GameObject unitToShoot = h.transform.gameObject;
+                GameObject ray = Instantiate(Resources.Load("Units/LaserBlue")) as GameObject;
+                ray.transform.SetParent(this.transform.parent);
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                ray.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                ray.transform.position = origin + heading / 2f;
+                Destroy(ray, 0.3f);
+                if (this.GetAttack >= h.transform.GetComponent<IUnitScript>().Life)
+                {
+                    manager.Tiles[unitToShoot.GetComponent<IUnitScript>().currentPosition].SetIsEmpty(true);
+                    manager.Tiles[unitToShoot.GetComponent<IUnitScript>().currentPosition].SetColor(Color.white);
+                    Destroy(h.transform.gameObject);
+                    gameController.DestinationUnit = null;
+                }
+                else
+                {
+                    unitToShoot.GetComponent<IUnitScript>().Life = unitToShoot.GetComponent<IUnitScript>().Life - this.GetAttack;
+                    manager.Tiles[unitToShoot.GetComponent<IUnitScript>().currentPosition].SetColor(Color.white);
+                    gameController.DestinationUnit = null;
+                }
+            }
+        }
         gameController.SetAbility(" ");
         gameController.ActualCell.SetColor(Color.white);
         gameController.ActualCell = null;
@@ -64,5 +96,19 @@ public class RangedUnitScript : IUnitScript {
         gameController.DestinationUnit = null;
         gameController.SetAbility(" ");
         gameController.SetCancelAction(false);
+    }
+
+    public override Vector3 GetOriginRay()
+    {
+        Vector3 origin;
+        if(transform.tag == "Blue")
+        {
+            origin = (this.transform.position + Vector3.right * 0.75f) + new Vector3(0, 1.1f, 0);
+        }
+        else
+        {
+            origin = (this.transform.position + Vector3.left * 0.75f) + new Vector3(0, 1.1f, 0);
+        }
+        return origin;
     }
 }

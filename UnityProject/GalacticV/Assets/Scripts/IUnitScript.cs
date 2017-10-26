@@ -15,9 +15,22 @@ public abstract class IUnitScript : MonoBehaviour
     protected int attackRange;
     protected int movementRange;
     protected double attackValue;
+    [SerializeField]
     protected double lifeValue;
     protected double defenseModifier;
     protected GameController gameController;
+
+    public double Life
+    {
+        get { return lifeValue; }
+        set { this.lifeValue = value; }
+    }
+
+    public int GetAttack
+    {
+        get { return attackRange; }
+        set { this.attackRange = value; }
+    }
 
     // Use this for initialization
     internal void Start(int attackRange, int movementRange, double attackValue,
@@ -131,4 +144,6 @@ public abstract class IUnitScript : MonoBehaviour
     public abstract void Attack();
 
     public abstract void CancelAttack();
+
+    public abstract Vector3 GetOriginRay();
 }
