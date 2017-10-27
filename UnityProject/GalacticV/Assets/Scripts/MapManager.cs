@@ -119,7 +119,7 @@ public class MapManager : MonoBehaviour {
             Tiles[point].SetColor(Color.white);
         }
         currentRange = new List<Point>();
-        gameController.SetAbility("");
+        gameController.SetAbility(" ");
     }
 
     public void RecievedClickOnCell(Point point)

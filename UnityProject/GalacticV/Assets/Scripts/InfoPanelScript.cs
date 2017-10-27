@@ -57,9 +57,9 @@ public class InfoPanelScript : MonoBehaviour
 
 	private void PrintStats(IUnitScript unit)
     {
-		this.healthText.text = "Health Points: " + unit.GetLifeValue();
-        this.attackText.text = "Attack: " + unit.GetAttackValue();
-        this.defenseText.text = "Defense: " + unit.GetDefenseModifier();
+		this.healthText.text = "Health Points: " + unit.Life;
+        this.attackText.text = "Attack: " + unit.GetAttack;
+        this.defenseText.text = "Defense: " + unit.GetDefenseModifier;
     }
 
 	private void SetTeamSprite(Sprite sprite)

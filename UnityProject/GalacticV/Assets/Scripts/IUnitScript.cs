@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IUnitScript : MonoBehaviour {
+public abstract class IUnitScript : MonoBehaviour
+{
 
     public Point currentPosition;
     private SpriteRenderer spriteRenderer;
@@ -14,13 +15,33 @@ public class IUnitScript : MonoBehaviour {
     protected int attackRange;
     protected int movementRange;
     protected double attackValue;
+    [SerializeField]
     protected double lifeValue;
     protected double defenseModifier;
     protected GameController gameController;
 
-    // Use this for initialization
-    internal void Start (int attackRange, int movementRange, double attackValue, 
-                         double lifeValue, double defenseModifier) {
+    public double Life
+    {
+        get { return lifeValue; }
+        set { this.lifeValue = value; }
+    }
+
+    public int GetAttack
+    {
+        get { return attackRange; }
+        set { this.attackRange = value; }
+    }
+
+	public double GetDefenseModifier
+	{
+		get { return defenseModifier; }
+		set { this.defenseModifier = value; }
+	}
+
+	// Use this for initialization
+	internal void Start(int attackRange, int movementRange, double attackValue,
+                         double lifeValue, double defenseModifier)
+    {
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         this.attackRange = attackRange;
@@ -56,57 +77,84 @@ public class IUnitScript : MonoBehaviour {
         gameController.SetCancelAction(false);
     }
 
-    public void OnMouseDown()
-    {
-        if (gameController.GetHability() != "Move")
-        {
-            MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-            if (gameController.ActualUnit != null && gameController.ActualUnit != this)
-            {
-                gameController.ActualCell.PaintUnselected();
-                gameController.ActualUnit.isSelected = false;
-            }
+    public abstract void OnMouseOver();
 
-            if (!isSelected)
-            {
-                //This is needed because the script is inside another game object
-                isSelected = true;
-                gameController.ActualUnit = this;
-                gameController.ActualCell = manager.Tiles[this.currentPosition];
-                gameController.ActualCell.PaintSelected();
-                manager.ShowRange(this.currentPosition, this.movementRange);
-				gameController.ShowPlayerStats();
-            }
-            else
-            {
-                isSelected = false;
-                gameController.ActualCell.PaintUnselected();
-                gameController.ActualUnit = null;
-                gameController.ActualCell = null;
-                manager.ClearCurrentRange();
-				gameController.HidePlayerStats();
-            }
+    public void OnMouseExit()
+    {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        if (gameController.GetHability() == "Attack" && gameController.ActualUnit != this)
+        {
+            manager.Tiles[this.currentPosition].SetColor(Color.white);
         }
     }
 
-	public double GetAttackValue()
-	{
-		return this.attackValue;
-	}
+    public void OnMouseDown()
+    {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        switch (gameController.GetHability())
+        {
+            case "Move":
+                break;
+            case "Attack":
+                if (this.team != gameController.ActualUnit.team)
+                {
+                    gameController.DestinationUnit = this;
+                    gameController.ActualUnit.Attack();
+					gameController.HidePlayerStats();
+				}
+                break;
+            default:
+                if (gameController.ActualUnit != null && gameController.ActualUnit != this)
+                {
+                    gameController.ActualCell.PaintUnselected();
+                    gameController.ActualUnit.isSelected = false;
+                }
 
-	public double GetLifeValue()
-	{
-		return this.lifeValue;
-	}
+                if (!isSelected)
+                {
+                    //This is needed because the script is inside another game object
+                    isSelected = true;
+                    gameController.ActualUnit = this;
+                    gameController.ActualCell = manager.Tiles[this.currentPosition];
+                    gameController.ActualCell.PaintSelected();
+					gameController.ShowPlayerStats();
+                }
+                else
+                {
+                    isSelected = false;
+                    gameController.ActualCell.PaintUnselected();
+                    gameController.ActualUnit = null;
+                    gameController.ActualCell = null;
+					gameController.HidePlayerStats();
+                }
+                break;
+        }
+    }
 
-	public double GetDefenseModifier()
-	{
-		return this.defenseModifier;
-	}
+    public void MoveAction()
+    {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        gameController.SetAbility("Move");
+        manager.ShowRange(this.currentPosition, movementRange);
+        gameController.SetCancelAction(true);
+    }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    public void CancelMoveAction()
+    {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        gameController.SetAbility(" ");
+        manager.ClearCurrentRange();
+        gameController.SetCancelAction(false);
+    }
+    public abstract void CancelAction(string actualAction);
 
+    public abstract void AttackAction();
+
+    public abstract void Attack();
+
+    public abstract void CancelAttack();
+
+    public abstract Vector3 GetOriginRay();
+
+	public abstract Vector3 GetDestinationPointRay();
 }
