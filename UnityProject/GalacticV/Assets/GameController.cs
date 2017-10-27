@@ -8,6 +8,8 @@ public class GameController : MonoBehaviour {
     private IUnitScript actualUnit;
     [SerializeField]
     private CellScript actualCell;
+    [SerializeField]
+    private IUnitScript destinationUnit;
     private string habilitySelected;
     private bool cancellAction;
     
@@ -21,6 +23,12 @@ public class GameController : MonoBehaviour {
     {
         get { return actualCell; }
         set { actualCell = value; }
+    }
+
+    public IUnitScript DestinationUnit
+    {
+        get { return destinationUnit; }
+        set { destinationUnit = value; }
     }
 
     // Use this for initialization
@@ -37,21 +45,33 @@ public class GameController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if(this.actualUnit != null && !cancellAction)
+            if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Move")
             {
-                habilitySelected = "Move";
-                MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-                manager.ShowRange(this.actualUnit.currentPosition, this.actualUnit.GetMovementRange());
-                cancellAction = true;
+                actualUnit.CancelAction(habilitySelected);
             }
-            else if(actualUnit != null && cancellAction)
+            if (this.actualUnit != null && !cancellAction)
             {
-                habilitySelected = "";
-                MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-                manager.ClearCurrentRange();
-                cancellAction = false;
+                actualUnit.MoveAction();
             }
-
+            else if (this.actualUnit != null && cancellAction)
+            {
+                actualUnit.CancelMoveAction();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Attack")
+            {
+                actualUnit.CancelAction(habilitySelected);
+            }
+            if (this.actualUnit != null && !cancellAction)
+            {
+                this.actualUnit.AttackAction();
+            }
+            else if (this.actualUnit != null && cancellAction)
+            {
+                this.actualUnit.CancelAttack();
+            }
         }
     }
 	
