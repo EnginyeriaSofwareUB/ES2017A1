@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,13 @@ public abstract class IUnitScript : MonoBehaviour
     protected int attackRange;
     protected int movementRange;
     protected double attackValue;
+    protected Enums.UnitState state = Enums.UnitState.Idle;
+
+    //movement values
+    protected const float speed = 1;
+    protected Vector3 targetTransform;
+    protected Point targetPosition;
+
     [SerializeField]
     protected double lifeValue;
     protected double defenseModifier;
@@ -71,10 +79,13 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, Vector3 worldPos)
     {
-        this.currentPosition = point;
-        transform.position = worldPos;
-        this.isSelected = false;
+        //this.currentPosition = point;
+        //transform.position = worldPos;
+         this.isSelected = false;
         gameController.SetCancelAction(false);
+        this.state = Enums.UnitState.Move;
+        this.targetPosition = point;
+        this.targetTransform = worldPos;
     }
 
     public abstract void OnMouseOver();
@@ -145,6 +156,23 @@ public abstract class IUnitScript : MonoBehaviour
         gameController.SetAbility(" ");
         manager.ClearCurrentRange();
         gameController.SetCancelAction(false);
+    }
+
+    private void Update()
+    {
+        switch(state)
+        {
+            case Enums.UnitState.Move:
+                float step = speed * Time.deltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, targetTransform, step);
+                if (transform.position == targetTransform) {
+                    state = Enums.UnitState.Idle;
+                    this.currentPosition = this.targetPosition;
+                }
+                break;
+            default:
+                break;
+        }
     }
     public abstract void CancelAction(string actualAction);
 
