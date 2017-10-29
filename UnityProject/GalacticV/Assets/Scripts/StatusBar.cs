@@ -8,15 +8,18 @@ public class StatusBar : MonoBehaviour
 
 	[SerializeField]
 	private Text pointsText;
-
+	[SerializeField]
 	private GameObject currentBar;
-	private float ratio;
 	private float initialWidth;
 
-	private void Start()
+	void Start()
 	{
-		currentBar = this.gameObject.transform.Find("image").gameObject;
-		initialWidth = (this.currentBar.transform as RectTransform).sizeDelta.x;
+		initialWidth = (currentBar.transform as RectTransform).sizeDelta.x;
+	}
+
+	private void Awake()
+	{
+		initialWidth = (currentBar.transform as RectTransform).sizeDelta.x;
 	}
 
 	public void UpdateStatusBar(float currentPoints, float maxPoints)
