@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts;
-using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +21,7 @@ public abstract class IUnitScript : MonoBehaviour
     //movement values
     protected const float speed = 1;
     protected Vector3 targetTransform;
+    protected List<Vector3> vectorPath;
     protected Point targetPosition;
 
     [SerializeField]
@@ -77,7 +78,7 @@ public abstract class IUnitScript : MonoBehaviour
         isSelected = _selected;
     }
 
-    public void MoveTo(Point point, Vector3 worldPos)
+    public void MoveTo(Point point, List<Vector3> vectorPath)
     {
         //this.currentPosition = point;
         //transform.position = worldPos;
@@ -85,7 +86,10 @@ public abstract class IUnitScript : MonoBehaviour
         gameController.SetCancelAction(false);
         this.state = Enums.UnitState.Move;
         this.targetPosition = point;
-        this.targetTransform = worldPos;
+        this.vectorPath = vectorPath;
+        this.targetTransform = this.vectorPath.First();
+        this.vectorPath.Remove(this.targetTransform);
+
     }
 
     public abstract void OnMouseOver();
@@ -166,8 +170,16 @@ public abstract class IUnitScript : MonoBehaviour
                 float step = speed * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, targetTransform, step);
                 if (transform.position == targetTransform) {
+                    if (this.vectorPath.Any())
+                    {
+                        targetTransform = this.vectorPath.First();
+                        this.vectorPath.Remove(targetTransform);
+                    }
+                    else
+                    {
                     state = Enums.UnitState.Idle;
                     this.currentPosition = this.targetPosition;
+                    }
                 }
                 break;
             default:

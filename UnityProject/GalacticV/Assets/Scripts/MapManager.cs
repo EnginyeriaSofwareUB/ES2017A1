@@ -143,7 +143,8 @@ public class MapManager : MonoBehaviour {
             {
                 gameController.ActualCell.PaintUnselected();
                 Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
-                gameController.ActualUnit.MoveTo(point, Tiles[point].transform.position);
+                List<Vector3> movementPath = CalculatePath(gameController.ActualUnit.currentPosition, point);
+                gameController.ActualUnit.MoveTo(point, movementPath);
                 Tiles[point].SetIsEmpty(false);
                 gameController.ActualCell = null;
                 gameController.ActualUnit = null;
@@ -151,6 +152,66 @@ public class MapManager : MonoBehaviour {
 				gameController.HidePlayerStats();
             }
         }
+    }
+
+    //Pathfinding using DFS
+    private List<Vector3> CalculatePath(Point start, Point end)
+    { 
+        List<Vector3> path;
+        List<Point> visited = new List<Point>();
+        Stack<Point> stack = new Stack<Point>();
+        Dictionary<Point, Point> parents = new Dictionary<Point, Point>();
+        stack.Push(start);
+        Point currentPoint, newPoint;
+        while(stack.Any())
+        {
+            currentPoint = stack.Pop();
+            if (currentPoint.Equals(end)) break;
+            if (!visited.Contains(currentPoint))
+            {
+                visited.Add(currentPoint);
+                newPoint = new Point(currentPoint.X + 1, currentPoint.Y);
+                if (currentRange.Contains(newPoint))
+                {
+                    stack.Push(newPoint);
+                    if (!parents.ContainsKey(newPoint))
+                        parents.Add(newPoint, currentPoint);
+                }
+
+                newPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+                if (currentRange.Contains(newPoint))
+                {
+                    stack.Push(newPoint);
+                    if (!parents.ContainsKey(newPoint))
+                        parents.Add(newPoint, currentPoint);
+                }
+
+                newPoint = new Point(currentPoint.X, currentPoint.Y - 1);
+                if (currentRange.Contains(newPoint))
+                {
+                    stack.Push(newPoint);
+                    if (!parents.ContainsKey(newPoint))
+                        parents.Add(newPoint, currentPoint);
+                }
+
+                newPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+                if (currentRange.Contains(newPoint))
+                {
+                    stack.Push(newPoint);
+                    if (!parents.ContainsKey(newPoint))
+                        parents.Add(newPoint, currentPoint);
+                }
+            }
+        }
+        visited = new List<Point>();
+        currentPoint = end;
+        while(!currentPoint.Equals(start))
+        {
+            visited.Add(currentPoint);
+            currentPoint = parents[currentPoint];
+        }
+
+        return visited.Select(point => Tiles[point].transform.position).Reverse().ToList();
     }
 
     public void SpawnUnits()
