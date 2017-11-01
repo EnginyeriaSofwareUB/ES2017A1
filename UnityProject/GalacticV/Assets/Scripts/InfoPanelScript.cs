@@ -13,11 +13,14 @@ public class InfoPanelScript : MonoBehaviour
     [SerializeField]
     private GameObject unitPreview;
     [SerializeField]
-    private Text healthText;
+    private GameObject healthBar;
     [SerializeField]
-    private Text attackText;
+    private GameObject attackBar;
     [SerializeField]
-    private Text defenseText;
+    private GameObject defenseBar;
+
+	private Sprite blueBackgroundSprite;
+	private Sprite redBackgroundSprite;
 
 	[SerializeField]
 	private IUnitScript unit;
@@ -25,6 +28,8 @@ public class InfoPanelScript : MonoBehaviour
 	// Use this for initialization
 	void Start()
     {
+		blueBackgroundSprite = Resources.Load<Sprite>("panel-background-blue");
+		redBackgroundSprite = Resources.Load<Sprite>("panel-background-red");
 		Hide ();
     }
 
@@ -44,7 +49,8 @@ public class InfoPanelScript : MonoBehaviour
 	public void ShowPanel(IUnitScript unit)
     {
 		this.unit = unit;
-        PrintStats(unit);
+		this.gameObject.GetComponent<Image>().sprite = unit.team == 0 ? blueBackgroundSprite : redBackgroundSprite;
+		PrintStats(unit);
 		Show();
 	}
 
@@ -57,10 +63,10 @@ public class InfoPanelScript : MonoBehaviour
 
 	private void PrintStats(IUnitScript unit)
     {
-		this.healthText.text = "Health Points: " + unit.Life;
-        this.attackText.text = "Attack: " + unit.GetAttack;
-        this.defenseText.text = "Defense: " + unit.GetDefenseModifier;
-    }
+		this.healthBar.GetComponent<StatusBar>().UpdateStatusBar((float) unit.Life, 8);
+		this.attackBar.GetComponent<StatusBar>().UpdateStatusBar(unit.GetAttack, unit.GetAttack);
+		this.defenseBar.GetComponent<StatusBar>().UpdateStatusBar((float) unit.GetDefenseModifier, (float)unit.GetDefenseModifier);
+	}
 
 	private void SetTeamSprite(Sprite sprite)
     {
