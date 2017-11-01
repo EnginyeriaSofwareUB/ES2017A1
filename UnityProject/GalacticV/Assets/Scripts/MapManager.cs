@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour {
@@ -77,39 +77,52 @@ public class MapManager : MonoBehaviour {
 
     public void ShowRange(Point position, int range)
     {
-        Point currentPoint;
-        for (int i = 0; i <= range; ++i)
+        Point currentPoint, newPoint;
+        //currentRange.Add(position);
+        List<Point> buffer = new List<Point>();
+        buffer.Add(position);
+        while (buffer.Any())
         {
-            for (int j = 0; j <= range; j++)
-            {
-                if (i + j > range) continue;
-                currentPoint = new Point(position.X + i, position.Y + j);
-                if (IsValidTile(currentPoint))
-                {
-                    currentRange.Add(currentPoint);
-                }
-                currentPoint = new Point(position.X - i, position.Y - j);
-                if (IsValidTile(currentPoint))
-                {
-                    currentRange.Add(currentPoint);
-                }
-                currentPoint = new Point(position.X + i, position.Y - j);
-                if (IsValidTile(currentPoint))
-                {
-                    currentRange.Add(currentPoint);
-                }
-                currentPoint = new Point(position.X - i, position.Y + j);
-                if (IsValidTile(currentPoint))
-                {
-                    currentRange.Add(currentPoint);
-                }
-            }
+            currentPoint = buffer.First();
+            newPoint = new Point(currentPoint.X + 1, currentPoint.Y);
+            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X, currentPoint.Y - 1);
+            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+
+            currentRange.Add(currentPoint);
+            buffer.Remove(currentPoint);
+
         }
 
+        currentRange.Remove(position);
         foreach(var point in currentRange)
         {
             Tiles[point].SetColor(Color.cyan);
         }
+    }
+
+    private bool CheckConnection(Point currentPoint, List<Point> currentRange)
+    {
+        return currentRange.Any(x => Distance(x, currentPoint) == 1);
+    }
+
+    private int Distance(Point p1, Point p2)
+    {
+        //Manhattan distance
+        //Note: System is called manually to not create issues with Random() calls
+        return System.Math.Abs(p1.X - p2.X) + System.Math.Abs(p1.Y - p2.Y);
     }
 
     public void ClearCurrentRange()
