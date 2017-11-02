@@ -46,37 +46,47 @@ public class GameController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Move")
-            {
-                actualUnit.CancelAction(habilitySelected);
-            }
-            if (this.actualUnit != null && !cancellAction)
-            {
-                actualUnit.MoveAction();
-            }
-            else if (this.actualUnit != null && cancellAction)
-            {
-                actualUnit.CancelMoveAction();
-            }
-        }
+			Move();
+		}
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Attack")
-            {
-                actualUnit.CancelAction(habilitySelected);
-            }
-            if (this.actualUnit != null && !cancellAction)
-            {
-                this.actualUnit.AttackAction();
-            }
-            else if (this.actualUnit != null && cancellAction)
-            {
-                this.actualUnit.CancelAttack();
-            }
+			Attack();
         }
     }
-	
-    public string GetHability()
+
+	public void Move()
+	{
+		if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Move")
+		{
+			actualUnit.CancelAction(habilitySelected);
+		}
+		if (this.actualUnit != null && !cancellAction)
+		{
+			actualUnit.MoveAction();
+		}
+		else if (this.actualUnit != null && cancellAction)
+		{
+			actualUnit.CancelMoveAction();
+		}
+	}
+
+	public void Attack()
+	{
+		if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Attack")
+		{
+			actualUnit.CancelAction(habilitySelected);
+		}
+		if (this.actualUnit != null && !cancellAction)
+		{
+			this.actualUnit.AttackAction();
+		}
+		else if (this.actualUnit != null && cancellAction)
+		{
+			this.actualUnit.CancelAttack();
+		}
+	}
+
+	public string GetHability()
     {
         return habilitySelected;
     }
@@ -85,6 +95,11 @@ public class GameController : MonoBehaviour {
     {
         habilitySelected = s;
     }
+
+	public bool IsCancelAction()
+	{
+		return this.cancellAction;
+	}
 
     public void SetCancelAction(bool _cancelAction)
     {
