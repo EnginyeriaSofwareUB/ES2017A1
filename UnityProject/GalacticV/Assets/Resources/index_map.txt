@@ -1,0 +1,10 @@
+0 - texture_brick
+1 - 0_ground_center_withgrass2
+2 - texture_stone
+3 - 1_ground_texture
+4 - texture_sand
+5 - texture_stone2
+6 - texture_road
+7 - texture_grass1
+8 - 1_ground_left
+9 - 1_ground_right

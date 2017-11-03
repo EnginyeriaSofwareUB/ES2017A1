@@ -260,7 +260,7 @@ public class MapManager : MonoBehaviour {
 
     public string[] ReadLevelText()
     {
-        TextAsset bindData = Resources.Load("LevelTest") as TextAsset;
+        TextAsset bindData = Resources.Load("the_palace") as TextAsset;
         string data = bindData.text.Replace(System.Environment.NewLine, string.Empty);
         return data.Split('-');
     }
