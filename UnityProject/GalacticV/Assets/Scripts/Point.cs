@@ -13,4 +13,12 @@ public struct Point
         this.X = x;
         this.Y = y;
     }
+
+    public override bool Equals(object obj)
+    {
+        if (!(obj is Point))
+            return false;
+        Point p2 = (Point)obj;
+        return (this.X == p2.X && this.Y == p2.Y);
+    }
 }

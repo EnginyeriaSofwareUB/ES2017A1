@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour {
@@ -36,6 +36,7 @@ public class MapManager : MonoBehaviour {
     {
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         CreateLevel();
+        SpawnCoverage();
         SpawnUnits();
         GameObject map = GameObject.Find("Map");
         map.transform.Rotate(0, 0, 45f);
@@ -77,39 +78,52 @@ public class MapManager : MonoBehaviour {
 
     public void ShowRange(Point position, int range)
     {
-        Point currentPoint;
-        for (int i = 0; i <= range; ++i)
+        Point currentPoint, newPoint;
+        //currentRange.Add(position);
+        List<Point> buffer = new List<Point>();
+        buffer.Add(position);
+        while (buffer.Any())
         {
-            for (int j = 0; j <= range; j++)
-            {
-                if (i + j > range) continue;
-                currentPoint = new Point(position.X + i, position.Y + j);
-                if (IsValidTile(currentPoint))
-                {
-                    currentRange.Add(currentPoint);
-                }
-                currentPoint = new Point(position.X - i, position.Y - j);
-                if (IsValidTile(currentPoint))
-                {
-                    currentRange.Add(currentPoint);
-                }
-                currentPoint = new Point(position.X + i, position.Y - j);
-                if (IsValidTile(currentPoint))
-                {
-                    currentRange.Add(currentPoint);
-                }
-                currentPoint = new Point(position.X - i, position.Y + j);
-                if (IsValidTile(currentPoint))
-                {
-                    currentRange.Add(currentPoint);
-                }
-            }
+            currentPoint = buffer.First();
+            newPoint = new Point(currentPoint.X + 1, currentPoint.Y);
+            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X, currentPoint.Y - 1);
+            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+
+            currentRange.Add(currentPoint);
+            buffer.Remove(currentPoint);
+
         }
 
+        currentRange.Remove(position);
         foreach(var point in currentRange)
         {
             Tiles[point].SetColor(Color.cyan);
         }
+    }
+
+    private bool CheckConnection(Point currentPoint, List<Point> currentRange)
+    {
+        return currentRange.Any(x => Distance(x, currentPoint) == 1);
+    }
+
+    private int Distance(Point p1, Point p2)
+    {
+        //Manhattan distance
+        //Note: System is called manually to not create issues with Random() calls
+        return System.Math.Abs(p1.X - p2.X) + System.Math.Abs(p1.Y - p2.Y);
     }
 
     public void ClearCurrentRange()
@@ -130,7 +144,8 @@ public class MapManager : MonoBehaviour {
             {
                 gameController.ActualCell.PaintUnselected();
                 Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
-                gameController.ActualUnit.MoveTo(point, Tiles[point].transform.position);
+                List<Vector3> movementPath = CalculatePath(gameController.ActualUnit.currentPosition, point);
+                gameController.ActualUnit.MoveTo(point, movementPath);
                 Tiles[point].SetIsEmpty(false);
                 gameController.ActualCell = null;
                 gameController.ActualUnit = null;
@@ -138,6 +153,66 @@ public class MapManager : MonoBehaviour {
 				gameController.HidePlayerStats();
             }
         }
+    }
+
+    //Pathfinding using DFS
+    private List<Vector3> CalculatePath(Point start, Point end)
+    { 
+        List<Vector3> path;
+        List<Point> visited = new List<Point>();
+        Stack<Point> stack = new Stack<Point>();
+        Dictionary<Point, Point> parents = new Dictionary<Point, Point>();
+        stack.Push(start);
+        Point currentPoint, newPoint;
+        while(stack.Any())
+        {
+            currentPoint = stack.Pop();
+            if (currentPoint.Equals(end)) break;
+            if (!visited.Contains(currentPoint))
+            {
+                visited.Add(currentPoint);
+                newPoint = new Point(currentPoint.X + 1, currentPoint.Y);
+                if (currentRange.Contains(newPoint))
+                {
+                    stack.Push(newPoint);
+                    if (!parents.ContainsKey(newPoint))
+                        parents.Add(newPoint, currentPoint);
+                }
+
+                newPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+                if (currentRange.Contains(newPoint))
+                {
+                    stack.Push(newPoint);
+                    if (!parents.ContainsKey(newPoint))
+                        parents.Add(newPoint, currentPoint);
+                }
+
+                newPoint = new Point(currentPoint.X, currentPoint.Y - 1);
+                if (currentRange.Contains(newPoint))
+                {
+                    stack.Push(newPoint);
+                    if (!parents.ContainsKey(newPoint))
+                        parents.Add(newPoint, currentPoint);
+                }
+
+                newPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+                if (currentRange.Contains(newPoint))
+                {
+                    stack.Push(newPoint);
+                    if (!parents.ContainsKey(newPoint))
+                        parents.Add(newPoint, currentPoint);
+                }
+            }
+        }
+        visited = new List<Point>();
+        currentPoint = end;
+        while(!currentPoint.Equals(start))
+        {
+            visited.Add(currentPoint);
+            currentPoint = parents[currentPoint];
+        }
+
+        return visited.Select(point => Tiles[point].transform.position).Reverse().ToList();
     }
 
     public void SpawnUnits()
@@ -188,5 +263,24 @@ public class MapManager : MonoBehaviour {
         TextAsset bindData = Resources.Load("the_palace") as TextAsset;
         string data = bindData.text.Replace(System.Environment.NewLine, string.Empty);
         return data.Split('-');
+    }
+
+    public void SpawnCoverage()
+    {
+        for(int i = 0; i < 2; ++i)
+        {
+            int xRandom = Random.Range(3, rows/2);
+            int yRandom = (rows - 2) - xRandom;
+            Point position = new Point(xRandom, yRandom);
+            while (!Tiles[position].GetIsEmpty())
+            {
+                xRandom = Random.Range(1, (rows - 2) / 2);
+                yRandom = (rows - 2) - xRandom;
+                position = new Point(xRandom, yRandom);
+            }
+            GameObject coverage = Instantiate(Resources.Load("Objects/Tree")) as GameObject;
+            coverage.GetComponent<CoverageScript>().Setup(position, Tiles[position].transform.position, map);
+            Tiles[position].SetIsEmpty(false);
+        }   
     }
 }
