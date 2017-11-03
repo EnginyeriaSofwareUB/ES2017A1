@@ -267,9 +267,20 @@ public class MapManager : MonoBehaviour {
 
     public void SpawnCoverage()
     {
-        Point position = new Point(5, 5);
-        GameObject coverage = Instantiate(Resources.Load("Objects/Tree")) as GameObject;
-        coverage.GetComponent<CoverageScript>().Setup(position, Tiles[position].transform.position, map);
-        Tiles[position].SetIsEmpty(false);
+        for(int i = 0; i < 2; ++i)
+        {
+            int xRandom = Random.Range(3, rows/2);
+            int yRandom = (rows - 2) - xRandom;
+            Point position = new Point(xRandom, yRandom);
+            while (!Tiles[position].GetIsEmpty())
+            {
+                xRandom = Random.Range(1, (rows - 2) / 2);
+                yRandom = (rows - 2) - xRandom;
+                position = new Point(xRandom, yRandom);
+            }
+            GameObject coverage = Instantiate(Resources.Load("Objects/Tree")) as GameObject;
+            coverage.GetComponent<CoverageScript>().Setup(position, Tiles[position].transform.position, map);
+            Tiles[position].SetIsEmpty(false);
+        }   
     }
 }
