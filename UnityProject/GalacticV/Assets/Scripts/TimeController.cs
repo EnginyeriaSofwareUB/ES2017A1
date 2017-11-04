@@ -10,6 +10,7 @@ public class TimeController : MonoBehaviour {
     public int TIME;
     private float timeRemaining; //In seconds
     private bool countdownActivate;
+    private int mana;
     public Text timerText;
     public Text manaText;
 
@@ -22,6 +23,7 @@ public class TimeController : MonoBehaviour {
         player1Turn = true;
         player2Turn = false;
         round = 1;
+        mana = 1;
         StartTime();
     }
 	
@@ -80,6 +82,7 @@ public class TimeController : MonoBehaviour {
             StartTime();
             ChangeTurn();
             round += 0.5f;
+            mana = Mathf.Min((int)round, 10);
             PrintMana();
         }
     }
@@ -87,7 +90,6 @@ public class TimeController : MonoBehaviour {
     // Function called to print mana
     public void PrintMana()
     {
-        int mana = Mathf.Min((int)round, 10);
         manaText.text = string.Format("{00:00}", mana) + " / 10";
     }
 
@@ -101,6 +103,14 @@ public class TimeController : MonoBehaviour {
         timerText.text = surrenderText;
         StartCoroutine(EndGame());
     }
+
+    public void UseMana(int usedMana)
+    {
+        mana -= usedMana;
+        if (mana <= 0) EndTurn();
+        else PrintMana();
+    }
+
     IEnumerator EndGame()
     {
         yield return new WaitForSecondsRealtime(1.5f);

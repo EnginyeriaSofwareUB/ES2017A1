@@ -11,6 +11,10 @@ public abstract class IUnitScript : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public int team; //team id
 
+    public int movementCost = 1;
+    public int attackCost = 1;
+    public int defendCost = 1;
+    public int abilityCost = 1;
 
     public bool isSelected = false;
     protected int attackRange;

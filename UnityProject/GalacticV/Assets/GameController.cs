@@ -53,6 +53,8 @@ public class GameController : MonoBehaviour {
             if (this.actualUnit != null && !cancellAction)
             {
                 actualUnit.MoveAction();
+                TimeController timeC = GameObject.FindObjectOfType<TimeController>();
+                timeC.UseMana(this.actualUnit.movementCost);
             }
             else if (this.actualUnit != null && cancellAction)
             {
@@ -67,6 +69,8 @@ public class GameController : MonoBehaviour {
             }
             if (this.actualUnit != null && !cancellAction)
             {
+                TimeController timeC = GameObject.FindObjectOfType<TimeController>();
+                timeC.UseMana(this.actualUnit.attackCost);
                 this.actualUnit.AttackAction();
             }
             else if (this.actualUnit != null && cancellAction)
