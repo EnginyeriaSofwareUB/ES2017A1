@@ -40,7 +40,8 @@ public class TimeController : MonoBehaviour {
 	void Start () {
 		Init();
 		StartTime();
-    }
+		ChangeColors();
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -101,6 +102,11 @@ public class TimeController : MonoBehaviour {
     {
         player1Turn = !player1Turn;
         player2Turn = !player2Turn;
+		ChangeColors();
+	}
+
+	private void ChangeColors()
+	{
 		//Background color
 		Image parent = timerText.transform.parent.GetComponent<Image>();
 		parent.color = player1Turn ? Color.blue : Color.red;
