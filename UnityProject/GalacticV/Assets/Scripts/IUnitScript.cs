@@ -186,6 +186,15 @@ public abstract class IUnitScript : MonoBehaviour
                 break;
         }
     }
+	
+	public void PlayEffectAttack(string resourcePath)
+	{
+		AudioClip laserEffect = Resources.Load(resourcePath) as AudioClip;
+		if (!gameObject.GetComponent<AudioSource>())
+			gameObject.AddComponent<AudioSource>();
+		gameObject.GetComponent<AudioSource>().PlayOneShot(laserEffect);
+	}
+
     public abstract void CancelAction(string actualAction);
 
     public abstract void AttackAction();

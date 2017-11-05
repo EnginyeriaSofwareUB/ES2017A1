@@ -10,21 +10,38 @@ public class TimeController : MonoBehaviour {
     public int TIME;
     private float timeRemaining; //In seconds
     private bool countdownActivate;
-    public Text timerText;
-    public Text manaText;
 
-    bool player1Turn;
+	[SerializeField]
+    private Text timerText;
+	[SerializeField]
+	private Text manaText;
+	[SerializeField]
+	private Button surrenderButton;
+	[SerializeField]
+	private Button passButton;
+
+	//Team red sprites
+	private Sprite surrenderRed;
+	private Sprite surrenderClickedRed;
+	private Sprite passRed;
+	private Sprite passClickedRed;
+
+	//Team blue sprites
+	private Sprite surrenderBlue;
+	private Sprite surrenderClickedBlue;
+	private Sprite passBlue;
+	private Sprite passClickedBlue;
+
+	bool player1Turn;
     bool player2Turn;
     float round;
 
     // Use this for initialization
 	void Start () {
-        player1Turn = true;
-        player2Turn = false;
-        round = 1;
-        StartTime();
+		Init();
+		StartTime();
     }
-	
+
 	// Update is called once per frame
 	void Update () {
         if (countdownActivate)
@@ -38,8 +55,24 @@ public class TimeController : MonoBehaviour {
         }
 	}
 
-    //Start Time
-    private void StartTime()
+	private void Init()
+	{
+		player1Turn = true;
+		player2Turn = false;
+		round = 1;
+		surrenderRed = Resources.Load<Sprite>("HUD/surrender_red");
+		surrenderClickedRed = Resources.Load<Sprite>("HUD/surrender_red_clicked");
+		passRed = Resources.Load<Sprite>("HUD/pass_red");
+		passClickedRed = Resources.Load<Sprite>("HUD/pass_red_clicked");
+
+		surrenderBlue = Resources.Load<Sprite>("HUD/surrender_blue");
+		surrenderClickedBlue = Resources.Load<Sprite>("HUD/surrender_blue_clicked");
+		passBlue = Resources.Load<Sprite>("HUD/pass_blue");
+		passClickedBlue = Resources.Load<Sprite>("HUD/pass_blue_clicked");
+	}
+
+	//Start Time
+	private void StartTime()
     {
         countdownActivate = true;
         timeRemaining = TIME;
@@ -61,8 +94,6 @@ public class TimeController : MonoBehaviour {
         seconds = (int) timeRemaining % 60;
         string niceTime = string.Format("{00:00}:{1:00}", minutes, seconds);
         timerText.text = niceTime;
-        Image parent = timerText.transform.parent.GetComponent<Image>();
-        parent.color = player1Turn ? Color.blue : Color.red;
     }
 
     //Change Turn of players
@@ -70,10 +101,27 @@ public class TimeController : MonoBehaviour {
     {
         player1Turn = !player1Turn;
         player2Turn = !player2Turn;
-    }
+		//Background color
+		Image parent = timerText.transform.parent.GetComponent<Image>();
+		parent.color = player1Turn ? Color.blue : Color.red;
 
-    //Function called when player end turn
-    public void EndTurn()
+		//Surrender button
+		surrenderButton.GetComponent<Image>().sprite = player1Turn ? surrenderBlue : surrenderRed;
+		//clicked
+		SpriteState spriteStateSurrender = surrenderButton.spriteState;
+		spriteStateSurrender.pressedSprite = player1Turn ? surrenderClickedBlue : surrenderClickedRed;
+		surrenderButton.spriteState = spriteStateSurrender;
+
+		//Pass button
+		passButton.GetComponent<Image>().sprite = player1Turn ? passBlue : passRed;
+		//clicked
+		SpriteState spriteStatePass = passButton.spriteState;
+		spriteStatePass.pressedSprite = player1Turn ? passClickedBlue : passClickedRed;
+		passButton.spriteState = spriteStatePass;
+	}
+
+	//Function called when player end turn
+	public void EndTurn()
     {
         if (countdownActivate)
         {
