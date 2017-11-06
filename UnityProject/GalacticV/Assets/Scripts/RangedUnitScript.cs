@@ -48,9 +48,9 @@ public class RangedUnitScript : IUnitScript
 
     public override void Attack()
     {
-		PlayEffectAttack("Effects/laser_effect_1");
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-        Vector3 origin = GetOriginRay();
+		SoundManager.instance.PlayEffect("Effects/laser_effect_1");
+		Vector3 origin = GetOriginRay();
         Vector3 heading = gameController.DestinationUnit.GetDestinationPointRay() - origin;
         float distance = heading.magnitude;
         Vector3 direction = heading / distance;

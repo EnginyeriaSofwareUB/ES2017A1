@@ -84,8 +84,9 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-        //this.currentPosition = point;
-        //transform.position = worldPos;
+		//this.currentPosition = point;
+		//transform.position = worldPos;
+		SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
          this.isSelected = false;
         gameController.SetCancelAction(false);
         this.state = Enums.UnitState.Move;
@@ -183,6 +184,7 @@ public abstract class IUnitScript : MonoBehaviour
                     {
                     state = Enums.UnitState.Idle;
                     this.currentPosition = this.targetPosition;
+						SoundManager.instance.StopEffect();
                     }
                 }
                 break;
@@ -190,14 +192,6 @@ public abstract class IUnitScript : MonoBehaviour
                 break;
         }
     }
-	
-	public void PlayEffectAttack(string resourcePath)
-	{
-		AudioClip laserEffect = Resources.Load(resourcePath) as AudioClip;
-		if (!gameObject.GetComponent<AudioSource>())
-			gameObject.AddComponent<AudioSource>();
-		gameObject.GetComponent<AudioSource>().PlayOneShot(laserEffect);
-	}
 
     public abstract void CancelAction(string actualAction);
 

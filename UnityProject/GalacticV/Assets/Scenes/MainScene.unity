@@ -1809,11 +1809,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde656884fe873e44acb097c682611f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TIME: 5
   timerText: {fileID: 1560172}
   manaText: {fileID: 1119532943}
   surrenderButton: {fileID: 697730935}
   passButton: {fileID: 1080493332}
+  TIME: 5
 --- !u!4 &1079892035
 Transform:
   m_ObjectHideFlags: 0
