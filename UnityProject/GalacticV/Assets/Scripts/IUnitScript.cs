@@ -29,11 +29,11 @@ public abstract class IUnitScript : MonoBehaviour
     protected Point targetPosition;
 
     [SerializeField]
-    protected double lifeValue;
+    protected float lifeValue;
     protected double defenseModifier;
     protected GameController gameController;
 
-    public double Life
+    public float Life
     {
         get { return lifeValue; }
         set { this.lifeValue = value; }
@@ -53,7 +53,7 @@ public abstract class IUnitScript : MonoBehaviour
 
 	// Use this for initialization
 	internal void Start(int attackRange, int movementRange, double attackValue,
-                         double lifeValue, double defenseModifier)
+                         float lifeValue, double defenseModifier)
     {
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -210,4 +210,10 @@ public abstract class IUnitScript : MonoBehaviour
     public abstract Vector3 GetOriginRay();
 
 	public abstract Vector3 GetDestinationPointRay();
+
+    public void ReduceLife()
+    {
+        GameObject bar = gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
+        bar.GetComponent<HealthBar>().ReduceLife(this.lifeValue);
+    }
 }
