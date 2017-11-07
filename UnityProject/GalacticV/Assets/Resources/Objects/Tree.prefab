@@ -75,11 +75,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1826975622820392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6890a874b9bbbdf49862da2b414bb7f9, type: 3}
+  m_Script: {fileID: 11500000, guid: b5d858cbc4ce00e49b27a79a98b30576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   full: 1
-  halfCoverage: {fileID: 21300000, guid: e8cf5d2159b2fef4c828577a82d7fd2e, type: 3}
+  halfCoverage: {fileID: 21300000, guid: dbc77ef75efa4f3438eb6450affc55e6, type: 3}
 --- !u!212 &212087472981920034
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -112,7 +112,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 947e963cfa47a4d4f8478baf70b403e9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f90534a07b7f1534cb90b4c1458bb5f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
