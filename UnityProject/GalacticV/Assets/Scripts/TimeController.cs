@@ -7,24 +7,45 @@ using System.Collections.Generic;
 
 public class TimeController : MonoBehaviour {
 
-    public int TIME;
     private float timeRemaining; //In seconds
     private bool countdownActivate;
-    public Text timerText;
-    public Text manaText;
+    private int mana;
 
-    bool player1Turn;
+	[SerializeField]
+    private Text timerText;
+	[SerializeField]
+	private Text manaText;
+	[SerializeField]
+	private Button surrenderButton;
+	[SerializeField]
+    private Button passButton;
+	[SerializeField]
+    public int TIME;
+
+
+    //Team red sprites
+    private Sprite surrenderRed;
+	private Sprite surrenderClickedRed;
+	private Sprite passRed;
+	private Sprite passClickedRed;
+
+	//Team blue sprites
+	private Sprite surrenderBlue;
+	private Sprite surrenderClickedBlue;
+	private Sprite passBlue;
+	private Sprite passClickedBlue;
+
+	bool player1Turn;
     bool player2Turn;
     float round;
 
     // Use this for initialization
 	void Start () {
-        player1Turn = true;
-        player2Turn = false;
-        round = 1;
-        StartTime();
-    }
-	
+		Init();
+		StartTime();
+		ChangeColors();
+	}
+
 	// Update is called once per frame
 	void Update () {
         if (countdownActivate)
@@ -38,8 +59,25 @@ public class TimeController : MonoBehaviour {
         }
 	}
 
-    //Start Time
-    private void StartTime()
+	private void Init()
+	{
+		player1Turn = true;
+		player2Turn = false;
+		round = 1;
+        mana = 1;
+		surrenderRed = Resources.Load<Sprite>("HUD/surrender_red");
+		surrenderClickedRed = Resources.Load<Sprite>("HUD/surrender_red_clicked");
+		passRed = Resources.Load<Sprite>("HUD/pass_red");
+		passClickedRed = Resources.Load<Sprite>("HUD/pass_red_clicked");
+
+		surrenderBlue = Resources.Load<Sprite>("HUD/surrender_blue");
+		surrenderClickedBlue = Resources.Load<Sprite>("HUD/surrender_blue_clicked");
+		passBlue = Resources.Load<Sprite>("HUD/pass_blue");
+		passClickedBlue = Resources.Load<Sprite>("HUD/pass_blue_clicked");
+	}
+
+	//Start Time
+	private void StartTime()
     {
         countdownActivate = true;
         timeRemaining = TIME;
@@ -61,8 +99,6 @@ public class TimeController : MonoBehaviour {
         seconds = (int) timeRemaining % 60;
         string niceTime = string.Format("{00:00}:{1:00}", minutes, seconds);
         timerText.text = niceTime;
-        Image parent = timerText.transform.parent.GetComponent<Image>();
-        parent.color = player1Turn ? Color.blue : Color.red;
     }
 
     //Change Turn of players
@@ -70,16 +106,39 @@ public class TimeController : MonoBehaviour {
     {
         player1Turn = !player1Turn;
         player2Turn = !player2Turn;
-    }
+		ChangeColors();
+	}
 
-    //Function called when player end turn
-    public void EndTurn()
+	private void ChangeColors()
+	{
+		//Background color
+		Image parent = timerText.transform.parent.GetComponent<Image>();
+		parent.color = player1Turn ? Color.blue : Color.red;
+
+		//Surrender button
+		surrenderButton.GetComponent<Image>().sprite = player1Turn ? surrenderBlue : surrenderRed;
+		//clicked
+		SpriteState spriteStateSurrender = surrenderButton.spriteState;
+		spriteStateSurrender.pressedSprite = player1Turn ? surrenderClickedBlue : surrenderClickedRed;
+		surrenderButton.spriteState = spriteStateSurrender;
+
+		//Pass button
+		passButton.GetComponent<Image>().sprite = player1Turn ? passBlue : passRed;
+		//clicked
+		SpriteState spriteStatePass = passButton.spriteState;
+		spriteStatePass.pressedSprite = player1Turn ? passClickedBlue : passClickedRed;
+		passButton.spriteState = spriteStatePass;
+	}
+
+	//Function called when player end turn
+	public void EndTurn()
     {
         if (countdownActivate)
         {
             StartTime();
             ChangeTurn();
             round += 0.5f;
+            mana = Mathf.Min((int)round, 10);
             PrintMana();
         }
     }
@@ -87,7 +146,6 @@ public class TimeController : MonoBehaviour {
     // Function called to print mana
     public void PrintMana()
     {
-        int mana = Mathf.Min((int)round, 10);
         manaText.text = string.Format("{00:00}", mana) + " / 10";
     }
 
@@ -101,6 +159,14 @@ public class TimeController : MonoBehaviour {
         timerText.text = surrenderText;
         StartCoroutine(EndGame());
     }
+
+    public void UseMana(int usedMana)
+    {
+        mana -= usedMana;
+        if (mana <= 0) EndTurn();
+        else PrintMana();
+    }
+
     IEnumerator EndGame()
     {
         yield return new WaitForSecondsRealtime(1.5f);

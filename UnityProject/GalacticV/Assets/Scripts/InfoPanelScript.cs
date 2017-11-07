@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class InfoPanelScript : MonoBehaviour
 {
-
+	/*Panel objects*/
     [SerializeField]
     private Sprite[] sprites;
     [SerializeField]
@@ -19,17 +19,28 @@ public class InfoPanelScript : MonoBehaviour
     [SerializeField]
     private GameObject defenseBar;
 
+	/*Action Buttons*/
+	private Button moveButton;
+	private Button attackButton;
+	private Button defenseButton;
+	private Button habilityButton;
+
+	/*Resources*/
 	private Sprite blueBackgroundSprite;
 	private Sprite redBackgroundSprite;
 
+	/*Runtime attributes*/
 	[SerializeField]
 	private IUnitScript unit;
+	private GameController gameController;
 
 	// Use this for initialization
 	void Start()
     {
 		blueBackgroundSprite = Resources.Load<Sprite>("panel-background-blue");
 		redBackgroundSprite = Resources.Load<Sprite>("panel-background-red");
+		gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
+		InitButtons();
 		Hide ();
     }
 
@@ -79,5 +90,42 @@ public class InfoPanelScript : MonoBehaviour
 
 	private void Hide(){
 		gameObject.SetActive(false);
+	}
+
+	private void InitButtons()
+	{
+		moveButton = this.gameObject.transform.Find("Actions").Find("Move").Find("Button").GetComponent<Button>();
+		attackButton = this.gameObject.transform.Find("Actions").Find("Attack").Find("Button").GetComponent<Button>();
+		defenseButton = this.gameObject.transform.Find("Actions").Find("Defense").Find("Button").GetComponent<Button>();
+		habilityButton = this.gameObject.transform.Find("Actions").Find("Hability").Find("Button").GetComponent<Button>();
+
+		moveButton.onClick.AddListener(() => MoveButton());
+		attackButton.onClick.AddListener(() => AttackButton());
+		//defenseButton.onClick.AddListener(() => gameController.());
+		//habilityButton.onClick.AddListener(() => gameController.());
+	}
+
+	private void MoveButton()
+	{
+		gameController.Move();
+		if (!gameController.IsCancelAction())//si la accio ha estat cancelada, desseleccionem el boto
+		{
+			UnselectButton();
+		}
+	}
+
+	private void AttackButton()
+	{
+		gameController.Attack();
+		if (!gameController.IsCancelAction())//si la accio ha estat cancelada, desseleccionem el boto
+		{
+			UnselectButton();
+		}
+	}
+
+	private void UnselectButton()
+	{
+		GameObject myEventSystem = GameObject.Find("EventSystem");
+		myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
 	}
 }

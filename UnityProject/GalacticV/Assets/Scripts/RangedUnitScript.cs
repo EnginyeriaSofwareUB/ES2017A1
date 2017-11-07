@@ -42,12 +42,13 @@ public class RangedUnitScript : IUnitScript
 
     public override void AttackAction()
     {
-        gameController.SetAbility("Attack");
+		gameController.SetAbility("Attack");
         gameController.SetCancelAction(true);
     }
 
     public override void Attack()
     {
+		PlayEffectAttack("Effects/laser_effect_1");
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         Vector3 origin = GetOriginRay();
         Vector3 heading = gameController.DestinationUnit.GetDestinationPointRay() - origin;
@@ -83,6 +84,7 @@ public class RangedUnitScript : IUnitScript
                 else
                 {
                     unitToShoot.GetComponent<IUnitScript>().Life = unitToShoot.GetComponent<IUnitScript>().Life - this.GetAttack;
+                    unitToShoot.GetComponent<IUnitScript>().ReduceLife();
                     manager.Tiles[unitToShoot.GetComponent<IUnitScript>().currentPosition].SetColor(Color.white);
                     manager.Tiles[gameController.DestinationUnit.currentPosition].SetColor(Color.white);
                     gameController.DestinationUnit = null;
