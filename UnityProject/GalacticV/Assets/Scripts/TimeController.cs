@@ -172,4 +172,10 @@ public class TimeController : MonoBehaviour {
         yield return new WaitForSecondsRealtime(1.5f);
         SceneManager.LoadScene(0);
     }
+
+    // Function called when player pause the game
+    public void Pause()
+    {
+        countdownActivate = !countdownActivate;
+    }
 }
