@@ -278,7 +278,7 @@ public class MapManager : MonoBehaviour {
                 yRandom = (rows - 2) - xRandom;
                 position = new Point(xRandom, yRandom);
             }
-            GameObject coverage = Instantiate(Resources.Load("Objects/Tree")) as GameObject;
+            GameObject coverage = Instantiate(Resources.Load("Coverage_Tree")) as GameObject;
             coverage.GetComponent<CoverageScript>().Setup(position, Tiles[position].transform.position, map);
             Tiles[position].SetIsEmpty(false);
         }   
