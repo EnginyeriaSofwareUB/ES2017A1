@@ -10,6 +10,7 @@ public class TimeController : MonoBehaviour {
     private float timeRemaining; //In seconds
     private bool countdownActivate;
     private int mana;
+    private int manaBuffer;
 
 	[SerializeField]
     private Text timerText;
@@ -160,9 +161,10 @@ public class TimeController : MonoBehaviour {
         StartCoroutine(EndGame());
     }
 
-    public void UseMana(int usedMana)
+    public void UseMana()
     {
-        mana -= usedMana;
+        mana -= manaBuffer;
+        manaBuffer = 0;
         if (mana <= 0) EndTurn();
         else PrintMana();
     }
@@ -177,5 +179,26 @@ public class TimeController : MonoBehaviour {
     public void Pause()
     {
         countdownActivate = !countdownActivate;
+    }
+
+    public bool HasEnoughMana(int cost)
+    {
+        return mana >= cost;
+    }
+
+    public void PrepareMana(int manaToUse)
+    {
+        manaBuffer = manaToUse;
+
+        //Quick workaround to visualize the mana
+        mana -= manaBuffer;
+        PrintMana();
+        mana += manaBuffer;
+    }
+
+    public void ReleaseMana()
+    {
+        manaBuffer = 0;
+        PrintMana();
     }
 }

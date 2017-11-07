@@ -84,9 +84,7 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-        //this.currentPosition = point;
-        //transform.position = worldPos;
-         this.isSelected = false;
+        this.isSelected = false;
         gameController.SetCancelAction(false);
         this.state = Enums.UnitState.Move;
         this.targetPosition = point;

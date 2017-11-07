@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour {
     private IUnitScript destinationUnit;
     private string habilitySelected;
     private bool cancellAction;
+    private TimeController timeController;
     
     public IUnitScript ActualUnit
     {
@@ -38,6 +39,7 @@ public class GameController : MonoBehaviour {
         actualCell = null;
         habilitySelected = " ";
         cancellAction = false;
+        timeController = GameObject.FindObjectOfType<TimeController>();
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         manager.Init();
     }
@@ -62,15 +64,16 @@ public class GameController : MonoBehaviour {
 		}
 		if (this.actualUnit != null && !cancellAction)
 		{
+            if (!timeController.HasEnoughMana(this.actualUnit.movementCost)) return;
 			actualUnit.MoveAction();
-            TimeController timeC = GameObject.FindObjectOfType<TimeController>();
-            timeC.UseMana(this.actualUnit.movementCost);
+            timeController.PrepareMana(this.actualUnit.movementCost);
         }
 		else if (this.actualUnit != null && cancellAction)
 		{
 			actualUnit.CancelMoveAction();
-		}
-	}
+            timeController.ReleaseMana();
+        }
+    }
 
 	public void Attack()
 	{
@@ -80,15 +83,16 @@ public class GameController : MonoBehaviour {
 		}
 		if (this.actualUnit != null && !cancellAction)
 		{
-			this.actualUnit.AttackAction();
-            TimeController timeC = GameObject.FindObjectOfType<TimeController>();
-            timeC.UseMana(this.actualUnit.attackCost);
+            if (!timeController.HasEnoughMana(this.actualUnit.attackCost)) return;
+            this.actualUnit.AttackAction();
+            timeController.PrepareMana(this.actualUnit.attackCost);
         }
 		else if (this.actualUnit != null && cancellAction)
 		{
 			this.actualUnit.CancelAttack();
-		}
-	}
+            timeController.ReleaseMana();
+        }
+    }
 
 	public string GetHability()
     {
@@ -108,6 +112,11 @@ public class GameController : MonoBehaviour {
     public void SetCancelAction(bool _cancelAction)
     {
         cancellAction = _cancelAction;
+    }
+
+    public void FinishAction()
+    {
+        timeController.UseMana();
     }
 
     public void ShowPlayerStats()
