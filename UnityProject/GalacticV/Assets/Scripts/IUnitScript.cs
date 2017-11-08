@@ -179,8 +179,9 @@ public abstract class IUnitScript : MonoBehaviour
                     }
                     else
                     {
-                    state = Enums.UnitState.Idle;
-                    this.currentPosition = this.targetPosition;
+                        state = Enums.UnitState.Idle;
+                        this.currentPosition = this.targetPosition;
+                        gameController.FinishAction();
                     }
                 }
                 break;

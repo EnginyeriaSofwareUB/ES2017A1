@@ -122,6 +122,7 @@ public class RangedUnitScript : IUnitScript
         gameController.ActualUnit.SetSelected(false);
         gameController.ActualUnit = null;
         gameController.SetCancelAction(false);
+        gameController.FinishAction();
     }
 
     public override void CancelAttack()

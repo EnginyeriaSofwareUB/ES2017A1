@@ -160,13 +160,13 @@ public class MapManager : MonoBehaviour {
     { 
         List<Vector3> path;
         List<Point> visited = new List<Point>();
-        Stack<Point> stack = new Stack<Point>();
+        Queue<Point> stack = new Queue<Point>();
         Dictionary<Point, Point> parents = new Dictionary<Point, Point>();
-        stack.Push(start);
+        stack.Enqueue(start);
         Point currentPoint, newPoint;
         while(stack.Any())
         {
-            currentPoint = stack.Pop();
+            currentPoint = stack.Dequeue();
             if (currentPoint.Equals(end)) break;
             if (!visited.Contains(currentPoint))
             {
@@ -174,7 +174,7 @@ public class MapManager : MonoBehaviour {
                 newPoint = new Point(currentPoint.X + 1, currentPoint.Y);
                 if (currentRange.Contains(newPoint))
                 {
-                    stack.Push(newPoint);
+                    stack.Enqueue(newPoint);
                     if (!parents.ContainsKey(newPoint))
                         parents.Add(newPoint, currentPoint);
                 }
@@ -182,7 +182,7 @@ public class MapManager : MonoBehaviour {
                 newPoint = new Point(currentPoint.X - 1, currentPoint.Y);
                 if (currentRange.Contains(newPoint))
                 {
-                    stack.Push(newPoint);
+                    stack.Enqueue(newPoint);
                     if (!parents.ContainsKey(newPoint))
                         parents.Add(newPoint, currentPoint);
                 }
@@ -190,7 +190,7 @@ public class MapManager : MonoBehaviour {
                 newPoint = new Point(currentPoint.X, currentPoint.Y - 1);
                 if (currentRange.Contains(newPoint))
                 {
-                    stack.Push(newPoint);
+                    stack.Enqueue(newPoint);
                     if (!parents.ContainsKey(newPoint))
                         parents.Add(newPoint, currentPoint);
                 }
@@ -198,7 +198,7 @@ public class MapManager : MonoBehaviour {
                 newPoint = new Point(currentPoint.X, currentPoint.Y + 1);
                 if (currentRange.Contains(newPoint))
                 {
-                    stack.Push(newPoint);
+                    stack.Enqueue(newPoint);
                     if (!parents.ContainsKey(newPoint))
                         parents.Add(newPoint, currentPoint);
                 }
