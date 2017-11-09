@@ -45,8 +45,17 @@ public class CellScript : MonoBehaviour {
     {
         if (tag != "Border")
         {
-            previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
-            spriteRenderer.color = emptyColor;
+            switch (gameController.GetHability())
+            {
+                case "Attack":
+                    previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
+                    spriteRenderer.color = emptyColor;
+                    break;
+                default:
+                    previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
+                    spriteRenderer.color = emptyColor;
+                    break;
+            }
         }
     }
 
@@ -71,7 +80,7 @@ public class CellScript : MonoBehaviour {
 
     private void OnMouseDown()
     {
-        //Debug.Log(GridPosition.X + " " + GridPosition.Y);
+        Debug.Log(GridPosition.X + " " + GridPosition.Y);
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         if (isEmpty)
             manager.RecievedClickOnCell(GridPosition);

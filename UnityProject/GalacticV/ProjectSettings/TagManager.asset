@@ -10,6 +10,10 @@ TagManager:
   - MainController
   - Blue
   - Red
+  - Canvas
+  - PauseMenu
+  - PauseCanvas
+  - Map
   layers:
   - Default
   - TransparentFX
@@ -19,7 +23,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - MapItem
   - 
   - 
   - 

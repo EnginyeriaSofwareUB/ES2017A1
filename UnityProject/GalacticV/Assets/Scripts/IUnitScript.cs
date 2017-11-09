@@ -1,26 +1,60 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IUnitScript : MonoBehaviour {
+public abstract class IUnitScript : MonoBehaviour
+{
 
     public Point currentPosition;
     private SpriteRenderer spriteRenderer;
     public int team; //team id
 
+    public int movementCost = 1;
+    public int attackCost = 1;
+    public int defendCost = 1;
+    public int abilityCost = 1;
 
     public bool isSelected = false;
     protected int attackRange;
     protected int movementRange;
     protected double attackValue;
-    protected double lifeValue;
+    protected Enums.UnitState state = Enums.UnitState.Idle;
+
+    //movement values
+    protected const float speed = 1;
+    protected Vector3 targetTransform;
+    protected List<Vector3> vectorPath;
+    protected Point targetPosition;
+
+    [SerializeField]
+    protected float lifeValue;
     protected double defenseModifier;
     protected GameController gameController;
 
-    // Use this for initialization
-    internal void Start (int attackRange, int movementRange, double attackValue, 
-                         double lifeValue, double defenseModifier) {
+    public float Life
+    {
+        get { return lifeValue; }
+        set { this.lifeValue = value; }
+    }
+
+    public int GetAttack
+    {
+        get { return attackRange; }
+        set { this.attackRange = value; }
+    }
+
+	public double GetDefenseModifier
+	{
+		get { return defenseModifier; }
+		set { this.defenseModifier = value; }
+	}
+
+	// Use this for initialization
+	internal void Start(int attackRange, int movementRange, double attackValue,
+                         float lifeValue, double defenseModifier)
+    {
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         this.attackRange = attackRange;
@@ -48,48 +82,137 @@ public class IUnitScript : MonoBehaviour {
         isSelected = _selected;
     }
 
-    public void MoveTo(Point point, Vector3 worldPos)
+    public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-        this.currentPosition = point;
-        transform.position = worldPos;
         this.isSelected = false;
         gameController.SetCancelAction(false);
+        this.state = Enums.UnitState.Move;
+        this.targetPosition = point;
+        this.vectorPath = vectorPath;
+        this.targetTransform = this.vectorPath.First();
+        this.vectorPath.Remove(this.targetTransform);
+
+    }
+
+    public abstract void OnMouseOver();
+
+    public void OnMouseExit()
+    {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        if (gameController.GetHability() == "Attack" && gameController.ActualUnit != this)
+        {
+            manager.Tiles[this.currentPosition].SetColor(Color.white);
+        }
     }
 
     public void OnMouseDown()
     {
-        if (gameController.GetHability() != "Move")
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        switch (gameController.GetHability())
         {
-            MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-            if (gameController.ActualUnit != null && gameController.ActualUnit != this)
-            {
-                gameController.ActualCell.PaintUnselected();
-                gameController.ActualUnit.isSelected = false;
-            }
+            case "Move":
+                break;
+            case "Attack":
+                if (this.team != gameController.ActualUnit.team)
+                {
+                    gameController.DestinationUnit = this;
+                    gameController.ActualUnit.Attack();
+					gameController.HidePlayerStats();
+				}
+                break;
+            default:
+                if (gameController.ActualUnit != null && gameController.ActualUnit != this)
+                {
+                    gameController.ActualCell.PaintUnselected();
+                    gameController.ActualUnit.isSelected = false;
+                }
 
-            if (!isSelected)
-            {
-                //This is needed because the script is inside another game object
-                isSelected = true;
-                gameController.ActualUnit = this;
-                gameController.ActualCell = manager.Tiles[this.currentPosition];
-                gameController.ActualCell.PaintSelected();
-                manager.ShowRange(this.currentPosition, this.movementRange);
-            }
-            else
-            {
-                isSelected = false;
-                gameController.ActualCell.PaintUnselected();
-                gameController.ActualUnit = null;
-                gameController.ActualCell = null;
-                manager.ClearCurrentRange();
-            }
+                if (!isSelected)
+                {
+                    //This is needed because the script is inside another game object
+                    isSelected = true;
+                    gameController.ActualUnit = this;
+                    gameController.ActualCell = manager.Tiles[this.currentPosition];
+                    gameController.ActualCell.PaintSelected();
+					gameController.ShowPlayerStats();
+                }
+                else
+                {
+                    isSelected = false;
+                    gameController.ActualCell.PaintUnselected();
+                    gameController.ActualUnit = null;
+                    gameController.ActualCell = null;
+					gameController.HidePlayerStats();
+                }
+                break;
         }
     }
 
-    // Update is called once per frame
-    void Update () {
-		
+    public void MoveAction()
+    {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        gameController.SetAbility("Move");
+        manager.ShowRange(this.currentPosition, movementRange);
+        gameController.SetCancelAction(true);
+    }
+
+    public void CancelMoveAction()
+    {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        gameController.SetAbility(" ");
+        manager.ClearCurrentRange();
+        gameController.SetCancelAction(false);
+    }
+
+    private void Update()
+    {
+        switch(state)
+        {
+            case Enums.UnitState.Move:
+                float step = speed * Time.deltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, targetTransform, step);
+                if (transform.position == targetTransform) {
+                    if (this.vectorPath.Any())
+                    {
+                        targetTransform = this.vectorPath.First();
+                        this.vectorPath.Remove(targetTransform);
+                    }
+                    else
+                    {
+                        state = Enums.UnitState.Idle;
+                        this.currentPosition = this.targetPosition;
+                        gameController.FinishAction();
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+	
+	public void PlayEffectAttack(string resourcePath)
+	{
+		AudioClip laserEffect = Resources.Load(resourcePath) as AudioClip;
+		if (!gameObject.GetComponent<AudioSource>())
+			gameObject.AddComponent<AudioSource>();
+		gameObject.GetComponent<AudioSource>().PlayOneShot(laserEffect);
 	}
 
+    public abstract void CancelAction(string actualAction);
+
+    public abstract void AttackAction();
+
+    public abstract void Attack();
+
+    public abstract void CancelAttack();
+
+    public abstract Vector3 GetOriginRay();
+
+	public abstract Vector3 GetDestinationPointRay();
+
+    public void ReduceLife()
+    {
+        GameObject bar = gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
+        bar.GetComponent<HealthBar>().ReduceLife(this.lifeValue);
+    }
 }
