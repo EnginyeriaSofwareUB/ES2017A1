@@ -10,10 +10,12 @@ public class PauseController : MonoBehaviour {
     private GameObject pauseMenu;
     private GameObject map;
     private GameObject hud;
+    private TimeController timeController;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         showPause = false;
+        timeController = GameObject.FindObjectOfType<TimeController>();
         pauseMenu = GameObject.FindGameObjectWithTag("PauseMenu");
         map = GameObject.FindGameObjectWithTag("Map");
         hud = GameObject.FindGameObjectWithTag("Canvas");
@@ -24,6 +26,7 @@ public class PauseController : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            timeController.Pause();
             Pause();
         }
     }
@@ -41,6 +44,7 @@ public class PauseController : MonoBehaviour {
     // Function called when player press resume game button on pause menu
     public void ResumeGame()
     {
+        timeController.Pause();
         Pause();
     }
 

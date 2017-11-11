@@ -48,11 +48,17 @@ public class GameController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Move();
+            if (this.checkTurn())
+            {
+                Move();
+            } 
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-			Attack();
+            if (this.checkTurn())
+            {
+                Attack();
+            }
         }
     }
 
@@ -121,9 +127,11 @@ public class GameController : MonoBehaviour {
 
     public void ShowPlayerStats()
     {
-        InfoPanelScript infoPanel = GameObject.FindGameObjectWithTag("Canvas").
+        if (this.checkTurn()) {
+            InfoPanelScript infoPanel = GameObject.FindGameObjectWithTag("Canvas").
                                     transform.Find("InfoPanel").GetComponent<InfoPanelScript>();
-        infoPanel.ShowPanel(ActualUnit);
+            infoPanel.ShowPanel(ActualUnit);
+        }
     }
 
 	public void HidePlayerStats()
@@ -132,4 +140,27 @@ public class GameController : MonoBehaviour {
 			transform.Find("InfoPanel").GetComponent<InfoPanelScript>();
 		infoPanel.HidePanel();
 	}
+
+    // Return true if we can do actions with the select unit
+    public bool checkTurn() {
+        if (timeController.isPlayer1Turn())
+        {
+            if (this.actualUnit.tag == "Blue")
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        } else {
+            if (this.actualUnit.tag == "Red")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }

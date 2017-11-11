@@ -201,4 +201,16 @@ public class TimeController : MonoBehaviour {
         manaBuffer = 0;
         PrintMana();
     }
+
+    // Return true/false player 1 turn
+    public bool isPlayer1Turn()
+    {
+        return player1Turn;
+    }
+
+    // Return true/false player 2 turn
+    public bool isPlayer2Turn()
+    {
+        return player2Turn;
+    }
 }
