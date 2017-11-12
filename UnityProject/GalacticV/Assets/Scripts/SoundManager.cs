@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour {
 
 	public float lowPicthRange = .95f;
 	public float highPicthRange = 1.05f;
+	private float masterValue = 1.0f;
 
 	// Use this for initialization
 	void Awake () {//Singleton Method
@@ -34,6 +35,12 @@ public class SoundManager : MonoBehaviour {
 		PlayEffect(effect, loop);
 	}
 
+	public void PlayEffect(string resourcePath)//Per poder ser cridat des del inspector
+	{
+		AudioClip effect = Resources.Load(resourcePath) as AudioClip;
+		PlayEffect(effect);
+	}
+
 	public void StopEffect()
 	{
 		if (effectSource.isPlaying)
@@ -51,17 +58,40 @@ public class SoundManager : MonoBehaviour {
 		effectSource.Play();
 	}
 
+	public float GetMasterVolume()
+	{
+		return masterValue;
+	}
+
+	public float GetMusicVolume()
+	{
+		return this.musicSource.volume;
+	}
+
+	public float GetEffectVolume()
+	{
+		return this.effectSource.volume;
+	}
+
 	public void SetMusicVolume(float value)
 	{
-		Debug.Log(value);
 		this.musicSource.volume = value;
 	}
 
 	public void SetMasterVolume(float value)
 	{
-		Debug.Log(value);
 		this.musicSource.volume = value;
+		this.effectSource.volume = value;
+		masterValue = value;
+	}
+
+	public void SetEffectVolume(float value)
+	{
 		this.effectSource.volume = value;
 	}
 
+	public void PlayButtonEffect()
+	{
+		PlayEffect("Effects/button_effect");
+	}
 }
