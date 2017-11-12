@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour {
     private IUnitScript destinationUnit;
     private string habilitySelected;
     private bool cancellAction;
+    private TimeController timeController;
     
     public IUnitScript ActualUnit
     {
@@ -38,6 +39,7 @@ public class GameController : MonoBehaviour {
         actualCell = null;
         habilitySelected = " ";
         cancellAction = false;
+        timeController = GameObject.FindObjectOfType<TimeController>();
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         manager.Init();
     }
@@ -46,11 +48,17 @@ public class GameController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Move();
+            if (this.checkTurn())
+            {
+                Move();
+            } 
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-			Attack();
+            if (this.checkTurn())
+            {
+                Attack();
+            }
         }
     }
 
@@ -62,15 +70,16 @@ public class GameController : MonoBehaviour {
 		}
 		if (this.actualUnit != null && !cancellAction)
 		{
+            if (!timeController.HasEnoughMana(this.actualUnit.movementCost)) return;
 			actualUnit.MoveAction();
-            TimeController timeC = GameObject.FindObjectOfType<TimeController>();
-            timeC.UseMana(this.actualUnit.movementCost);
+            timeController.PrepareMana(this.actualUnit.movementCost);
         }
 		else if (this.actualUnit != null && cancellAction)
 		{
 			actualUnit.CancelMoveAction();
-		}
-	}
+            timeController.ReleaseMana();
+        }
+    }
 
 	public void Attack()
 	{
@@ -80,15 +89,16 @@ public class GameController : MonoBehaviour {
 		}
 		if (this.actualUnit != null && !cancellAction)
 		{
-			this.actualUnit.AttackAction();
-            TimeController timeC = GameObject.FindObjectOfType<TimeController>();
-            timeC.UseMana(this.actualUnit.attackCost);
+            if (!timeController.HasEnoughMana(this.actualUnit.attackCost)) return;
+            this.actualUnit.AttackAction();
+            timeController.PrepareMana(this.actualUnit.attackCost);
         }
 		else if (this.actualUnit != null && cancellAction)
 		{
 			this.actualUnit.CancelAttack();
-		}
-	}
+            timeController.ReleaseMana();
+        }
+    }
 
 	public string GetHability()
     {
@@ -110,11 +120,18 @@ public class GameController : MonoBehaviour {
         cancellAction = _cancelAction;
     }
 
+    public void FinishAction()
+    {
+		timeController.UseMana();
+    }
+
     public void ShowPlayerStats()
     {
-        InfoPanelScript infoPanel = GameObject.FindGameObjectWithTag("Canvas").
+        if (this.checkTurn()) {
+            InfoPanelScript infoPanel = GameObject.FindGameObjectWithTag("Canvas").
                                     transform.Find("InfoPanel").GetComponent<InfoPanelScript>();
-        infoPanel.ShowPanel(ActualUnit);
+            infoPanel.ShowPanel(ActualUnit);
+        }
     }
 
 	public void HidePlayerStats()
@@ -123,4 +140,27 @@ public class GameController : MonoBehaviour {
 			transform.Find("InfoPanel").GetComponent<InfoPanelScript>();
 		infoPanel.HidePanel();
 	}
+
+    // Return true if we can do actions with the select unit
+    public bool checkTurn() {
+        if (timeController.isPlayer1Turn())
+        {
+            if (this.actualUnit.tag == "Blue")
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        } else {
+            if (this.actualUnit.tag == "Red")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }

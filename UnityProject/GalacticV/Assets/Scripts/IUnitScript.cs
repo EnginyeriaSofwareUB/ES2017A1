@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,11 +30,11 @@ public abstract class IUnitScript : MonoBehaviour
     protected Point targetPosition;
 
     [SerializeField]
-    protected double lifeValue;
+    protected float lifeValue;
     protected double defenseModifier;
     protected GameController gameController;
 
-    public double Life
+    public float Life
     {
         get { return lifeValue; }
         set { this.lifeValue = value; }
@@ -53,7 +54,7 @@ public abstract class IUnitScript : MonoBehaviour
 
 	// Use this for initialization
 	internal void Start(int attackRange, int movementRange, double attackValue,
-                         double lifeValue, double defenseModifier)
+                         float lifeValue, double defenseModifier)
     {
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -84,10 +85,8 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-		//this.currentPosition = point;
-		//transform.position = worldPos;
 		SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
-         this.isSelected = false;
+        this.isSelected = false;
         gameController.SetCancelAction(false);
         this.state = Enums.UnitState.Move;
         this.targetPosition = point;
@@ -182,9 +181,10 @@ public abstract class IUnitScript : MonoBehaviour
                     }
                     else
                     {
-                    state = Enums.UnitState.Idle;
-                    this.currentPosition = this.targetPosition;
+                        state = Enums.UnitState.Idle;
+                        this.currentPosition = this.targetPosition;
 						SoundManager.instance.StopEffect();
+						gameController.FinishAction();
                     }
                 }
                 break;
@@ -204,4 +204,10 @@ public abstract class IUnitScript : MonoBehaviour
     public abstract Vector3 GetOriginRay();
 
 	public abstract Vector3 GetDestinationPointRay();
+
+    public void ReduceLife()
+    {
+        GameObject bar = gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
+        bar.GetComponent<HealthBar>().ReduceLife(this.lifeValue);
+    }
 }

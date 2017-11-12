@@ -344,6 +344,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7461a7b0cf97947fd9b9e4502fd2d07b, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &376523118 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114833312322764526, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1229509039}
+  m_Script: {fileID: 11500000, guid: cb380d16bf60b4541b4f36aaf5052e86, type: 3}
 --- !u!1 &496625715
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +522,7 @@ Prefab:
     - target: {fileID: 11400000, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d, type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1416778892}
+      objectReference: {fileID: 1298021441}
     - target: {fileID: 11400000, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d, type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetMasterVolume
@@ -796,24 +802,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 22400008, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
     type: 2}
   m_PrefabInternal: {fileID: 1333661880}
---- !u!114 &618015708 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114833312322764526, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
-    type: 2}
-  m_PrefabInternal: {fileID: 1333661880}
-  m_Script: {fileID: 11500000, guid: cb380d16bf60b4541b4f36aaf5052e86, type: 3}
 --- !u!114 &618015709 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11400000, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
     type: 2}
   m_PrefabInternal: {fileID: 1333661880}
   m_Script: {fileID: -113659843, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
---- !u!114 &678979222 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114833312322764526, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
-    type: 2}
-  m_PrefabInternal: {fileID: 1229509039}
-  m_Script: {fileID: 11500000, guid: cb380d16bf60b4541b4f36aaf5052e86, type: 3}
 --- !u!114 &678979223 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11400000, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
@@ -1452,7 +1446,7 @@ Prefab:
     - target: {fileID: 11400000, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d, type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 678979222}
+      objectReference: {fileID: 376523118}
     - target: {fileID: 11400000, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d, type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetMusicVolume
@@ -1550,6 +1544,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1293465622}
+--- !u!114 &1298021441 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114833312322764526, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
+    type: 2}
+  m_PrefabInternal: {fileID: 518470819}
+  m_Script: {fileID: 11500000, guid: cb380d16bf60b4541b4f36aaf5052e86, type: 3}
 --- !u!224 &1300376222 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22400008, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
@@ -1653,7 +1653,7 @@ Prefab:
     - target: {fileID: 11400000, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d, type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 618015708}
+      objectReference: {fileID: 1817645831}
     - target: {fileID: 11400000, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d, type: 2}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetEffectValue
@@ -1677,12 +1677,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &1416778892 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114833312322764526, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
-    type: 2}
-  m_PrefabInternal: {fileID: 518470819}
-  m_Script: {fileID: 11500000, guid: cb380d16bf60b4541b4f36aaf5052e86, type: 3}
 --- !u!114 &1416778893 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11400000, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
@@ -2235,6 +2229,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1791255836}
+--- !u!114 &1817645831 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114833312322764526, guid: b6a1cf4e3eeaf9a4ca38bf8acb910a6d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1333661880}
+  m_Script: {fileID: 11500000, guid: cb380d16bf60b4541b4f36aaf5052e86, type: 3}
 --- !u!1 &1852950364
 GameObject:
   m_ObjectHideFlags: 0

@@ -84,6 +84,7 @@ public class RangedUnitScript : IUnitScript
                 else
                 {
                     unitToShoot.GetComponent<IUnitScript>().Life = unitToShoot.GetComponent<IUnitScript>().Life - this.GetAttack;
+                    unitToShoot.GetComponent<IUnitScript>().ReduceLife();
                     manager.Tiles[unitToShoot.GetComponent<IUnitScript>().currentPosition].SetColor(Color.white);
                     manager.Tiles[gameController.DestinationUnit.currentPosition].SetColor(Color.white);
                     gameController.DestinationUnit = null;
@@ -121,6 +122,7 @@ public class RangedUnitScript : IUnitScript
         gameController.ActualUnit.SetSelected(false);
         gameController.ActualUnit = null;
         gameController.SetCancelAction(false);
+        gameController.FinishAction();
     }
 
     public override void CancelAttack()
