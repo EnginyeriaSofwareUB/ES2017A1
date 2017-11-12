@@ -5,6 +5,7 @@ using UnityEngine;
 public class QuitOnClick : MonoBehaviour {
 
 	public void Quit(){
+		SoundManager.instance.PlayButtonEffect();
         Application.Quit();
 
 	}
