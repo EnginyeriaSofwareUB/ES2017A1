@@ -19,7 +19,6 @@ public class onChangeValueSlider : MonoBehaviour {
 		{
 			this.GetComponent<Slider>().value = SoundManager.instance.GetMasterVolume();
 		}
-		Debug.Log("Awake" + this.name);
 	}
 
 	public void SetMasterVolume(Slider slider)
