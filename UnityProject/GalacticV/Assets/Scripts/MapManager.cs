@@ -219,16 +219,16 @@ public class MapManager : MonoBehaviour {
     {
         for(int i = 0; i < blueUnits.Length; ++i)
         {
-            SpawnBlueUnits();
-            SpawnRedUnits();
+            SpawnBlueUnits(i);
+            SpawnRedUnits(i);
         }
     }
 
-    public void SpawnRedUnits()
+    public void SpawnRedUnits(int i)
     {
         int xRandom = Random.Range(rows-rangeToSpawn-1, rows-2);
         int yRandom = Random.Range(columns-rangeToSpawn-1, columns-2);
-        IUnitScript newUnit = Instantiate(redUnits[0]).GetComponent<IUnitScript>();
+        IUnitScript newUnit = Instantiate(redUnits[i]).GetComponent<IUnitScript>();
         Point position = new Point(xRandom, yRandom);
         while (!Tiles[position].GetIsEmpty())
         {
@@ -241,11 +241,11 @@ public class MapManager : MonoBehaviour {
         Tiles[position].SetIsEmpty(false);
     }
 
-    public void SpawnBlueUnits()
+    public void SpawnBlueUnits(int i)
     {
         int yRandom = Random.Range(1, rangeToSpawn+1);
         int xRandom = Random.Range(1, rangeToSpawn+1);
-        IUnitScript newUnit = Instantiate(blueUnits[0]).GetComponent<IUnitScript>();
+        IUnitScript newUnit = Instantiate(blueUnits[i]).GetComponent<IUnitScript>();
         Point position = new Point(xRandom, yRandom);
         while(!Tiles[position].GetIsEmpty())
         {
