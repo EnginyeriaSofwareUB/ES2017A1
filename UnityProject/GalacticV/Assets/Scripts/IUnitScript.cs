@@ -85,7 +85,7 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-		SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
+		//SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
         this.isSelected = false;
         gameController.SetCancelAction(false);
         this.state = Enums.UnitState.Move;
@@ -183,7 +183,7 @@ public abstract class IUnitScript : MonoBehaviour
                     {
                         state = Enums.UnitState.Idle;
                         this.currentPosition = this.targetPosition;
-						SoundManager.instance.StopEffect();
+						//SoundManager.instance.StopEffect();
 						gameController.FinishAction();
                     }
                 }
@@ -204,6 +204,10 @@ public abstract class IUnitScript : MonoBehaviour
     public abstract Vector3 GetOriginRay();
 
 	public abstract Vector3 GetDestinationPointRay();
+
+    public abstract void SpecialHabilityAction();
+
+    public abstract void CancelSpecialHability();
 
     public void ReduceLife()
     {

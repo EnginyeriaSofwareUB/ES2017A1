@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,7 +50,7 @@ public class RangedUnitScript : IUnitScript
     public override void Attack()
     {
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-		SoundManager.instance.PlayEffect("Effects/laser_effect_1");
+		//SoundManager.instance.PlayEffect("Effects/laser_effect_1");
 		Vector3 origin = GetOriginRay();
         Vector3 heading = gameController.DestinationUnit.GetDestinationPointRay() - origin;
         float distance = heading.magnitude;
@@ -158,5 +159,15 @@ public class RangedUnitScript : IUnitScript
             origin = (this.transform.position + Vector3.left * 0.25f) + new Vector3(0, 0.6f, 0);
         }
         return origin;
+    }
+
+    public override void SpecialHabilityAction()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void CancelSpecialHability()
+    {
+        throw new NotImplementedException();
     }
 }

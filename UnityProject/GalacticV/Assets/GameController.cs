@@ -60,6 +60,13 @@ public class GameController : MonoBehaviour {
                 Attack();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if(this.checkTurn())
+            {
+                SpecialHability();
+            }
+        }
     }
 
 	public void Move()
@@ -96,6 +103,26 @@ public class GameController : MonoBehaviour {
 		else if (this.actualUnit != null && cancellAction)
 		{
 			this.actualUnit.CancelAttack();
+            timeController.ReleaseMana();
+        }
+    }
+
+    public void SpecialHability()
+    {
+        if(this.actualUnit !=  null & habilitySelected != "" && habilitySelected != "Special")
+        {
+            actualUnit.CancelAction(habilitySelected);
+        }
+        if (this.actualUnit != null && !cancellAction)
+        {
+            if (!timeController.HasEnoughMana(this.actualUnit.abilityCost)) return;
+            //actualUnit.MoveAction();
+            timeController.PrepareMana(this.actualUnit.abilityCost);
+        }
+        else if (this.actualUnit != null && cancellAction)
+        {
+            //cancel special action
+            //actualUnit.CancelMoveAction();
             timeController.ReleaseMana();
         }
     }
