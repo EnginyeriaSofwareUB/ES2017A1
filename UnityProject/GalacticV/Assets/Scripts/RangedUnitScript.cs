@@ -123,6 +123,7 @@ public class RangedUnitScript : IUnitScript
         gameController.ActualUnit.SetSelected(false);
         gameController.ActualUnit = null;
         gameController.SetCancelAction(false);
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         gameController.FinishAction();
     }
 

@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour {
     private CellScript actualCell;
     [SerializeField]
     private IUnitScript destinationUnit;
+    [SerializeField]
+    private Texture2D cursor;
     private string habilitySelected;
     private bool cancellAction;
     private TimeController timeController;
@@ -74,7 +76,8 @@ public class GameController : MonoBehaviour {
 		if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Move")
 		{
 			actualUnit.CancelAction(habilitySelected);
-		}
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
 		if (this.actualUnit != null && !cancellAction)
 		{
             if (!timeController.HasEnoughMana(this.actualUnit.movementCost)) return;
@@ -93,16 +96,19 @@ public class GameController : MonoBehaviour {
 		if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Attack")
 		{
 			actualUnit.CancelAction(habilitySelected);
-		}
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
 		if (this.actualUnit != null && !cancellAction)
 		{
             if (!timeController.HasEnoughMana(this.actualUnit.attackCost)) return;
+            Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
             this.actualUnit.AttackAction();
             timeController.PrepareMana(this.actualUnit.attackCost);
         }
 		else if (this.actualUnit != null && cancellAction)
 		{
-			this.actualUnit.CancelAttack();
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            this.actualUnit.CancelAttack();
             timeController.ReleaseMana();
         }
     }
@@ -112,17 +118,18 @@ public class GameController : MonoBehaviour {
         if(this.actualUnit !=  null & habilitySelected != "" && habilitySelected != "Special")
         {
             actualUnit.CancelAction(habilitySelected);
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
         if (this.actualUnit != null && !cancellAction)
         {
             if (!timeController.HasEnoughMana(this.actualUnit.abilityCost)) return;
-            //actualUnit.MoveAction();
+            actualUnit.SpecialHabilityAction();
             timeController.PrepareMana(this.actualUnit.abilityCost);
         }
         else if (this.actualUnit != null && cancellAction)
         {
             //cancel special action
-            //actualUnit.CancelMoveAction();
+            actualUnit.CancelSpecialHability();
             timeController.ReleaseMana();
         }
     }

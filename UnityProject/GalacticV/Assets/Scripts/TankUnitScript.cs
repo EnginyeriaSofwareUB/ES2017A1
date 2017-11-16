@@ -18,17 +18,32 @@ public class TankUnitScript : IUnitScript {
 
     public override void AttackAction()
     {
-        
+        gameController.SetAbility("Attack");
+        gameController.SetCancelAction(true);
     }
 
     public override void CancelAction(string actualAction)
     {
-        
+        switch(actualAction)
+        {
+            case "Move":
+                CancelMoveAction();
+                break;
+            case "Attack":
+                CancelAttack();
+                break;
+            case "Special":
+                CancelSpecialHability();
+                break;
+        }
     }
 
     public override void CancelAttack()
     {
-        
+        gameController.DestinationUnit = null;
+        gameController.SetAbility(" ");
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        gameController.SetCancelAction(false);
     }
 
     public override Vector3 GetDestinationPointRay()
@@ -70,6 +85,7 @@ public class TankUnitScript : IUnitScript {
     {
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         gameController.SetAbility("Special");
+        manager.ShowRange(this.currentPosition, 1);
         gameController.SetCancelAction(true);
     }
 
@@ -77,6 +93,7 @@ public class TankUnitScript : IUnitScript {
     {
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         gameController.SetAbility(" ");
+        manager.ClearCurrentRange();
         gameController.SetCancelAction(false);
     }
 }

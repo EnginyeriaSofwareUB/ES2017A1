@@ -110,7 +110,14 @@ public class MapManager : MonoBehaviour {
         currentRange.Remove(position);
         foreach(var point in currentRange)
         {
-            Tiles[point].SetColor(Color.cyan);
+            if(gameController.GetHability() == "Move")
+            {
+                Tiles[point].SetColor(Color.cyan);
+            }
+            else if(gameController.GetHability() == "Special")
+            {
+                Tiles[point].SetColor(Color.yellow);
+            }
         }
     }
 
@@ -140,7 +147,7 @@ public class MapManager : MonoBehaviour {
     {
         if (gameController.ActualUnit != null)
         {
-            if (currentRange.Contains(point))
+            if (currentRange.Contains(point) && gameController.GetHability() == "Move")
             {
                 gameController.ActualCell.PaintUnselected();
                 Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
@@ -151,6 +158,20 @@ public class MapManager : MonoBehaviour {
                 gameController.ActualUnit = null;
                 ClearCurrentRange();
 				gameController.HidePlayerStats();
+            }
+            else if(currentRange.Contains(point) && gameController.GetHability() == "Special")
+            {
+                gameController.ActualCell.PaintUnselected();
+                Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
+                Tiles[point].SetIsEmpty(false);
+                GameObject coverage = Instantiate(Resources.Load("Objects/Tree")) as GameObject;
+                coverage.GetComponent<CoverageScript>().Setup(point, Tiles[point].transform.position, map);
+                coverage.transform.Rotate(0, 0, 45);
+                gameController.ActualCell = null;
+                gameController.ActualUnit = null;
+                ClearCurrentRange();
+                gameController.HidePlayerStats();
+                gameController.FinishAction();
             }
         }
     }

@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4445786242378786}
   - component: {fileID: 212017620744089624}
   - component: {fileID: 95953540187538310}
-  - component: {fileID: 114332596109904454}
   - component: {fileID: 61649622969164506}
+  - component: {fileID: 114443048179475358}
   m_Layer: 0
   m_Name: UnitTankRed
   m_TagString: Red
@@ -203,24 +203,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114332596109904454
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1157869639676800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b786ba5518612e74fb7f4dbce269009e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team: 1
-  movementCost: 1
-  attackCost: 1
-  defendCost: 1
-  abilityCost: 1
-  isSelected: 0
-  lifeValue: 0
 --- !u!114 &114351538919477164
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,6 +230,24 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114443048179475358
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1157869639676800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75627bd837adbc545b5dd1aacbd88b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  movementCost: 1
+  attackCost: 1
+  defendCost: 1
+  abilityCost: 1
+  isSelected: 0
+  lifeValue: 0
 --- !u!114 &114930680265292184
 MonoBehaviour:
   m_ObjectHideFlags: 1
