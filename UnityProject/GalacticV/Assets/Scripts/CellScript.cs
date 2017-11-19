@@ -51,6 +51,11 @@ public class CellScript : MonoBehaviour {
                     previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
                     spriteRenderer.color = emptyColor;
                     break;
+                case "Ability":
+                    previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
+                    spriteRenderer.color = emptyColor;
+                    //TODO: Fer que pinti també les del voltant
+                    break;
                 default:
                     previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
                     spriteRenderer.color = emptyColor;

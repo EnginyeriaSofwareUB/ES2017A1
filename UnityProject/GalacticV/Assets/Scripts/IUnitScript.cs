@@ -120,7 +120,12 @@ public abstract class IUnitScript : MonoBehaviour
                     gameController.DestinationUnit = this;
                     gameController.ActualUnit.Attack();
 					gameController.HidePlayerStats();
-				}
+                }
+                break;
+            case "Ability":
+                gameController.destinationPoint = this.currentPosition;
+                gameController.ActualUnit.UseAbility();
+				gameController.HidePlayerStats();
                 break;
             default:
                 if (gameController.ActualUnit != null && gameController.ActualUnit != this)
@@ -201,6 +206,12 @@ public abstract class IUnitScript : MonoBehaviour
 
     public abstract void CancelAttack();
 
+    public abstract void AbilityAction();
+
+    public abstract void CancelAbility();
+
+    public abstract void UseAbility();
+
     public abstract Vector3 GetOriginRay();
 
 	public abstract Vector3 GetDestinationPointRay();
@@ -209,5 +220,10 @@ public abstract class IUnitScript : MonoBehaviour
     {
         GameObject bar = gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
         bar.GetComponent<HealthBar>().ReduceLife(this.lifeValue);
+    }
+
+    public void TakeDamage(double damageValue)
+    {
+        this.lifeValue -= (float)damageValue;
     }
 }

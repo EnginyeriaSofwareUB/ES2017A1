@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
     private CellScript actualCell;
     [SerializeField]
     private IUnitScript destinationUnit;
+    public Point destinationPoint;
     private string habilitySelected;
     private bool cancellAction;
     private TimeController timeController;
@@ -60,6 +61,13 @@ public class GameController : MonoBehaviour {
                 Attack();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (this.checkTurn())
+            {
+                Ability();
+            }
+        }
     }
 
 	public void Move()
@@ -96,6 +104,25 @@ public class GameController : MonoBehaviour {
 		else if (this.actualUnit != null && cancellAction)
 		{
 			this.actualUnit.CancelAttack();
+            timeController.ReleaseMana();
+        }
+    }
+
+    public void Ability()
+    {
+        if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Ability")
+        {
+            actualUnit.CancelAction(habilitySelected);
+        }
+        if (this.actualUnit != null && !cancellAction)
+        {
+            if (!timeController.HasEnoughMana(this.actualUnit.abilityCost)) return;
+            this.actualUnit.AbilityAction();
+            timeController.PrepareMana(this.actualUnit.abilityCost);
+        }
+        else if (this.actualUnit != null && cancellAction)
+        {
+            this.actualUnit.CancelAbility();
             timeController.ReleaseMana();
         }
     }

@@ -36,6 +36,21 @@ public class MeleeUnitScript : IUnitScript {
         
     }
 
+    public override void CancelAbility()
+    {
+
+    }
+
+    public override void AbilityAction()
+    {
+
+    }
+
+    public override void UseAbility()
+    {
+
+    }
+
     public override Vector3 GetOriginRay()
     {
         return new Vector3(0,0,0);

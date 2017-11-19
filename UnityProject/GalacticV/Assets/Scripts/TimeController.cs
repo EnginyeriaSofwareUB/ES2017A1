@@ -183,7 +183,7 @@ public class TimeController : MonoBehaviour {
 
     public bool HasEnoughMana(int cost)
     {
-        return mana >= cost;
+        return (mana - manaBuffer) >= cost;
     }
 
     public void PrepareMana(int manaToUse)

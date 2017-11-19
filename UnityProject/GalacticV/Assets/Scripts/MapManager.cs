@@ -79,7 +79,6 @@ public class MapManager : MonoBehaviour {
     public void ShowRange(Point position, int range)
     {
         Point currentPoint, newPoint;
-        //currentRange.Add(position);
         List<Point> buffer = new List<Point>();
         buffer.Add(position);
         while (buffer.Any())
@@ -282,5 +281,32 @@ public class MapManager : MonoBehaviour {
             coverage.GetComponent<CoverageScript>().Setup(position, Tiles[position].transform.position, map);
             Tiles[position].SetIsEmpty(false);
         }   
+    }
+
+    public void DamageInRange(Point point, int range, double damage)
+    {
+        foreach (var unit in units)
+        {
+            if (Distance(unit.currentPosition, point) < range + 1)
+            {
+                if (damage >= unit.Life)
+                {
+                    Tiles[unit.currentPosition].SetIsEmpty(true);
+                    Tiles[unit.currentPosition].SetColor(Color.white);
+                    Destroy(unit.transform.gameObject);
+                    gameController.DestinationUnit = null;
+                }
+                else
+                {
+                    unit.Life -= (float)damage;
+                    unit.ReduceLife();
+                    Tiles[unit.currentPosition].SetColor(Color.white);
+                    Tiles[gameController.DestinationUnit.currentPosition].SetColor(Color.white);
+                    gameController.DestinationUnit = null;
+                }
+            }
+        }
+
+        
     }
 }
