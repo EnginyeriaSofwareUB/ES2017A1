@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,13 @@ public class InfoPanelScript : MonoBehaviour
 	private Button moveButton;
 	private Button attackButton;
 	private Button defenseButton;
-	private Button habilityButton;
+	private Button abilityButton;
+
+	/*Cost Texts*/
+	private Text moveCost;
+	private Text attackCost;
+	private Text defenseCost;
+	private Text abilityCost;
 
 	/*Resources*/
 	private Sprite blueBackgroundSprite;
@@ -40,7 +47,7 @@ public class InfoPanelScript : MonoBehaviour
 		blueBackgroundSprite = Resources.Load<Sprite>("panel-background-blue");
 		redBackgroundSprite = Resources.Load<Sprite>("panel-background-red");
 		gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
-		InitButtons();
+		InitElements();
 		Hide ();
     }
 
@@ -54,6 +61,14 @@ public class InfoPanelScript : MonoBehaviour
 			{
 				SetTeamSprite(currentUnitSprite);
 			}
+
+			if (unit.GetState() == Enums.UnitState.Move)
+			{
+				moveButton.interactable = false;
+				attackButton.interactable = false;
+				defenseButton.interactable = false;
+				abilityButton.interactable = false;
+			}
 		}
 	}
 
@@ -62,6 +77,8 @@ public class InfoPanelScript : MonoBehaviour
 		this.unit = unit;
 		this.gameObject.GetComponent<Image>().sprite = unit.team == 0 ? blueBackgroundSprite : redBackgroundSprite;
 		PrintStats(unit);
+		PrintCostActions(unit);
+		CheckActions(unit);
 		Show();
 	}
 
@@ -74,9 +91,34 @@ public class InfoPanelScript : MonoBehaviour
 
 	private void PrintStats(IUnitScript unit)
     {
-		this.healthBar.GetComponent<StatusBar>().UpdateStatusBar((float) unit.Life, 8);
+		this.healthBar.GetComponent<StatusBar>().UpdateStatusBar((float) unit.Life, unit.GetMaxLifeValue);
 		this.attackBar.GetComponent<StatusBar>().UpdateStatusBar(unit.GetAttack, unit.GetAttack);
 		this.defenseBar.GetComponent<StatusBar>().UpdateStatusBar((float) unit.GetDefenseModifier, (float)unit.GetDefenseModifier);
+	}
+
+	private void PrintCostActions(IUnitScript unit)
+	{
+		List<int> costActions = unit.GetCostActions();
+		this.moveCost.text = costActions[(int)Enums.Actions.Move].ToString();
+		this.attackCost.text = costActions[(int)Enums.Actions.Attack].ToString();
+		this.defenseCost.text = costActions[(int)Enums.Actions.Defense].ToString();
+		this.abilityCost.text = costActions[(int)Enums.Actions.Ability].ToString();
+	}
+
+	private void CheckActions(IUnitScript unit)
+	{
+		int moveCost = unit.GetCostActions()[(int)Enums.Actions.Move];
+		int attackCost = unit.GetCostActions()[(int)Enums.Actions.Attack];
+		int defenseCost = unit.GetCostActions()[(int)Enums.Actions.Defense];
+		int abilityCost = unit.GetCostActions()[(int)Enums.Actions.Ability];
+
+		int mana = gameController.GetMana();
+		int manaBuffer = gameController.GetManaBuffer();
+
+		moveButton.interactable = mana >= moveCost && (mana - manaBuffer) >= moveCost;
+		attackButton.interactable = mana >= attackCost && (mana - manaBuffer) >= attackCost;
+		defenseButton.interactable = mana >= defenseCost && (mana - manaBuffer) >= defenseCost;
+		abilityButton.interactable = mana >= abilityCost && (mana - manaBuffer) >= abilityCost;
 	}
 
 	private void SetTeamSprite(Sprite sprite)
@@ -92,17 +134,30 @@ public class InfoPanelScript : MonoBehaviour
 		gameObject.SetActive(false);
 	}
 
-	private void InitButtons()
+	private void InitElements()
 	{
-		moveButton = this.gameObject.transform.Find("Actions").Find("Move").Find("Button").GetComponent<Button>();
-		attackButton = this.gameObject.transform.Find("Actions").Find("Attack").Find("Button").GetComponent<Button>();
-		defenseButton = this.gameObject.transform.Find("Actions").Find("Defense").Find("Button").GetComponent<Button>();
-		habilityButton = this.gameObject.transform.Find("Actions").Find("Hability").Find("Button").GetComponent<Button>();
+		var actions = this.gameObject.transform.Find("Actions");
+		var move = actions.Find("Move");
+		var attack = actions.Find("Attack");
+		var defense = actions.Find("Defense");
+		var ability = actions.Find("Ability");
+
+		/*Buttons*/
+		moveButton = move.Find("Button").GetComponent<Button>();
+		attackButton = attack.Find("Button").GetComponent<Button>();
+		defenseButton = defense.Find("Button").GetComponent<Button>();
+		abilityButton = ability.Find("Button").GetComponent<Button>();
 
 		moveButton.onClick.AddListener(() => MoveButton());
 		attackButton.onClick.AddListener(() => AttackButton());
 		//defenseButton.onClick.AddListener(() => gameController.());
 		//habilityButton.onClick.AddListener(() => gameController.());
+
+		/*Cost Texts*/
+		moveCost = move.Find("Cost").GetComponent<Text>();
+		attackCost = attack.Find("Cost").GetComponent<Text>();
+		defenseCost = defense.Find("Cost").GetComponent<Text>();
+		abilityCost = ability.Find("Cost").GetComponent<Text>();
 	}
 
 	private void MoveButton()

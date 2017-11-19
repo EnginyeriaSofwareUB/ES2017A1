@@ -213,4 +213,14 @@ public class TimeController : MonoBehaviour {
     {
         return player2Turn;
     }
+
+	public int GetMana()
+	{
+		return mana;
+	}
+
+	public int GetManaBuffer()
+	{
+		return manaBuffer;
+	}
 }

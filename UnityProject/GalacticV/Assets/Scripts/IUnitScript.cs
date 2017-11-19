@@ -31,6 +31,7 @@ public abstract class IUnitScript : MonoBehaviour
 
     [SerializeField]
     protected float lifeValue;
+	protected float maxLifeValue;
     protected double defenseModifier;
     protected GameController gameController;
 
@@ -39,6 +40,11 @@ public abstract class IUnitScript : MonoBehaviour
         get { return lifeValue; }
         set { this.lifeValue = value; }
     }
+
+	public float GetMaxLifeValue
+	{
+		get { return maxLifeValue; }
+	}
 
     public int GetAttack
     {
@@ -62,6 +68,7 @@ public abstract class IUnitScript : MonoBehaviour
         this.movementRange = movementRange;
         this.attackValue = attackValue;
         this.lifeValue = lifeValue;
+		this.maxLifeValue = lifeValue;
         this.defenseModifier = defenseModifier;
     }
 
@@ -193,6 +200,15 @@ public abstract class IUnitScript : MonoBehaviour
         }
     }
 
+	public List<int> GetCostActions()
+	{
+		return new List<int>() {movementCost, attackCost, defendCost, abilityCost };
+	}
+
+	public Enums.UnitState GetState()
+	{
+		return state;
+	}
     public abstract void CancelAction(string actualAction);
 
     public abstract void AttackAction();

@@ -9,6 +9,7 @@ public class RangedUnitScript : IUnitScript
 	void Start ()
     {
         base.Start(4, 5, 10, 8, 1);
+		this.abilityCost = 2;//prova
 	}
     
     public override void OnMouseOver()

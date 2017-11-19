@@ -123,7 +123,8 @@ public class GameController : MonoBehaviour {
     public void FinishAction()
     {
 		timeController.UseMana();
-    }
+		HidePlayerStats();
+	}
 
     public void ShowPlayerStats()
     {
@@ -163,4 +164,14 @@ public class GameController : MonoBehaviour {
             }
         }
     }
+
+	public int GetMana()
+	{
+		return timeController.GetMana();
+	}
+
+	public int GetManaBuffer()
+	{
+		return timeController.GetManaBuffer();
+	}
 }
