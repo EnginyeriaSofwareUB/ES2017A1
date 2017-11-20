@@ -24,11 +24,11 @@ public abstract class IUnitScript : MonoBehaviour
     protected Enums.UnitState state = Enums.UnitState.Idle;
 
     //movement values
-    protected const float speed = 1;
+    protected const float speed = 1f;
     protected Vector3 targetTransform;
     protected List<Vector3> vectorPath;
     protected Point targetPosition;
-
+    protected Transform parent;
     [SerializeField]
     protected float lifeValue;
     protected double defenseModifier;
@@ -70,6 +70,7 @@ public abstract class IUnitScript : MonoBehaviour
     {
         this.currentPosition = point;
         transform.position = worldPos;
+        this.parent = parent;
         transform.SetParent(parent);
     }
 
@@ -89,7 +90,9 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-		//SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
+        //SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
+        this.GetComponent<Animator>().SetTrigger("move");
+        this.transform.parent = parent;
         this.isSelected = false;
         gameController.SetCancelAction(false);
         this.state = Enums.UnitState.Move;
@@ -186,9 +189,10 @@ public abstract class IUnitScript : MonoBehaviour
                     else
                     {
                         state = Enums.UnitState.Idle;
+                        this.GetComponent<Animator>().SetTrigger("idle");
                         this.currentPosition = this.targetPosition;
-						//SoundManager.instance.StopEffect();
-						gameController.FinishAction();
+                        //SoundManager.instance.StopEffect();
+                        gameController.FinishAction();
                     }
                 }
                 break;
