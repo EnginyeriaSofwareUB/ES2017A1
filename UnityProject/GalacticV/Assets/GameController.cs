@@ -115,7 +115,7 @@ public class GameController : MonoBehaviour {
 
     public void SpecialHability()
     {
-        if(this.actualUnit !=  null & habilitySelected != "" && habilitySelected != "Special")
+        if(this.actualUnit !=  null & habilitySelected != " " && habilitySelected != "Special")
         {
             actualUnit.CancelAction(habilitySelected);
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);

@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
+  type: 
   movementCost: 1
   attackCost: 1
   defendCost: 1
@@ -330,8 +331,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: -232206463
+  m_SortingOrder: 50
   m_TargetDisplay: 0
 --- !u!224 &224267561370501476
 RectTransform:

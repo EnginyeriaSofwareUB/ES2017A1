@@ -159,16 +159,27 @@ public class MapManager : MonoBehaviour {
                 ClearCurrentRange();
 				gameController.HidePlayerStats();
             }
-            else if(currentRange.Contains(point) && gameController.GetHability() == "Special")
+            else if(gameController.ActualUnit.GetType() == "tank" && currentRange.Contains(point) && gameController.GetHability() == "Special")
             {
                 gameController.ActualCell.PaintUnselected();
                 Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
-                Tiles[point].SetIsEmpty(false);
-                GameObject coverage = Instantiate(Resources.Load("Objects/Tree")) as GameObject;
+                string coverageName = "";
+                if(gameController.ActualUnit.team == 0)
+                {
+                    coverageName = "Objects/CoverageBlue";
+                }
+                else if(gameController.ActualUnit.team == 1)
+                {
+                    coverageName = "Objects/CoverageRed";
+                }
+                GameObject coverage = Instantiate(Resources.Load(coverageName)) as GameObject;
                 coverage.GetComponent<CoverageScript>().Setup(point, Tiles[point].transform.position, map);
                 coverage.transform.Rotate(0, 0, 45);
+                Tiles[point].SetIsEmpty(false);
                 gameController.ActualCell = null;
                 gameController.ActualUnit = null;
+                gameController.SetAbility(" ");
+                gameController.SetCancelAction(false);
                 ClearCurrentRange();
                 gameController.HidePlayerStats();
                 gameController.FinishAction();

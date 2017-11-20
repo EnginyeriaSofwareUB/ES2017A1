@@ -8,7 +8,7 @@ public class TankUnitScript : IUnitScript {
 
     void Start()
     {
-        base.Start(2, 2, 2, 20, 2);
+        base.Start(2, 2, 2, 20, 2, "tank");
     }
 
     public override void Attack()

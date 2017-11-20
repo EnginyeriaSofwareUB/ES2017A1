@@ -11,7 +11,7 @@ public abstract class IUnitScript : MonoBehaviour
     public Point currentPosition;
     private SpriteRenderer spriteRenderer;
     public int team; //team id
-
+    public string type;
     public int movementCost = 1;
     public int attackCost = 1;
     public int defendCost = 1;
@@ -54,7 +54,7 @@ public abstract class IUnitScript : MonoBehaviour
 
 	// Use this for initialization
 	internal void Start(int attackRange, int movementRange, double attackValue,
-                         float lifeValue, double defenseModifier)
+                         float lifeValue, double defenseModifier, string type)
     {
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -63,6 +63,7 @@ public abstract class IUnitScript : MonoBehaviour
         this.attackValue = attackValue;
         this.lifeValue = lifeValue;
         this.defenseModifier = defenseModifier;
+        this.type = type;
     }
 
     public void Setup(Point point, Vector3 worldPos, Transform parent)
@@ -72,7 +73,10 @@ public abstract class IUnitScript : MonoBehaviour
         transform.SetParent(parent);
     }
 
-
+    public string GetType()
+    {
+        return this.type;
+    }
     public int GetMovementRange()
     {
         return this.movementRange;
