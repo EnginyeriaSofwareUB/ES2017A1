@@ -26,6 +26,12 @@ public class InfoPanelScript : MonoBehaviour
 	private Button defenseButton;
 	private Button abilityButton;
 
+	/*Image Buttons*/
+	private Image moveImage;
+	private Image attackImage;
+	private Image defenseImage;
+	private Image abilityImage;
+
 	/*Cost Texts*/
 	private Text moveCost;
 	private Text attackCost;
@@ -35,6 +41,11 @@ public class InfoPanelScript : MonoBehaviour
 	/*Resources*/
 	private Sprite blueBackgroundSprite;
 	private Sprite redBackgroundSprite;
+	private Sprite attackSpriteRangeUnitBlue;
+	private Sprite attackSpriteRangeUnitRed;
+	private Sprite attackSpriteTankUnit;
+	private Sprite defenseSpriteRangeUnitBlue;
+	private Sprite defenseSpriteRangeUnitRed;
 
 	/*Runtime attributes*/
 	[SerializeField]
@@ -44,9 +55,9 @@ public class InfoPanelScript : MonoBehaviour
 	// Use this for initialization
 	void Start()
     {
-		blueBackgroundSprite = Resources.Load<Sprite>("panel-background-blue");
-		redBackgroundSprite = Resources.Load<Sprite>("panel-background-red");
+		
 		gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
+		LoadResources ();
 		InitElements();
 		Hide ();
     }
@@ -77,6 +88,7 @@ public class InfoPanelScript : MonoBehaviour
 		this.unit = unit;
 		this.gameObject.GetComponent<Image>().sprite = unit.team == 0 ? blueBackgroundSprite : redBackgroundSprite;
 		PrintStats(unit);
+		UpdateResources (unit);
 		PrintCostActions(unit);
 		CheckActions(unit);
 		Show();
@@ -121,6 +133,21 @@ public class InfoPanelScript : MonoBehaviour
 		abilityButton.interactable = mana >= abilityCost && (mana - manaBuffer) >= abilityCost;
 	}
 
+	private void UpdateResources (IUnitScript unit){
+		if (unit.team == 0) {
+			defenseImage.sprite = defenseSpriteRangeUnitBlue;
+			attackImage.sprite = attackSpriteRangeUnitBlue;
+		} else {//red team
+			defenseImage.sprite = defenseSpriteRangeUnitRed;
+			attackImage.sprite = attackSpriteRangeUnitRed;
+		}
+
+		/*if (){
+			
+		}*/
+	}
+
+
 	private void SetTeamSprite(Sprite sprite)
     {
 		this.unitPreview.GetComponent<Image>().sprite = sprite;
@@ -148,6 +175,12 @@ public class InfoPanelScript : MonoBehaviour
 		defenseButton = defense.Find("Button").GetComponent<Button>();
 		abilityButton = ability.Find("Button").GetComponent<Button>();
 
+		/*Images*/
+		//moveImage = move.Find ("Image").GetComponent<Image>();
+		attackImage = attack.Find ("Image").GetComponent<Image>();
+		defenseImage = defense.Find ("Image").GetComponent<Image>();
+		//abilityImage = ability.Find ("Image").GetComponent<Image>();
+
 		moveButton.onClick.AddListener(() => MoveButton());
 		attackButton.onClick.AddListener(() => AttackButton());
 		//defenseButton.onClick.AddListener(() => gameController.());
@@ -158,6 +191,16 @@ public class InfoPanelScript : MonoBehaviour
 		attackCost = attack.Find("Cost").GetComponent<Text>();
 		defenseCost = defense.Find("Cost").GetComponent<Text>();
 		abilityCost = ability.Find("Cost").GetComponent<Text>();
+	}
+
+	private void LoadResources(){
+		blueBackgroundSprite = Resources.Load<Sprite>("panel-background-blue");
+		redBackgroundSprite = Resources.Load<Sprite>("panel-background-red");
+		attackSpriteRangeUnitBlue = Resources.Load<Sprite> ("attack_icon_ranged_blue");
+		attackSpriteRangeUnitRed = Resources.Load<Sprite> ("attack_icon_ranged_red");
+		attackSpriteTankUnit = Resources.Load<Sprite> ("attack_icon_tank");
+		defenseSpriteRangeUnitBlue = Resources.Load<Sprite> ("shield_blue_solid");
+		defenseSpriteRangeUnitRed = Resources.Load<Sprite> ("shield_red_solid");
 	}
 
 	private void MoveButton()

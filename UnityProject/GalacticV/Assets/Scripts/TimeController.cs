@@ -141,6 +141,8 @@ public class TimeController : MonoBehaviour {
             round += 0.5f;
             mana = Mathf.Min((int)round, 10);
             PrintMana();
+			GameController gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
+			gameController.HidePlayerStats ();
         }
     }
 
