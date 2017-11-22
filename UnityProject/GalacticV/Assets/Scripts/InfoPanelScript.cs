@@ -76,6 +76,13 @@ public class InfoPanelScript : MonoBehaviour
 			if (unit.GetState() == Enums.UnitState.Move)
 			{
 				moveButton.interactable = false;
+				Color color = attackImage.color;
+				color.a = 0.5f;
+				attackImage.color = color;
+
+				color = defenseImage.color;
+				color.a = 0.5f;
+				defenseImage.color = color;
 				attackButton.interactable = false;
 				defenseButton.interactable = false;
 				abilityButton.interactable = false;
@@ -142,9 +149,16 @@ public class InfoPanelScript : MonoBehaviour
 			attackImage.sprite = attackSpriteRangeUnitRed;
 		}
 
-		/*if (){
-			
-		}*/
+		if (unit.type.Equals("tank")){
+			attackImage.sprite = attackSpriteTankUnit;
+		}
+		Color color = attackImage.color;
+		color.a = 1.0f;
+		attackImage.color = color;
+
+		color = defenseImage.color;
+		color.a = 1.0f;
+		defenseImage.color = color;
 	}
 
 
@@ -184,7 +198,7 @@ public class InfoPanelScript : MonoBehaviour
 		moveButton.onClick.AddListener(() => MoveButton());
 		attackButton.onClick.AddListener(() => AttackButton());
 		//defenseButton.onClick.AddListener(() => gameController.());
-		//habilityButton.onClick.AddListener(() => gameController.());
+		abilityButton.onClick.AddListener(() => AbilityButton());
 
 		/*Cost Texts*/
 		moveCost = move.Find("Cost").GetComponent<Text>();
@@ -220,6 +234,16 @@ public class InfoPanelScript : MonoBehaviour
 			UnselectButton();
 		}
 	}
+
+	private void AbilityButton()
+	{
+		gameController.SpecialHability();
+		if (!gameController.IsCancelAction())//si la accio ha estat cancelada, desseleccionem el boto
+		{
+			UnselectButton();
+		}
+	}
+
 
 	private void UnselectButton()
 	{
