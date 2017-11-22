@@ -7,8 +7,11 @@ using UnityEngine.SceneManagement;
 public class CharacterSelection : MonoBehaviour {
 
 	private GameObject[] character;
+	private bool P1;
 	private int index;
-	string[]texts=new string[]{"B L U E","R E D"};
+	private int count=0;
+	[SerializeField] private Texture Icon3;
+	string[]texts=new string[]{"RANGED    ATTACKER","DEFENDER"};
 	string[]health=new string[]{"8","8"};
 	string[]atk=new string[]{"4","4"};
 	string[]def=new string[]{"1","1"};
@@ -17,9 +20,11 @@ public class CharacterSelection : MonoBehaviour {
 	Text vida;
 	Text attack;
 	Text defense;
+	Text player;
+	Text playerred;
 	private void Start(){
 		character=new GameObject[transform.childCount];
-
+		P1 = true;
 
 		for (int i = 0; i < transform.childCount; i++) {
 			character [i] = transform.GetChild (i).gameObject;
@@ -27,10 +32,13 @@ public class CharacterSelection : MonoBehaviour {
 			vida = GameObject.Find ("health").GetComponent<Text> ();
 			attack = GameObject.Find ("attack").GetComponent<Text> ();
 			defense = GameObject.Find ("defense").GetComponent<Text> ();
+			player = GameObject.Find ("player").GetComponent<Text> ();
+			playerred = GameObject.Find ("playerred").GetComponent<Text> ();
 			word.text = texts [index];
 			vida.text = health [index];
 			attack.text = atk [index];
 			defense.text = def [index];
+			//player.text = texts [index];
 
 		}
 
@@ -60,6 +68,8 @@ public class CharacterSelection : MonoBehaviour {
 		vida.text = health [index];
 		attack.text = atk [index];
 		defense.text = def [index];
+		//player.text = texts [index];
+
 		print (health [index]);
 		print (texts [index]);
 		print (atk [index]);
@@ -93,8 +103,30 @@ public class CharacterSelection : MonoBehaviour {
 
 	public void okbutton(){
 		SoundManager.instance.PlayButtonEffect();
-		SceneManager.LoadScene ("MainScene");
-		
+		//SceneManager.LoadScene ("MainScene");
+
+		//player.text = texts [index];
+		//print (texts [index]);
+		if (count == 0)
+		{
+			//Text player = GameObject.Find("player");
+			//Como solo hay un caracater no se mira que tipo ha seleccionado
+			player.text=texts[index];
+			print (texts [index]);
+			GameObject t = GameObject.Find("RawImage");
+			//Como solo hay un caracater no se mira que tipo ha seleccionado
+			t.GetComponent<RawImage>().texture = Icon3;
+		}
+		else if (count == 1)
+		{
+			playerred.text = texts [index];
+			print (texts [index]);
+			//Como solo hay un caracater no se mira que tipo ha seleccionado
+
+			//
+		}
+
+		count++;
 	}
 
 
