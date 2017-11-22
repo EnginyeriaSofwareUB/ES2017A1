@@ -39,7 +39,6 @@ public class PauseController : MonoBehaviour {
         pauseMenu.SetActive(showPause);
         map.SetActive(!showPause);
         hud.SetActive(!showPause);
-  
     }
 
     // Function called when player press resume game button on pause menu

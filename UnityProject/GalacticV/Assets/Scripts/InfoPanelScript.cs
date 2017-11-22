@@ -76,16 +76,11 @@ public class InfoPanelScript : MonoBehaviour
 			if (unit.GetState() == Enums.UnitState.Move)
 			{
 				moveButton.interactable = false;
-				Color color = attackImage.color;
-				color.a = 0.5f;
-				attackImage.color = color;
-
-				color = defenseImage.color;
-				color.a = 0.5f;
-				defenseImage.color = color;
 				attackButton.interactable = false;
 				defenseButton.interactable = false;
 				abilityButton.interactable = false;
+				SetAlfa(attackImage, 0.5f);
+				SetAlfa(defenseImage, 0.5f);
 			}
 		}
 	}
@@ -152,13 +147,8 @@ public class InfoPanelScript : MonoBehaviour
 		if (unit.type.Equals("tank")){
 			attackImage.sprite = attackSpriteTankUnit;
 		}
-		Color color = attackImage.color;
-		color.a = 1.0f;
-		attackImage.color = color;
-
-		color = defenseImage.color;
-		color.a = 1.0f;
-		defenseImage.color = color;
+		SetAlfa(attackImage, 1.0f);
+		SetAlfa(defenseImage, 1.0f);
 	}
 
 
@@ -244,6 +234,12 @@ public class InfoPanelScript : MonoBehaviour
 		}
 	}
 
+	private void SetAlfa(Image image, float alfa)
+	{
+		Color color = image.color;
+		color.a = 1.0f;
+		image.color = color;
+	}
 
 	private void UnselectButton()
 	{

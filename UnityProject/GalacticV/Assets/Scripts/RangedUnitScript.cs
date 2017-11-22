@@ -10,7 +10,6 @@ public class RangedUnitScript : IUnitScript
 	void Start ()
     {
 		base.Start(4, 5, 10, 8, 1, "ranged");
-		this.abilityCost = 2;//prova
 	}
     
     public override void OnMouseOver()
@@ -51,7 +50,7 @@ public class RangedUnitScript : IUnitScript
     public override void Attack()
     {
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-		//SoundManager.instance.PlayEffect("Effects/laser_effect_1");
+		SoundManager.instance.PlayEffect("Effects/laser_effect_1");
 		Vector3 origin = GetOriginRay();
         Vector3 heading = gameController.DestinationUnit.GetDestinationPointRay() - origin;
         float distance = heading.magnitude;
