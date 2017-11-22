@@ -56,8 +56,8 @@ GameObject:
   - component: {fileID: 4852625875445960}
   - component: {fileID: 212952848852389736}
   - component: {fileID: 95209149592495796}
-  - component: {fileID: 114602998565869234}
   - component: {fileID: 61515225594617726}
+  - component: {fileID: 114556837919767156}
   m_Layer: 0
   m_Name: UnitTankBlue
   m_TagString: Blue
@@ -106,7 +106,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.21963471, y: 0.7680296}
@@ -160,6 +160,25 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114556837919767156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1647316825745294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75627bd837adbc545b5dd1aacbd88b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 0
+  type: 
+  movementCost: 1
+  attackCost: 1
+  defendCost: 1
+  abilityCost: 1
+  isSelected: 0
+  lifeValue: 0
 --- !u!114 &114563924351937902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -171,24 +190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d63f7aedc6dbde468ed8871cfea6486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114602998565869234
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1647316825745294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b786ba5518612e74fb7f4dbce269009e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team: 0
-  movementCost: 1
-  attackCost: 1
-  defendCost: 1
-  abilityCost: 1
-  isSelected: 0
-  lifeValue: 0
 --- !u!114 &114633910309176420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -330,8 +331,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: -232206463
+  m_SortingOrder: 50
   m_TargetDisplay: 0
 --- !u!224 &224593702197044508
 RectTransform:

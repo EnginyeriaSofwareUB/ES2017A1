@@ -4283,6 +4283,7 @@ MonoBehaviour:
   actualUnit: {fileID: 0}
   actualCell: {fileID: 0}
   destinationUnit: {fileID: 0}
+  cursor: {fileID: 2800000, guid: 30932d7145946c842803b6bb4b589f1a, type: 3}
 --- !u!4 &1649945754
 Transform:
   m_ObjectHideFlags: 0

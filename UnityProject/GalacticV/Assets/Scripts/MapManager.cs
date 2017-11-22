@@ -110,7 +110,14 @@ public class MapManager : MonoBehaviour {
         currentRange.Remove(position);
         foreach(var point in currentRange)
         {
-            Tiles[point].SetColor(Color.cyan);
+            if(gameController.GetHability() == "Move")
+            {
+                Tiles[point].SetColor(Color.cyan);
+            }
+            else if(gameController.GetHability() == "Special")
+            {
+                Tiles[point].SetColor(Color.yellow);
+            }
         }
     }
 
@@ -140,7 +147,7 @@ public class MapManager : MonoBehaviour {
     {
         if (gameController.ActualUnit != null)
         {
-            if (currentRange.Contains(point))
+            if (currentRange.Contains(point) && gameController.GetHability() == "Move")
             {
                 gameController.ActualCell.PaintUnselected();
                 Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
@@ -151,6 +158,31 @@ public class MapManager : MonoBehaviour {
                 gameController.ActualUnit = null;
                 ClearCurrentRange();
 				gameController.HidePlayerStats();
+            }
+            else if(gameController.ActualUnit.GetType() == "tank" && currentRange.Contains(point) && gameController.GetHability() == "Special")
+            {
+                gameController.ActualCell.PaintUnselected();
+                Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
+                string coverageName = "";
+                if(gameController.ActualUnit.team == 0)
+                {
+                    coverageName = "Objects/CoverageBlue";
+                }
+                else if(gameController.ActualUnit.team == 1)
+                {
+                    coverageName = "Objects/CoverageRed";
+                }
+                GameObject coverage = Instantiate(Resources.Load(coverageName)) as GameObject;
+                coverage.GetComponent<CoverageScript>().Setup(point, Tiles[point].transform.position, map);
+                coverage.transform.Rotate(0, 0, 45);
+                Tiles[point].SetIsEmpty(false);
+                gameController.ActualCell = null;
+                gameController.ActualUnit = null;
+                gameController.SetAbility(" ");
+                gameController.SetCancelAction(false);
+                ClearCurrentRange();
+                gameController.HidePlayerStats();
+                gameController.FinishAction();
             }
         }
     }

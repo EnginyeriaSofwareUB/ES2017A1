@@ -11,7 +11,7 @@ public abstract class IUnitScript : MonoBehaviour
     public Point currentPosition;
     private SpriteRenderer spriteRenderer;
     public int team; //team id
-
+    public string type;
     public int movementCost = 1;
     public int attackCost = 1;
     public int defendCost = 1;
@@ -24,11 +24,11 @@ public abstract class IUnitScript : MonoBehaviour
     protected Enums.UnitState state = Enums.UnitState.Idle;
 
     //movement values
-    protected const float speed = 1;
+    protected const float speed = 1f;
     protected Vector3 targetTransform;
     protected List<Vector3> vectorPath;
     protected Point targetPosition;
-
+    protected Transform parent;
     [SerializeField]
     protected float lifeValue;
 	protected float maxLifeValue;
@@ -60,7 +60,7 @@ public abstract class IUnitScript : MonoBehaviour
 
 	// Use this for initialization
 	internal void Start(int attackRange, int movementRange, double attackValue,
-                         float lifeValue, double defenseModifier)
+                         float lifeValue, double defenseModifier, string type)
     {
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -70,16 +70,21 @@ public abstract class IUnitScript : MonoBehaviour
         this.lifeValue = lifeValue;
 		this.maxLifeValue = lifeValue;
         this.defenseModifier = defenseModifier;
+        this.type = type;
     }
 
     public void Setup(Point point, Vector3 worldPos, Transform parent)
     {
         this.currentPosition = point;
         transform.position = worldPos;
+        this.parent = parent;
         transform.SetParent(parent);
     }
 
-
+    public string GetType()
+    {
+        return this.type;
+    }
     public int GetMovementRange()
     {
         return this.movementRange;
@@ -92,7 +97,9 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-		SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
+        //SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
+        this.GetComponent<Animator>().SetTrigger("move");
+        this.transform.parent = parent;
         this.isSelected = false;
         gameController.SetCancelAction(false);
         this.state = Enums.UnitState.Move;
@@ -189,9 +196,10 @@ public abstract class IUnitScript : MonoBehaviour
                     else
                     {
                         state = Enums.UnitState.Idle;
+                        this.GetComponent<Animator>().SetTrigger("idle");
                         this.currentPosition = this.targetPosition;
-						SoundManager.instance.StopEffect();
-						gameController.FinishAction();
+                        //SoundManager.instance.StopEffect();
+                        gameController.FinishAction();
                     }
                 }
                 break;
@@ -220,6 +228,10 @@ public abstract class IUnitScript : MonoBehaviour
     public abstract Vector3 GetOriginRay();
 
 	public abstract Vector3 GetDestinationPointRay();
+
+    public abstract void SpecialHabilityAction();
+
+    public abstract void CancelSpecialHability();
 
     public void ReduceLife()
     {
