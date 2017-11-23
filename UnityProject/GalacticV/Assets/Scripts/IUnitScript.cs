@@ -21,6 +21,7 @@ public abstract class IUnitScript : MonoBehaviour
     protected int attackRange;
     protected int movementRange;
     protected double attackValue;
+    [SerializeField]
     protected Enums.UnitState state = Enums.UnitState.Idle;
 
     //movement values
@@ -124,44 +125,47 @@ public abstract class IUnitScript : MonoBehaviour
     public void OnMouseDown()
     {
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-        switch (gameController.GetHability())
+        if(this.state != Enums.UnitState.Defense)
         {
-            case "Move":
-                break;
-            case "Attack":
-                if (this.team != gameController.ActualUnit.team)
-                {
-                    gameController.DestinationUnit = this;
-                    gameController.ActualUnit.Attack();
-					gameController.HidePlayerStats();
-				}
-                break;
-            default:
-                if (gameController.ActualUnit != null && gameController.ActualUnit != this)
-                {
-                    gameController.ActualCell.PaintUnselected();
-                    gameController.ActualUnit.isSelected = false;
-                }
+            switch (gameController.GetHability())
+            {
+                case "Move":
+                    break;
+                case "Attack":
+                    if (this.team != gameController.ActualUnit.team)
+                    {
+                        gameController.DestinationUnit = this;
+                        gameController.ActualUnit.Attack();
+                        gameController.HidePlayerStats();
+                    }
+                    break;
+                default:
+                    if (gameController.ActualUnit != null && gameController.ActualUnit != this)
+                    {
+                        gameController.ActualCell.PaintUnselected();
+                        gameController.ActualUnit.isSelected = false;
+                    }
 
-                if (!isSelected)
-                {
-                    //This is needed because the script is inside another game object
-                    isSelected = true;
-                    gameController.ActualUnit = this;
-                    gameController.ActualCell = manager.Tiles[this.currentPosition];
-                    gameController.ActualCell.PaintSelected();
-					gameController.ShowPlayerStats();
-                }
-                else
-                {
-                    isSelected = false;
-                    gameController.ActualCell.PaintUnselected();
-                    gameController.ActualUnit = null;
-                    gameController.ActualCell = null;
-					gameController.HidePlayerStats();
-                }
-                break;
-        }
+                    if (!isSelected)
+                    {
+                        //This is needed because the script is inside another game object
+                        isSelected = true;
+                        gameController.ActualUnit = this;
+                        gameController.ActualCell = manager.Tiles[this.currentPosition];
+                        gameController.ActualCell.PaintSelected();
+                        gameController.ShowPlayerStats();
+                    }
+                    else
+                    {
+                        isSelected = false;
+                        gameController.ActualCell.PaintUnselected();
+                        gameController.ActualUnit = null;
+                        gameController.ActualCell = null;
+                        gameController.HidePlayerStats();
+                    }
+                    break;
+            }
+        } 
     }
 
     public void MoveAction()
@@ -177,6 +181,20 @@ public abstract class IUnitScript : MonoBehaviour
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         gameController.SetAbility(" ");
         manager.ClearCurrentRange();
+        gameController.SetCancelAction(false);
+    }
+
+    public void DeffenseAction()
+    {
+        this.state = Enums.UnitState.Defense;
+        string teamUnit = this.team == 0 ? "Blue" : "Red";
+        GameObject shield  = this.gameObject.transform.Find("HealthCanvas").transform.Find("Shield" + teamUnit).gameObject;
+        shield.SetActive(true);
+        gameController.SetAbility(" ");
+        gameController.ActualCell.SetColor(Color.white);
+        gameController.ActualCell = null;
+        gameController.ActualUnit.SetSelected(false);
+        gameController.ActualUnit = null;
         gameController.SetCancelAction(false);
     }
 
@@ -237,5 +255,10 @@ public abstract class IUnitScript : MonoBehaviour
     {
         GameObject bar = gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
         bar.GetComponent<HealthBar>().ReduceLife(this.lifeValue);
+    }
+
+    public void SetIdleState()
+    {
+        this.state = Enums.UnitState.Idle;
     }
 }
