@@ -62,6 +62,13 @@ public class GameController : MonoBehaviour {
                 Attack();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if(this.checkTurn())
+            {
+                Deffense();
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             if(this.checkTurn())
@@ -110,6 +117,23 @@ public class GameController : MonoBehaviour {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             this.actualUnit.CancelAttack();
             timeController.ReleaseMana();
+        }
+    }
+
+    public void Deffense()
+    {
+        if (this.actualUnit != null & habilitySelected != " " && habilitySelected != "Special")
+        {
+            actualUnit.CancelAction(habilitySelected);
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
+        if (this.actualUnit != null && !cancellAction)
+        {
+            int cost = this.actualUnit.abilityCost;
+            if (!timeController.HasEnoughMana(this.actualUnit.defendCost)) return;
+            actualUnit.DeffenseAction();
+            timeController.PrepareMana(cost);
+            FinishAction();
         }
     }
 

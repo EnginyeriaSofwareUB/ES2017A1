@@ -17,6 +17,8 @@ TagManager:
   - Coverage
   - CoverageBlue
   - CoverageRed
+  - ShieldBlue
+  - ShieldRed
   layers:
   - Default
   - TransparentFX
