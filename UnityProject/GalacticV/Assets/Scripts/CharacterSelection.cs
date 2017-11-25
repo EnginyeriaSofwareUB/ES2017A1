@@ -7,15 +7,18 @@ using UnityEngine.SceneManagement;
 public class CharacterSelection : MonoBehaviour {
 
 	private GameObject[] character;
-	private bool P1;
+	public List<IUnitScript> P1Characters;
+	public List<IUnitScript> P2Characters;
 	private int index;
-	private int count=0;
+	private int count=10;
+	private int p1añadidos=0;
+	private int p2added=6;
 	[SerializeField] private Texture Icon3;
 	string[]texts=new string[]{"RANGED    ATTACKER","DEFENDER"};
 	string[]health=new string[]{"8","8"};
 	string[]atk=new string[]{"4","4"};
 	string[]def=new string[]{"1","1"};
-
+	IUnitScript[] unit= new IUnitScript[]{new RangedUnitScript(),new TankUnitScript()};
 	Text word;
 	Text vida;
 	Text attack;
@@ -24,7 +27,7 @@ public class CharacterSelection : MonoBehaviour {
 	Text playerred;
 	private void Start(){
 		character=new GameObject[transform.childCount];
-		P1 = true;
+		//P1Characters = true;
 
 		for (int i = 0; i < transform.childCount; i++) {
 			character [i] = transform.GetChild (i).gameObject;
@@ -32,13 +35,12 @@ public class CharacterSelection : MonoBehaviour {
 			vida = GameObject.Find ("health").GetComponent<Text> ();
 			attack = GameObject.Find ("attack").GetComponent<Text> ();
 			defense = GameObject.Find ("defense").GetComponent<Text> ();
-			player = GameObject.Find ("player").GetComponent<Text> ();
-			playerred = GameObject.Find ("playerred").GetComponent<Text> ();
+
 			word.text = texts [index];
 			vida.text = health [index];
 			attack.text = atk [index];
 			defense.text = def [index];
-			//player.text = texts [index];
+
 
 		}
 
@@ -50,7 +52,7 @@ public class CharacterSelection : MonoBehaviour {
 
 		if (character [0])
 			character [0].SetActive (true);
-		
+
 	}
 
 	public void ToggleLeft(){
@@ -59,7 +61,7 @@ public class CharacterSelection : MonoBehaviour {
 
 		index--;
 
-	
+
 		if (index < 0)
 			index = character.Length - 1;
 
@@ -107,26 +109,31 @@ public class CharacterSelection : MonoBehaviour {
 
 		//player.text = texts [index];
 		//print (texts [index]);
-		if (count == 0)
+		if (count % 2 ==0)
 		{
 			//Text player = GameObject.Find("player");
-			//Como solo hay un caracater no se mira que tipo ha seleccionado
+
+			player = GameObject.Find ("player"+p1añadidos).GetComponent<Text> ();
 			player.text=texts[index];
 			print (texts [index]);
-			GameObject t = GameObject.Find("RawImage");
-			//Como solo hay un caracater no se mira que tipo ha seleccionado
-			t.GetComponent<RawImage>().texture = Icon3;
+			//GameObject t = GameObject.Find("RawImage");
+
+			//t.GetComponent<RawImage>().texture = Icon3;
+			P1Characters.Add(unit[index]);
+			p1añadidos++;
 		}
-		else if (count == 1)
+		else if (count % 2!=0)
 		{
+			playerred = GameObject.Find ("playerred"+p2added).GetComponent<Text> ();
 			playerred.text = texts [index];
 			print (texts [index]);
-			//Como solo hay un caracater no se mira que tipo ha seleccionado
 
+			P2Characters.Add(unit[index]);
+			p2added++;
 			//
 		}
 
-		count++;
+		count--;
 	}
 
 
