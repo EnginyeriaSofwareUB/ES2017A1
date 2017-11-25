@@ -107,8 +107,23 @@ public class TimeController : MonoBehaviour {
     {
         player1Turn = !player1Turn;
         player2Turn = !player2Turn;
+        CleanShields();
 		ChangeColors();
 	}
+
+    public void CleanShields()
+    {
+        string team = player1Turn ? "Blue" : "Red";
+        string tag = "Shield" + team;
+        GameObject[] shields = GameObject.FindGameObjectsWithTag(tag);
+        GameObject unitParent;
+        foreach(GameObject sh in shields)
+        {
+            unitParent = sh.transform.parent.transform.parent.gameObject;
+            sh.SetActive(false);
+            unitParent.GetComponent<IUnitScript>().SetIdleState();
+        }
+    }
 
 	private void ChangeColors()
 	{
@@ -141,6 +156,8 @@ public class TimeController : MonoBehaviour {
             round += 0.5f;
             mana = Mathf.Min((int)round, 10);
             PrintMana();
+			GameController gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
+			gameController.HidePlayerStats ();
         }
     }
 
@@ -165,6 +182,7 @@ public class TimeController : MonoBehaviour {
     {
         mana -= manaBuffer;
         manaBuffer = 0;
+        Debug.Log(mana);
         if (mana <= 0) EndTurn();
         else PrintMana();
     }
@@ -213,4 +231,14 @@ public class TimeController : MonoBehaviour {
     {
         return player2Turn;
     }
+
+	public int GetMana()
+	{
+		return mana;
+	}
+
+	public int GetManaBuffer()
+	{
+		return manaBuffer;
+	}
 }

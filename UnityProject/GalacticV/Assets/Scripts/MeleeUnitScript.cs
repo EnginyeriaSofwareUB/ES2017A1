@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class MeleeUnitScript : IUnitScript {
     // Use this for initialization
     void Start()
     {
-        base.Start(1, 5, 15, 200, 0.5);
+        base.Start(1, 5, 15, 200, 0.5, "melee");
     }
 
 
@@ -35,17 +36,7 @@ public class MeleeUnitScript : IUnitScript {
     {
         
     }
-
-    public override void CancelAbility()
-    {
-
-    }
-
-    public override void AbilityAction()
-    {
-
-    }
-
+    
     public override void UseAbility()
     {
 
@@ -59,5 +50,15 @@ public class MeleeUnitScript : IUnitScript {
     public override Vector3 GetDestinationPointRay()
     {
         return new Vector3(0, 0, 0);
+    }
+
+    public override void SpecialHabilityAction()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void CancelSpecialHability()
+    {
+        throw new NotImplementedException();
     }
 }

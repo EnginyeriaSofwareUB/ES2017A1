@@ -8,5 +8,6 @@ namespace Assets.Scripts
     public class Enums
     {
         public enum UnitState { Move, Skill, Idle, Defense}
+		public enum Actions {Move, Attack, Defense, Ability }
     }
 }

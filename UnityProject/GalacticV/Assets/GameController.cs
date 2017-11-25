@@ -12,6 +12,9 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private IUnitScript destinationUnit;
     public Point destinationPoint;
+
+    [SerializeField]
+    private Texture2D cursor;
     private string habilitySelected;
     private bool cancellAction;
     private TimeController timeController;
@@ -63,9 +66,16 @@ public class GameController : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (this.checkTurn())
+            if(this.checkTurn())
             {
-                Ability();
+                Deffense();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if(this.checkTurn())
+            {
+                SpecialHability();
             }
         }
     }
@@ -75,7 +85,8 @@ public class GameController : MonoBehaviour {
 		if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Move")
 		{
 			actualUnit.CancelAction(habilitySelected);
-		}
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
 		if (this.actualUnit != null && !cancellAction)
 		{
             if (!timeController.HasEnoughMana(this.actualUnit.movementCost)) return;
@@ -94,35 +105,57 @@ public class GameController : MonoBehaviour {
 		if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Attack")
 		{
 			actualUnit.CancelAction(habilitySelected);
-		}
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
 		if (this.actualUnit != null && !cancellAction)
 		{
             if (!timeController.HasEnoughMana(this.actualUnit.attackCost)) return;
+            Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
             this.actualUnit.AttackAction();
             timeController.PrepareMana(this.actualUnit.attackCost);
         }
 		else if (this.actualUnit != null && cancellAction)
 		{
-			this.actualUnit.CancelAttack();
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            this.actualUnit.CancelAttack();
             timeController.ReleaseMana();
         }
     }
 
-    public void Ability()
+    public void Deffense()
     {
-        if (this.actualUnit != null && habilitySelected != " " && habilitySelected != "Ability")
+        if (this.actualUnit != null & habilitySelected != " " && habilitySelected != "Special")
         {
             actualUnit.CancelAction(habilitySelected);
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
+        if (this.actualUnit != null && !cancellAction)
+        {
+            int cost = this.actualUnit.abilityCost;
+            if (!timeController.HasEnoughMana(this.actualUnit.defendCost)) return;
+            actualUnit.DeffenseAction();
+            timeController.PrepareMana(cost);
+            FinishAction();
+        }
+    }
+
+    public void SpecialHability()
+    {
+        if (this.actualUnit !=  null & habilitySelected != " " && habilitySelected != "Special")
+        {
+            actualUnit.CancelAction(habilitySelected);
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
         if (this.actualUnit != null && !cancellAction)
         {
             if (!timeController.HasEnoughMana(this.actualUnit.abilityCost)) return;
-            this.actualUnit.AbilityAction();
+            actualUnit.SpecialHabilityAction();
             timeController.PrepareMana(this.actualUnit.abilityCost);
         }
         else if (this.actualUnit != null && cancellAction)
         {
-            this.actualUnit.CancelAbility();
+            //cancel special action
+            actualUnit.CancelSpecialHability();
             timeController.ReleaseMana();
         }
     }
@@ -150,7 +183,8 @@ public class GameController : MonoBehaviour {
     public void FinishAction()
     {
 		timeController.UseMana();
-    }
+		HidePlayerStats();
+	}
 
     public void ShowPlayerStats()
     {
@@ -190,4 +224,14 @@ public class GameController : MonoBehaviour {
             }
         }
     }
+
+	public int GetMana()
+	{
+		return timeController.GetMana();
+	}
+
+	public int GetManaBuffer()
+	{
+		return timeController.GetManaBuffer();
+	}
 }
