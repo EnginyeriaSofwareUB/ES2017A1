@@ -183,6 +183,18 @@ public class MapManager : MonoBehaviour {
                 gameController.HidePlayerStats();
                 gameController.FinishAction();
             }
+            else if (gameController.ActualUnit.GetType() == "ranged" && gameController.GetHability() == "Ability")
+            {
+                gameController.destinationPoint = point;
+                gameController.ActualUnit.UseAbility();
+                gameController.HidePlayerStats();
+                gameController.ActualCell = null;
+                gameController.ActualUnit = null;
+                gameController.SetAbility(" ");
+                gameController.SetCancelAction(false);
+                gameController.HidePlayerStats();
+                gameController.FinishAction();
+            }
         }
     }
 
@@ -335,7 +347,24 @@ public class MapManager : MonoBehaviour {
                 }
             }
         }
-
-        
     }
+
+
+    public void PaintSurrounding(Point point)
+    {
+        Tiles[new Point(point.X+1, point.Y)].SetColor(Color.yellow);
+        Tiles[new Point(point.X, point.Y+1)].SetColor(Color.yellow);
+        Tiles[new Point(point.X-1, point.Y)].SetColor(Color.yellow);
+        Tiles[new Point(point.X, point.Y-1)].SetColor(Color.yellow);
+    }
+
+    public void ClearSurrounding(Point point, Color color)
+    {
+        Tiles[new Point(point.X + 1, point.Y)].SetColor(color);
+        Tiles[new Point(point.X, point.Y + 1)].SetColor(color);
+        Tiles[new Point(point.X - 1, point.Y)].SetColor(color);
+        Tiles[new Point(point.X, point.Y - 1)].SetColor(color);
+    }
+
+
 }

@@ -52,9 +52,11 @@ public class CellScript : MonoBehaviour {
                     spriteRenderer.color = emptyColor;
                     break;
                 case "Ability":
-                    previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
-                    spriteRenderer.color = emptyColor;
+                    //previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor
+                    spriteRenderer.color = Color.yellow;
                     //TODO: Fer que pinti també les del voltant
+                    MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+                    manager.PaintSurrounding(this.GridPosition);
                     break;
                 default:
                     previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;
@@ -70,6 +72,11 @@ public class CellScript : MonoBehaviour {
         if (tag != "Border" && gameController.ActualCell != this)
         {
             spriteRenderer.color = previousColor;
+        }
+        if (gameController.GetHability() == "Ability")
+        {
+            MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+            manager.ClearSurrounding(this.GridPosition, previousColor);
         }
     }
 
@@ -87,8 +94,14 @@ public class CellScript : MonoBehaviour {
     {
         Debug.Log(GridPosition.X + " " + GridPosition.Y);
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        if (gameController.GetHability() == "Ability")
+        {
+            spriteRenderer.color = previousColor;
+            manager.ClearSurrounding(this.GridPosition, previousColor);
+        }
         if (isEmpty)
             manager.RecievedClickOnCell(GridPosition);
+        
 
     }
 
