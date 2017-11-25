@@ -224,6 +224,6 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void TakeDamage(double damageValue)
     {
-        this.lifeValue -= (float)damageValue;
+        this.lifeValue -= (float)(damageValue*this.defenseModifier);
     }
 }
