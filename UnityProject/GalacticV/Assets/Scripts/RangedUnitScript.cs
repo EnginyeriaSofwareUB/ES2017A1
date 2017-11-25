@@ -12,6 +12,10 @@ public class RangedUnitScript : IUnitScript
 	void Start ()
     {
 		base.Start(4, 5, 10, 100, 1, "ranged");
+        this.movementCost = 1;
+        this.attackCost = 2;
+        this.defendCost = 1;
+        this.abilityCost = 3;
 	}
     
     public override void OnMouseOver()
