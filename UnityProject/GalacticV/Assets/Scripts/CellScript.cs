@@ -54,7 +54,6 @@ public class CellScript : MonoBehaviour {
                 case "Ability":
                     //previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor
                     spriteRenderer.color = Color.yellow;
-                    //TODO: Fer que pinti també les del voltant
                     MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
                     manager.PaintSurrounding(this.GridPosition);
                     break;

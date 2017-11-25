@@ -259,7 +259,7 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void ReduceLife()
     {
-        GameObject bar = gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
+        GameObject bar = gameObject.transform.GetChild(0).transform.GetChild(1).gameObject;
         //TODO: mirar pq peta
         if (bar.GetComponent<HealthBar>() != null) bar.GetComponent<HealthBar>().ReduceLife(this.lifeValue);
     }
