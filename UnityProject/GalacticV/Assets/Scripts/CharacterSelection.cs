@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 public class CharacterSelection : MonoBehaviour {
 
 	private GameObject[] character;
+
 	public List<IUnitScript> P1Characters;
 	public List<IUnitScript> P2Characters;
+	//public List<IUnitScript> units;
 	private int index;
 	private int count=10;
 	private int p1añadidos=0;
@@ -18,7 +20,7 @@ public class CharacterSelection : MonoBehaviour {
 	string[]health=new string[]{"8","8"};
 	string[]atk=new string[]{"4","4"};
 	string[]def=new string[]{"1","1"};
-	IUnitScript[] unit= new IUnitScript[]{new RangedUnitScript(),new TankUnitScript()};
+
 	Text word;
 	Text vida;
 	Text attack;
@@ -28,6 +30,8 @@ public class CharacterSelection : MonoBehaviour {
 	private void Start(){
 		character=new GameObject[transform.childCount];
 		//P1Characters = true;
+		//P1Characters=new List<IUnitScript>();
+		//P2Characters = new List<IUnitScript> ();
 
 		for (int i = 0; i < transform.childCount; i++) {
 			character [i] = transform.GetChild (i).gameObject;
@@ -116,10 +120,14 @@ public class CharacterSelection : MonoBehaviour {
 			player = GameObject.Find ("player"+p1añadidos).GetComponent<Text> ();
 			player.text=texts[index];
 			print (texts [index]);
+
+
+			//IUnitScript newUnit=Instantiate(character[index].GetComponent<IUnitScript>());
 			//GameObject t = GameObject.Find("RawImage");
 
 			//t.GetComponent<RawImage>().texture = Icon3;
-			P1Characters.Add(unit[index]);
+			//P1Characters.Add(newUnit);
+
 			p1añadidos++;
 		}
 		else if (count % 2!=0)
@@ -128,7 +136,7 @@ public class CharacterSelection : MonoBehaviour {
 			playerred.text = texts [index];
 			print (texts [index]);
 
-			P2Characters.Add(unit[index]);
+
 			p2added++;
 			//
 		}
@@ -136,5 +144,10 @@ public class CharacterSelection : MonoBehaviour {
 		count--;
 	}
 
+	public void playbutton(){
+		SoundManager.instance.PlayButtonEffect ();
+		SceneManager.LoadScene ("MainScene");
+
+	}
 
 }
