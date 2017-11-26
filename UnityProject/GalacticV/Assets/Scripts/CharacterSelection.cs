@@ -15,9 +15,9 @@ public class CharacterSelection : MonoBehaviour {
 	private int count=10;
 	private int p1añadidos=0;
 	private int p2added=6;
-	[SerializeField] private Texture Icon3;
-	string[]texts=new string[]{"RANGED    ATTACKER","DEFENDER"};
-	string[]health=new string[]{"8","8"};
+	//[SerializeField] private Texture Icon3;
+	//string[]texts=new string[]{"RANGED    ATTACKER","DEFENDER"};
+	//string[]health=new string[]{"8","20"};
 	string[]atk=new string[]{"4","4"};
 	string[]def=new string[]{"1","1"};
 
@@ -39,9 +39,9 @@ public class CharacterSelection : MonoBehaviour {
 			vida = GameObject.Find ("health").GetComponent<Text> ();
 			attack = GameObject.Find ("attack").GetComponent<Text> ();
 			defense = GameObject.Find ("defense").GetComponent<Text> ();
+			word.text=character[index].GetComponent<IUnitScript>().GetType();
+			vida.text=character [index].GetComponent<IUnitScript> ().Life.ToString ();
 
-			word.text = texts [index];
-			vida.text = health [index];
 			attack.text = atk [index];
 			defense.text = def [index];
 
@@ -70,16 +70,16 @@ public class CharacterSelection : MonoBehaviour {
 			index = character.Length - 1;
 
 		character [index].SetActive (true);
-		word.text = texts [index];
-		vida.text = health [index];
+		word.text=character[index].GetComponent<IUnitScript>().GetType();
+		vida.text=character [index].GetComponent<IUnitScript> ().Life.ToString ();
 		attack.text = atk [index];
 		defense.text = def [index];
 		//player.text = texts [index];
 
-		print (health [index]);
-		print (texts [index]);
-		print (atk [index]);
-		print (def [index]);
+		print(vida.text);
+		print (word.text);
+		print (attack.text);
+		print (defense.text);
 
 	}
 
@@ -95,15 +95,21 @@ public class CharacterSelection : MonoBehaviour {
 			index = 0;
 
 		character [index].SetActive (true);
-		word.text = texts [index];
-		vida.text = health [index];
+		//word.text = texts [index];
+		//vida.text = health [index];
+		word.text=character[index].GetComponent<IUnitScript>().GetType();
+		vida.text=character [index].GetComponent<IUnitScript> ().Life.ToString ();
+		//attack.text = character [index].GetComponent<IUnitScript> ().Life.ToString ();
 		attack.text = atk [index];
-		defense.text = def [index];
-		print (health [index]);
-		print (texts [index]);
-		print (atk [index]);
-		print (def [index]);
+		//defense.text = def [index];
+		defense.text=character[index].GetComponent<IUnitScript>().GetDefenseModifier.ToString();
 
+		print(vida.text);
+		print (word.text);
+		print (attack.text);
+
+		//print (def [index]);
+		print (character[index].GetComponent<IUnitScript>().GetDefenseModifier.ToString());
 
 	}
 
@@ -118,25 +124,25 @@ public class CharacterSelection : MonoBehaviour {
 			//Text player = GameObject.Find("player");
 
 			player = GameObject.Find ("player"+p1añadidos).GetComponent<Text> ();
-			player.text=texts[index];
-			print (texts [index]);
+			player.text=character[index].GetComponent<IUnitScript>().GetType();
+			print (character[index].GetComponent<IUnitScript>().GetType());
 
 
-			//IUnitScript newUnit=Instantiate(character[index].GetComponent<IUnitScript>());
+			IUnitScript blueUnit=character[index].GetComponent<IUnitScript>();
 			//GameObject t = GameObject.Find("RawImage");
 
 			//t.GetComponent<RawImage>().texture = Icon3;
-			//P1Characters.Add(newUnit);
+			P1Characters.Add(blueUnit);
 
 			p1añadidos++;
 		}
 		else if (count % 2!=0)
 		{
 			playerred = GameObject.Find ("playerred"+p2added).GetComponent<Text> ();
-			playerred.text = texts [index];
-			print (texts [index]);
-
-
+			playerred.text = character[index].GetComponent<IUnitScript>().GetType();
+			print (character[index].GetComponent<IUnitScript>().GetType());
+			IUnitScript redUnit=character[index].GetComponent<IUnitScript>();
+			P2Characters.Add (redUnit);
 			p2added++;
 			//
 		}
