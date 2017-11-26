@@ -79,7 +79,6 @@ public class MapManager : MonoBehaviour {
     public void ShowRange(Point position, int range)
     {
         Point currentPoint, newPoint;
-        //currentRange.Add(position);
         List<Point> buffer = new List<Point>();
         buffer.Add(position);
         while (buffer.Any())
@@ -181,6 +180,18 @@ public class MapManager : MonoBehaviour {
                 gameController.SetAbility(" ");
                 gameController.SetCancelAction(false);
                 ClearCurrentRange();
+                gameController.HidePlayerStats();
+                gameController.FinishAction();
+            }
+            else if (gameController.ActualUnit.GetType() == "ranged" && gameController.GetHability() == "Ability")
+            {
+                gameController.destinationPoint = point;
+                gameController.ActualUnit.UseAbility();
+                gameController.HidePlayerStats();
+                gameController.ActualCell = null;
+                gameController.ActualUnit = null;
+                gameController.SetAbility(" ");
+                gameController.SetCancelAction(false);
                 gameController.HidePlayerStats();
                 gameController.FinishAction();
             }
@@ -315,4 +326,45 @@ public class MapManager : MonoBehaviour {
             Tiles[position].SetIsEmpty(false);
         }   
     }
+
+    public void DamageInRange(Point point, int range, double damage)
+    {
+        foreach (var unit in units)
+        {
+            if (Distance(unit.currentPosition, point) < range + 1)
+            {
+                if (damage >= unit.Life)
+                {
+                    Tiles[unit.currentPosition].SetIsEmpty(true);
+                    Tiles[unit.currentPosition].SetColor(Color.white);
+                    Destroy(unit.transform.gameObject);
+                }
+                else
+                {
+                    unit.Life -= (float)damage;
+                    unit.ReduceLife();
+                    Tiles[unit.currentPosition].SetColor(Color.white);
+                }
+            }
+        }
+    }
+
+
+    public void PaintSurrounding(Point point)
+    {
+        Tiles[new Point(point.X+1, point.Y)].SetColor(Color.yellow);
+        Tiles[new Point(point.X, point.Y+1)].SetColor(Color.yellow);
+        Tiles[new Point(point.X-1, point.Y)].SetColor(Color.yellow);
+        Tiles[new Point(point.X, point.Y-1)].SetColor(Color.yellow);
+    }
+
+    public void ClearSurrounding(Point point, Color color)
+    {
+        Tiles[new Point(point.X + 1, point.Y)].SetColor(color);
+        Tiles[new Point(point.X, point.Y + 1)].SetColor(color);
+        Tiles[new Point(point.X - 1, point.Y)].SetColor(color);
+        Tiles[new Point(point.X, point.Y - 1)].SetColor(color);
+    }
+
+
 }

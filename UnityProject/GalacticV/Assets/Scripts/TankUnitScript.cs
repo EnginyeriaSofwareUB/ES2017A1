@@ -8,7 +8,11 @@ public class TankUnitScript : IUnitScript {
 
     void Start()
     {
-        base.Start(2, 2, 2, 20, 2, "tank");
+        base.Start(1, 2, 5, 200, 0.75, "tank");
+        this.movementCost = 1;
+        this.attackCost = 1;
+        this.defendCost = 1;
+        this.abilityCost = 2;
     }
 
     public override void Attack()
@@ -87,6 +91,11 @@ public class TankUnitScript : IUnitScript {
         gameController.SetAbility("Special");
         manager.ShowRange(this.currentPosition, 1);
         gameController.SetCancelAction(true);
+    }
+
+    public override void UseAbility()
+    {
+
     }
 
     public override void CancelSpecialHability()

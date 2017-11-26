@@ -98,7 +98,7 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-        SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
+        //SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
         this.GetComponent<Animator>().SetTrigger("move");
         this.transform.parent = parent;
         this.isSelected = false;
@@ -139,13 +139,17 @@ public abstract class IUnitScript : MonoBehaviour
                         gameController.HidePlayerStats();
                     }
                     break;
+                case "Ability":
+                    gameController.destinationPoint = this.currentPosition;
+                    gameController.ActualUnit.UseAbility();
+				    gameController.HidePlayerStats();
+                    break;
                 default:
                     if (gameController.ActualUnit != null && gameController.ActualUnit != this)
                     {
                         gameController.ActualCell.PaintUnselected();
                         gameController.ActualUnit.isSelected = false;
                     }
-
                     if (!isSelected)
                     {
                         //This is needed because the script is inside another game object
@@ -165,7 +169,7 @@ public abstract class IUnitScript : MonoBehaviour
                     }
                     break;
             }
-        } 
+        }
     }
 
     public void MoveAction()
@@ -216,7 +220,7 @@ public abstract class IUnitScript : MonoBehaviour
                         state = Enums.UnitState.Idle;
                         this.GetComponent<Animator>().SetTrigger("idle");
                         this.currentPosition = this.targetPosition;
-                        SoundManager.instance.StopEffect();
+                        //SoundManager.instance.StopEffect();
                         gameController.FinishAction();
                     }
                 }
@@ -243,6 +247,8 @@ public abstract class IUnitScript : MonoBehaviour
 
     public abstract void CancelAttack();
 
+    public abstract void UseAbility();
+
     public abstract Vector3 GetOriginRay();
 
 	public abstract Vector3 GetDestinationPointRay();
@@ -253,8 +259,14 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void ReduceLife()
     {
-        GameObject bar = gameObject.transform.GetChild(0).transform.GetChild(0).gameObject;
-        bar.GetComponent<HealthBar>().ReduceLife(this.lifeValue);
+        GameObject bar = gameObject.transform.GetChild(0).transform.GetChild(1).gameObject;
+        //TODO: mirar pq peta
+        if (bar.GetComponent<HealthBar>() != null) bar.GetComponent<HealthBar>().ReduceLife(this.lifeValue);
+    }
+
+    public void TakeDamage(double damageValue)
+    {
+        this.lifeValue -= (float)(damageValue*this.defenseModifier);
     }
 
     public void SetIdleState()

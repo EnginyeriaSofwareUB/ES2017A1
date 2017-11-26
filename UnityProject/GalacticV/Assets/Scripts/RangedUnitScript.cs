@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class RangedUnitScript : IUnitScript
 {
-    
+
+    private int abilityRange = 1;
+
 	// Use this for initialization
 	void Start ()
     {
-		base.Start(4, 5, 10, 8, 1, "ranged");
+		base.Start(4, 5, 10, 100, 1, "ranged");
+        this.movementCost = 1;
+        this.attackCost = 2;
+        this.defendCost = 1;
+        this.abilityCost = 3;
 	}
     
     public override void OnMouseOver()
@@ -50,7 +56,7 @@ public class RangedUnitScript : IUnitScript
     public override void Attack()
     {
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-		SoundManager.instance.PlayEffect("Effects/laser_effect_1");
+		//SoundManager.instance.PlayEffect("Effects/laser_effect_1");
 		Vector3 origin = GetOriginRay();
         Vector3 heading = gameController.DestinationUnit.GetDestinationPointRay() - origin;
         float distance = heading.magnitude;
@@ -190,13 +196,29 @@ public class RangedUnitScript : IUnitScript
         return origin;
     }
 
+
+    public override void UseAbility()
+    {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        manager.DamageInRange(gameController.destinationPoint, abilityRange, this.attackValue);
+        gameController.SetAbility(" ");
+        gameController.ActualCell.SetColor(Color.white);
+        gameController.ActualCell = null;
+        gameController.ActualUnit.SetSelected(false);
+        gameController.ActualUnit = null;
+        gameController.SetCancelAction(false);
+        gameController.FinishAction();
+    }
+
     public override void SpecialHabilityAction()
     {
-        throw new NotImplementedException();
+        gameController.SetAbility("Ability");
+        gameController.SetCancelAction(true);
     }
 
     public override void CancelSpecialHability()
     {
-        throw new NotImplementedException();
+        gameController.SetAbility(" ");
+        gameController.SetCancelAction(false);
     }
 }
