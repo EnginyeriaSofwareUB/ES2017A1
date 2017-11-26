@@ -11,6 +11,8 @@ public class TimeController : MonoBehaviour {
     private bool countdownActivate;
     private int mana;
     private int manaBuffer;
+    private float timeDelayRemaining; // Time for delay in seconds
+    private bool isDelayActivate;
 
 	[SerializeField]
     private Text timerText;
@@ -45,6 +47,8 @@ public class TimeController : MonoBehaviour {
 		Init();
 		StartTime();
 		ChangeColors();
+        this.timeDelayRemaining = 5;
+        this.isDelayActivate = false;
 	}
 
 	// Update is called once per frame
@@ -57,6 +61,16 @@ public class TimeController : MonoBehaviour {
             {
                 EndTurn();
             }
+        }
+
+        if (this.isDelayActivate)
+        {
+            this.timeDelayRemaining -= Time.deltaTime; //Decrement
+            if (this.timeRemaining <= 0)
+            {
+                this.timeDelayRemaining = 0;
+            }
+            
         }
 	}
 
@@ -241,4 +255,21 @@ public class TimeController : MonoBehaviour {
 	{
 		return manaBuffer;
 	}
+
+    // Setter for the delay countdown
+    public void SetIsDelayActivate(bool state)
+    {
+        this.isDelayActivate = state;
+    }
+
+    // Getter fot timeDelayRemaining
+    public float GetTimeDelayRemaining ()
+    {
+        return this.timeDelayRemaining;
+    }
+
+    public bool GetIsDelayActivate()
+    {
+        return this.isDelayActivate;
+    }
 }
