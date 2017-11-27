@@ -191,6 +191,7 @@ public class TimeController : MonoBehaviour {
         string surrenderText = "00:00";
         surrenderText += player1Turn ? "\n\nPlayer 1 Surrended" : "\n\nPlayer 2 Surrended";
         timerText.text = surrenderText;
+        //StartCoroutine(EndGame());
         StartCoroutine(EndGame());
     }
 
@@ -205,8 +206,16 @@ public class TimeController : MonoBehaviour {
 
     IEnumerator EndGame()
     {
-        yield return new WaitForSecondsRealtime(1.5f);
-        SceneManager.LoadScene(0);
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        yield return new WaitForSecondsRealtime(2.0f);
+        if (player1Turn)
+        {
+            manager.KillUnits("Blue");
+        }
+        else {
+            manager.KillUnits("Red");
+        }
+        //SceneManager.LoadScene(0);
     }
 
     // Function called when player pause the game

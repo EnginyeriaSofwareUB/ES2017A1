@@ -81,29 +81,60 @@ public class MapManager : MonoBehaviour {
         Point currentPoint, newPoint;
         List<Point> buffer = new List<Point>();
         buffer.Add(position);
-        while (buffer.Any())
+
+        if (gameController.GetHability() == "Move")
         {
-            currentPoint = buffer.First();
-            newPoint = new Point(currentPoint.X + 1, currentPoint.Y);
-            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
-                buffer.Add(newPoint);
+            while (buffer.Any())
+            {
+                currentPoint = buffer.First();
+                newPoint = new Point(currentPoint.X + 1, currentPoint.Y);
+                if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                    buffer.Add(newPoint);
 
-            newPoint = new Point(currentPoint.X - 1, currentPoint.Y);
-            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
-                buffer.Add(newPoint);
+                newPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+                if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                    buffer.Add(newPoint);
 
-            newPoint = new Point(currentPoint.X, currentPoint.Y - 1);
-            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
-                buffer.Add(newPoint);
+                newPoint = new Point(currentPoint.X, currentPoint.Y - 1);
+                if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                    buffer.Add(newPoint);
 
-            newPoint = new Point(currentPoint.X, currentPoint.Y + 1);
-            if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
-                buffer.Add(newPoint);
+                newPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+                if (IsValidTile(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                    buffer.Add(newPoint);
 
 
-            currentRange.Add(currentPoint);
-            buffer.Remove(currentPoint);
+                currentRange.Add(currentPoint);
+                buffer.Remove(currentPoint);
 
+            }
+        }
+        else if (gameController.GetHability() == "Attack")
+        {
+            while (buffer.Any())
+            {
+                currentPoint = buffer.First();
+                newPoint = new Point(currentPoint.X + 1, currentPoint.Y);
+                if (!currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                    buffer.Add(newPoint);
+
+                newPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+                if (!currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                    buffer.Add(newPoint);
+
+                newPoint = new Point(currentPoint.X, currentPoint.Y - 1);
+                if (!currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                    buffer.Add(newPoint);
+
+                newPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+                if (!currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                    buffer.Add(newPoint);
+
+
+                currentRange.Add(currentPoint);
+                buffer.Remove(currentPoint);
+
+            }
         }
 
         currentRange.Remove(position);
@@ -116,6 +147,10 @@ public class MapManager : MonoBehaviour {
             else if(gameController.GetHability() == "Special")
             {
                 Tiles[point].SetColor(Color.yellow);
+            }
+            else if (gameController.GetHability() == "Attack" && gameController.ActualUnit.type == "tank")
+            {
+                Tiles[point].SetColor(Color.blue);
             }
         }
     }
@@ -349,6 +384,28 @@ public class MapManager : MonoBehaviour {
         }
     }
 
+    public void DamageInRangeForTank(Point point, int range, double damage)
+    {
+        foreach (var unit in units)
+        {
+            if (Distance(unit.currentPosition, point) < range + 1 && unit.team != gameController.ActualUnit.team)
+            {
+                if (damage >= unit.Life)
+                {
+                    Tiles[unit.currentPosition].SetIsEmpty(true);
+                    Tiles[unit.currentPosition].SetColor(Color.white);
+                    Destroy(unit.transform.gameObject);
+                }
+                else
+                {
+                    unit.Life -= (float)damage;
+                    unit.ReduceLife();
+                    Tiles[unit.currentPosition].SetColor(Color.white);
+                }
+            }
+        }
+    }
+
 
     public void PaintSurrounding(Point point)
     {
@@ -364,6 +421,24 @@ public class MapManager : MonoBehaviour {
         Tiles[new Point(point.X, point.Y + 1)].SetColor(color);
         Tiles[new Point(point.X - 1, point.Y)].SetColor(color);
         Tiles[new Point(point.X, point.Y - 1)].SetColor(color);
+    }
+
+    public void KillUnits(string color)
+    {
+        switch (color) {
+            case "Blue":
+                foreach (var player in GameObject.FindGameObjectsWithTag("Blue")) {
+                    Destroy(player.transform.gameObject);
+                }
+                break;
+            case "Red":
+                foreach (var player in GameObject.FindGameObjectsWithTag("Red")) {
+                    Destroy(player.transform.gameObject);
+                }
+                break;
+            case "Default":
+                break;
+        }
     }
 
 

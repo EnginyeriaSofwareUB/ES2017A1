@@ -132,9 +132,14 @@ public abstract class IUnitScript : MonoBehaviour
                 case "Move":
                     break;
                 case "Attack":
-                    if (this.team != gameController.ActualUnit.team)
+                    if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "ranged")
                     {
                         gameController.DestinationUnit = this;
+                        gameController.ActualUnit.Attack();
+                        gameController.HidePlayerStats();
+                    } else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "tank")
+                    {
+                        gameController.destinationPoint = this.currentPosition;
                         gameController.ActualUnit.Attack();
                         gameController.HidePlayerStats();
                     }
