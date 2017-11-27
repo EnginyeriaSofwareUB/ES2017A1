@@ -27,9 +27,10 @@ public class CharacterSelection : MonoBehaviour {
 	Text defense;
 	Text player;
 	Text playerred;
+	GameObject buttonplay;
 	private void Start(){
 		character=new GameObject[transform.childCount];
-		//P1Characters = true;
+
 		//P1Characters=new List<IUnitScript>();
 		//P2Characters = new List<IUnitScript> ();
 
@@ -41,7 +42,7 @@ public class CharacterSelection : MonoBehaviour {
 			defense = GameObject.Find ("defense").GetComponent<Text> ();
 			word.text=character[index].GetComponent<IUnitScript>().GetType();
 			vida.text=character [index].GetComponent<IUnitScript> ().Life.ToString ();
-
+			buttonplay = GameObject.Find ("ButtonPlay");
 			attack.text = atk [index];
 			defense.text = def [index];
 
@@ -49,7 +50,9 @@ public class CharacterSelection : MonoBehaviour {
 		}
 
 
+		//buttonplay.SetActive (false);
 
+			
 		foreach (GameObject go in character) {
 			go.SetActive (false);
 		}
@@ -101,15 +104,15 @@ public class CharacterSelection : MonoBehaviour {
 		vida.text=character [index].GetComponent<IUnitScript> ().Life.ToString ();
 		//attack.text = character [index].GetComponent<IUnitScript> ().Life.ToString ();
 		attack.text = atk [index];
-		//defense.text = def [index];
-		defense.text=character[index].GetComponent<IUnitScript>().GetDefenseModifier.ToString();
+		defense.text = def [index];
+		//defense.text=character[index].GetComponent<IUnitScript>().GetDefenseModifier.ToString();
 
 		print(vida.text);
 		print (word.text);
 		print (attack.text);
 
-		//print (def [index]);
-		print (character[index].GetComponent<IUnitScript>().GetDefenseModifier.ToString());
+		print (def [index]);
+		//print (character[index].GetComponent<IUnitScript>().GetDefenseModifier.ToString());
 
 	}
 
@@ -148,9 +151,17 @@ public class CharacterSelection : MonoBehaviour {
 		}
 
 		count--;
+
+		//show play button when player selection is complete
+		/*
+		if (count == 0) {
+			buttonplay.SetActive (true);
+		}
+		*/
 	}
 
 	public void playbutton(){
+		
 		SoundManager.instance.PlayButtonEffect ();
 		SceneManager.LoadScene ("MainScene");
 
