@@ -193,6 +193,7 @@ public abstract class IUnitScript : MonoBehaviour
         this.state = Enums.UnitState.Defense;
         string teamUnit = this.team == 0 ? "Blue" : "Red";
         GameObject shield  = this.gameObject.transform.Find("HealthCanvas").transform.Find("Shield" + teamUnit).gameObject;
+        this.defenseModifier /= 2;
         shield.SetActive(true);
         gameController.SetAbility(" ");
         gameController.ActualCell.SetColor(Color.white);

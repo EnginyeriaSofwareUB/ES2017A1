@@ -131,11 +131,13 @@ public class TimeController : MonoBehaviour {
         string tag = "Shield" + team;
         GameObject[] shields = GameObject.FindGameObjectsWithTag(tag);
         GameObject unitParent;
-        foreach(GameObject sh in shields)
+        foreach (GameObject sh in shields)
         {
             unitParent = sh.transform.parent.transform.parent.gameObject;
             sh.SetActive(false);
             unitParent.GetComponent<IUnitScript>().SetIdleState();
+            double deff = unitParent.GetComponent<IUnitScript>().GetDefenseModifier;
+            unitParent.GetComponent<IUnitScript>().GetDefenseModifier = deff * 2;
         }
     }
 

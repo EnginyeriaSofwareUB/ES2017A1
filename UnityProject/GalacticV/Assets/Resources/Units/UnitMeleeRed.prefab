@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 212567606906264368}
   - component: {fileID: 95051462997529070}
   - component: {fileID: 61287775663400816}
-  - component: {fileID: 114477263806242438}
+  - component: {fileID: 114371665268558074}
   m_Layer: 0
   m_Name: UnitMeleeRed
   m_TagString: Red
@@ -202,6 +202,26 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114371665268558074
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1406179191275762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a179997d9ffc1f498396b48090faf42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 1
+  type: 
+  movementCost: 1
+  attackCost: 1
+  defendCost: 1
+  abilityCost: 1
+  isSelected: 0
+  state: 2
+  lifeValue: 0
 --- !u!114 &114451646334484084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -229,26 +249,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114477263806242438
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1406179191275762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a179997d9ffc1f498396b48090faf42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team: 1
-  type: 
-  movementCost: 1
-  attackCost: 1
-  defendCost: 1
-  abilityCost: 1
-  isSelected: 0
-  state: 2
-  lifeValue: 0
 --- !u!114 &114577013906103812
 MonoBehaviour:
   m_ObjectHideFlags: 1
