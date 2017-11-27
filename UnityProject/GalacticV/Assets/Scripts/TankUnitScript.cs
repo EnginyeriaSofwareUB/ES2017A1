@@ -17,12 +17,23 @@ public class TankUnitScript : IUnitScript {
 
     public override void Attack()
     {
-        
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        manager.DamageInRangeForTank(gameController.destinationPoint, attackRange, this.attackValue);
+        gameController.SetAbility(" ");
+        gameController.ActualCell.SetColor(Color.white);
+        gameController.ActualCell = null;
+        gameController.ActualUnit.SetSelected(false);
+        gameController.ActualUnit = null;
+        gameController.SetCancelAction(false);
+        manager.ClearCurrentRange();
+        gameController.FinishAction();
     }
 
     public override void AttackAction()
     {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         gameController.SetAbility("Attack");
+        manager.ShowRange(this.currentPosition, attackRange);
         gameController.SetCancelAction(true);
     }
 
@@ -44,8 +55,10 @@ public class TankUnitScript : IUnitScript {
 
     public override void CancelAttack()
     {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         gameController.DestinationUnit = null;
         gameController.SetAbility(" ");
+        manager.ClearCurrentRange();
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         gameController.SetCancelAction(false);
     }
