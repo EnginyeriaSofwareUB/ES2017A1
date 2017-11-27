@@ -131,7 +131,7 @@ public class GameController : MonoBehaviour {
         }
         if (this.actualUnit != null && !cancellAction)
         {
-            int cost = this.actualUnit.abilityCost;
+            int cost = this.actualUnit.defendCost;
             if (!timeController.HasEnoughMana(this.actualUnit.defendCost)) return;
             actualUnit.DeffenseAction();
             timeController.PrepareMana(cost);
