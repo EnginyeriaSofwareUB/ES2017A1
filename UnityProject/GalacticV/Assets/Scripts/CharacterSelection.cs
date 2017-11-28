@@ -18,8 +18,8 @@ public class CharacterSelection : MonoBehaviour {
 	//[SerializeField] private Texture Icon3;
 	//string[]texts=new string[]{"RANGED    ATTACKER","DEFENDER"};
 	//string[]health=new string[]{"8","20"};
-	string[]atk=new string[]{"4","4"};
-	string[]def=new string[]{"1","1"};
+	string[]atk=new string[]{"4","4", "4"};
+	string[]def=new string[]{"1","1", "1"};
 
 	Text word;
 	Text vida;
