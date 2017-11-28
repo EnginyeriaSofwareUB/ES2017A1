@@ -8,17 +8,32 @@ public class TankUnitScript : IUnitScript {
 
     void Start()
     {
-        base.Start(2, 2, 2, 20, 2, "tank");
+        base.Start(1, 2, 5, 200, 0.75, "tank");
+        this.movementCost = 1;
+        this.attackCost = 1;
+        this.defendCost = 1;
+        this.abilityCost = 2;
     }
 
     public override void Attack()
     {
-        
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        manager.DamageInRangeForTank(gameController.destinationPoint, attackRange, this.attackValue);
+        gameController.SetAbility(" ");
+        gameController.ActualCell.SetColor(Color.white);
+        gameController.ActualCell = null;
+        gameController.ActualUnit.SetSelected(false);
+        gameController.ActualUnit = null;
+        gameController.SetCancelAction(false);
+        manager.ClearCurrentRange();
+        gameController.FinishAction();
     }
 
     public override void AttackAction()
     {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         gameController.SetAbility("Attack");
+        manager.ShowRange(this.currentPosition, attackRange);
         gameController.SetCancelAction(true);
     }
 
@@ -40,8 +55,10 @@ public class TankUnitScript : IUnitScript {
 
     public override void CancelAttack()
     {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         gameController.DestinationUnit = null;
         gameController.SetAbility(" ");
+        manager.ClearCurrentRange();
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         gameController.SetCancelAction(false);
     }
@@ -87,6 +104,11 @@ public class TankUnitScript : IUnitScript {
         gameController.SetAbility("Special");
         manager.ShowRange(this.currentPosition, 1);
         gameController.SetCancelAction(true);
+    }
+
+    public override void UseAbility()
+    {
+
     }
 
     public override void CancelSpecialHability()

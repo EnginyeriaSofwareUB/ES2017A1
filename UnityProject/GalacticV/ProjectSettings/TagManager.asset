@@ -17,6 +17,13 @@ TagManager:
   - Coverage
   - CoverageBlue
   - CoverageRed
+  - ShieldBlue
+  - ShieldRed
+  - FinishMenu
+  - SummaryText
+  - PauseButton
+  - TextBlue
+  - TextRed
   layers:
   - Default
   - TransparentFX

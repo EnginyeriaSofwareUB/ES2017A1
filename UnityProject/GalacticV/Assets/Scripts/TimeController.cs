@@ -11,6 +11,8 @@ public class TimeController : MonoBehaviour {
     private bool countdownActivate;
     private int mana;
     private int manaBuffer;
+    private float timeDelayRemaining; // Time for delay in seconds
+    private bool isDelayActivate;
 
 	[SerializeField]
     private Text timerText;
@@ -45,6 +47,8 @@ public class TimeController : MonoBehaviour {
 		Init();
 		StartTime();
 		ChangeColors();
+        this.timeDelayRemaining = 5;
+        this.isDelayActivate = false;
 	}
 
 	// Update is called once per frame
@@ -57,6 +61,16 @@ public class TimeController : MonoBehaviour {
             {
                 EndTurn();
             }
+        }
+
+        if (this.isDelayActivate)
+        {
+            this.timeDelayRemaining -= Time.deltaTime; //Decrement
+            if (this.timeRemaining <= 0)
+            {
+                this.timeDelayRemaining = 0;
+            }
+            
         }
 	}
 
@@ -107,8 +121,25 @@ public class TimeController : MonoBehaviour {
     {
         player1Turn = !player1Turn;
         player2Turn = !player2Turn;
+        CleanShields();
 		ChangeColors();
 	}
+
+    public void CleanShields()
+    {
+        string team = player1Turn ? "Blue" : "Red";
+        string tag = "Shield" + team;
+        GameObject[] shields = GameObject.FindGameObjectsWithTag(tag);
+        GameObject unitParent;
+        foreach (GameObject sh in shields)
+        {
+            unitParent = sh.transform.parent.transform.parent.gameObject;
+            sh.SetActive(false);
+            unitParent.GetComponent<IUnitScript>().SetIdleState();
+            double deff = unitParent.GetComponent<IUnitScript>().GetDefenseModifier;
+            unitParent.GetComponent<IUnitScript>().GetDefenseModifier = deff * 2;
+        }
+    }
 
 	private void ChangeColors()
 	{
@@ -141,6 +172,8 @@ public class TimeController : MonoBehaviour {
             round += 0.5f;
             mana = Mathf.Min((int)round, 10);
             PrintMana();
+			GameController gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
+			gameController.HidePlayerStats ();
         }
     }
 
@@ -158,6 +191,7 @@ public class TimeController : MonoBehaviour {
         string surrenderText = "00:00";
         surrenderText += player1Turn ? "\n\nPlayer 1 Surrended" : "\n\nPlayer 2 Surrended";
         timerText.text = surrenderText;
+        //StartCoroutine(EndGame());
         StartCoroutine(EndGame());
     }
 
@@ -165,14 +199,23 @@ public class TimeController : MonoBehaviour {
     {
         mana -= manaBuffer;
         manaBuffer = 0;
+        Debug.Log(mana);
         if (mana <= 0) EndTurn();
         else PrintMana();
     }
 
     IEnumerator EndGame()
     {
-        yield return new WaitForSecondsRealtime(1.5f);
-        SceneManager.LoadScene(0);
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        yield return new WaitForSecondsRealtime(2.0f);
+        if (player1Turn)
+        {
+            manager.KillUnits("Blue");
+        }
+        else {
+            manager.KillUnits("Red");
+        }
+        //SceneManager.LoadScene(0);
     }
 
     // Function called when player pause the game
@@ -183,7 +226,7 @@ public class TimeController : MonoBehaviour {
 
     public bool HasEnoughMana(int cost)
     {
-        return mana >= cost;
+        return (mana - manaBuffer) >= cost;
     }
 
     public void PrepareMana(int manaToUse)
@@ -212,5 +255,32 @@ public class TimeController : MonoBehaviour {
     public bool isPlayer2Turn()
     {
         return player2Turn;
+    }
+
+	public int GetMana()
+	{
+		return mana;
+	}
+
+	public int GetManaBuffer()
+	{
+		return manaBuffer;
+	}
+
+    // Setter for the delay countdown
+    public void SetIsDelayActivate(bool state)
+    {
+        this.isDelayActivate = state;
+    }
+
+    // Getter fot timeDelayRemaining
+    public float GetTimeDelayRemaining ()
+    {
+        return this.timeDelayRemaining;
+    }
+
+    public bool GetIsDelayActivate()
+    {
+        return this.isDelayActivate;
     }
 }

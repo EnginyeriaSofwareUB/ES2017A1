@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour {
     private CellScript actualCell;
     [SerializeField]
     private IUnitScript destinationUnit;
+    public Point destinationPoint;
+
     [SerializeField]
     private Texture2D cursor;
     private string habilitySelected;
@@ -60,6 +62,13 @@ public class GameController : MonoBehaviour {
             if (this.checkTurn())
             {
                 Attack();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if(this.checkTurn())
+            {
+                Deffense();
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
@@ -113,9 +122,26 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    public void Deffense()
+    {
+        if (this.actualUnit != null & habilitySelected != " " && habilitySelected != "Special")
+        {
+            actualUnit.CancelAction(habilitySelected);
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
+        if (this.actualUnit != null && !cancellAction)
+        {
+            int cost = this.actualUnit.defendCost;
+            if (!timeController.HasEnoughMana(this.actualUnit.defendCost)) return;
+            actualUnit.DeffenseAction();
+            timeController.PrepareMana(cost);
+            FinishAction();
+        }
+    }
+
     public void SpecialHability()
     {
-        if(this.actualUnit !=  null & habilitySelected != " " && habilitySelected != "Special")
+        if (this.actualUnit !=  null & habilitySelected != " " && habilitySelected != "Special")
         {
             actualUnit.CancelAction(habilitySelected);
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
@@ -157,7 +183,8 @@ public class GameController : MonoBehaviour {
     public void FinishAction()
     {
 		timeController.UseMana();
-    }
+		HidePlayerStats();
+	}
 
     public void ShowPlayerStats()
     {
@@ -197,4 +224,14 @@ public class GameController : MonoBehaviour {
             }
         }
     }
+
+	public int GetMana()
+	{
+		return timeController.GetMana();
+	}
+
+	public int GetManaBuffer()
+	{
+		return timeController.GetManaBuffer();
+	}
 }

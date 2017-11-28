@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class RangedUnitScript : IUnitScript
 {
-    
+
+    private int abilityRange = 1;
+
 	// Use this for initialization
 	void Start ()
     {
-        base.Start(4, 5, 10, 8, 1, "ranged");
+		base.Start(4, 5, 10, 100, 1, "ranged");
+        this.movementCost = 1;
+        this.attackCost = 2;
+        this.defendCost = 1;
+        this.abilityCost = 3;
 	}
     
     public override void OnMouseOver()
@@ -68,13 +74,17 @@ public class RangedUnitScript : IUnitScript
                 Vector2 origin2 = new Vector2(origin.x, origin.y);
                 distance = (h.point - origin2).magnitude;
                 string nameResource = "Units/Laser" + this.tag;
+                string explosionName = "Objects/ExplosionRed";
                 GameObject ray = Instantiate(Resources.Load(nameResource)) as GameObject;
+                GameObject expl = Instantiate(Resources.Load(explosionName)) as GameObject;
                 ray.transform.SetParent(this.transform.parent);
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 ray.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 ray.transform.position = origin;
                 ray.transform.localScale = new Vector3(distance / ray.GetComponent<BoxCollider2D>().size.x, 1, 1);
+                expl.transform.position = h.transform.position;
                 Destroy(ray, 0.3f);
+                Destroy(expl, 0.5f);
                 if (h.transform.GetComponent<CoverageScript>().IsFull())
                 {
                     h.transform.GetComponent<CoverageScript>().ChangeSprite();
@@ -93,13 +103,17 @@ public class RangedUnitScript : IUnitScript
                 GameObject unitToShoot = h.transform.gameObject;
                 distance = (unitToShoot.GetComponent<IUnitScript>().GetDestinationPointRay() - origin).magnitude;
                 string nameResource = "Units/Laser" + this.tag;
+                string explosionName = "Objects/ExplosionRed";
                 GameObject ray = Instantiate(Resources.Load(nameResource)) as GameObject;
+                GameObject expl = Instantiate(Resources.Load(explosionName)) as GameObject;
                 ray.transform.SetParent(this.transform.parent);
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 ray.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 ray.transform.position = origin;
                 ray.transform.localScale = new Vector3(distance / ray.GetComponent<BoxCollider2D>().size.x, 1, 1);
+                expl.transform.position = h.transform.gameObject.GetComponent<IUnitScript>().GetDestinationPointRay();
                 Destroy(ray, 0.3f);
+                Destroy(expl, 0.5f);
                 if (this.GetAttack >= h.transform.GetComponent<IUnitScript>().Life)
                 {
                     manager.Tiles[unitToShoot.GetComponent<IUnitScript>().currentPosition].SetIsEmpty(true);
@@ -125,13 +139,17 @@ public class RangedUnitScript : IUnitScript
                 Vector2 origin2 = new Vector2(origin.x, origin.y);
                 distance = (h.point - origin2).magnitude;
                 string nameResource = "Units/Laser" + this.tag;
+                string explosionName = "Objects/ExplosionRed";
                 GameObject ray = Instantiate(Resources.Load(nameResource)) as GameObject;
+                GameObject expl = Instantiate(Resources.Load(explosionName)) as GameObject;
                 ray.transform.SetParent(this.transform.parent);
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 ray.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 ray.transform.position = origin;
                 ray.transform.localScale = new Vector3(distance / ray.GetComponent<BoxCollider2D>().size.x, 1, 1);
+                expl.transform.position = h.transform.position;
                 Destroy(ray, 0.3f);
+                Destroy(expl, 0.5f);
                 if(h.transform.GetComponent<CoverageScript>().IsFull())
                 {
                     h.transform.GetComponent<CoverageScript>().ChangeSprite();
@@ -190,13 +208,29 @@ public class RangedUnitScript : IUnitScript
         return origin;
     }
 
+
+    public override void UseAbility()
+    {
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        manager.DamageInRange(gameController.destinationPoint, abilityRange, this.attackValue);
+        gameController.SetAbility(" ");
+        gameController.ActualCell.SetColor(Color.white);
+        gameController.ActualCell = null;
+        gameController.ActualUnit.SetSelected(false);
+        gameController.ActualUnit = null;
+        gameController.SetCancelAction(false);
+        gameController.FinishAction();
+    }
+
     public override void SpecialHabilityAction()
     {
-        throw new NotImplementedException();
+        gameController.SetAbility("Ability");
+        gameController.SetCancelAction(true);
     }
 
     public override void CancelSpecialHability()
     {
-        throw new NotImplementedException();
+        gameController.SetAbility(" ");
+        gameController.SetCancelAction(false);
     }
 }
