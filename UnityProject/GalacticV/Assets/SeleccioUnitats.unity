@@ -610,7 +610,8 @@ Prefab:
       propertyPath: type
       value: RANGE
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114129521120310218, guid: bee7388d237058848a83645eee48befc, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: bee7388d237058848a83645eee48befc, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &445394668 stripped
@@ -761,6 +762,28 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 627483099}
+--- !u!1 &644925524 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1647316825745294, guid: 1fa0e9e94499b544eab8615cf43f6c38,
+    type: 2}
+  m_PrefabInternal: {fileID: 2035098639}
+--- !u!114 &644925525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 644925524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098f98e5453ae9745909bd6018510ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: Tank
+  movementCost: 1
+  attackCost: 1
+  defendCost: 1
+  abilityCost: 1
+  lifeValue: 0
 --- !u!1 &646076826
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,6 +1985,28 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1347131999}
+--- !u!1 &1349822737 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1304330431714898, guid: bee7388d237058848a83645eee48befc,
+    type: 2}
+  m_PrefabInternal: {fileID: 445394667}
+--- !u!114 &1349822738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1349822737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098f98e5453ae9745909bd6018510ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: Ranged
+  movementCost: 1
+  attackCost: 1
+  defendCost: 1
+  abilityCost: 1
+  lifeValue: 0
 --- !u!1 &1472970755
 GameObject:
   m_ObjectHideFlags: 0
@@ -3354,7 +3399,8 @@ Prefab:
       propertyPath: type
       value: TANK
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114556837919767156, guid: 1fa0e9e94499b544eab8615cf43f6c38, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 1fa0e9e94499b544eab8615cf43f6c38, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &2035098640 stripped

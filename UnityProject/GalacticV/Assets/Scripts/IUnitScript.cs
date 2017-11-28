@@ -98,7 +98,7 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-        //SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
+        SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
         this.GetComponent<Animator>().SetTrigger("move");
         this.transform.parent = parent;
         this.isSelected = false;
@@ -226,7 +226,7 @@ public abstract class IUnitScript : MonoBehaviour
                         state = Enums.UnitState.Idle;
                         this.GetComponent<Animator>().SetTrigger("idle");
                         this.currentPosition = this.targetPosition;
-                        //SoundManager.instance.StopEffect();
+                        SoundManager.instance.StopEffect();
                         gameController.FinishAction();
                     }
                 }

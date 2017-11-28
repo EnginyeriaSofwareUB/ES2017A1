@@ -8,8 +8,8 @@ public class CharacterSelection : MonoBehaviour {
 
 	private GameObject[] character;
 
-	public List<IUnitScript> P1Characters;
-	public List<IUnitScript> P2Characters;
+	public List<UnitSpecification> P1Characters;
+	public List<UnitSpecification> P2Characters;
 	//public List<IUnitScript> units;
 	private int index;
 	private int count=10;
@@ -40,8 +40,8 @@ public class CharacterSelection : MonoBehaviour {
 			vida = GameObject.Find ("health").GetComponent<Text> ();
 			attack = GameObject.Find ("attack").GetComponent<Text> ();
 			defense = GameObject.Find ("defense").GetComponent<Text> ();
-			word.text=character[index].GetComponent<IUnitScript>().GetType();
-			vida.text=character [index].GetComponent<IUnitScript> ().Life.ToString ();
+			word.text=character[index].GetComponent<UnitSpecification>().GetType();
+			vida.text=character [index].GetComponent<UnitSpecification> ().Life.ToString ();
 			buttonplay = GameObject.Find ("ButtonPlay");
 			attack.text = atk [index];
 			defense.text = def [index];
@@ -73,8 +73,8 @@ public class CharacterSelection : MonoBehaviour {
 			index = character.Length - 1;
 
 		character [index].SetActive (true);
-		word.text=character[index].GetComponent<IUnitScript>().GetType();
-		vida.text=character [index].GetComponent<IUnitScript> ().Life.ToString ();
+		word.text=character[index].GetComponent<UnitSpecification>().GetType();
+		vida.text=character [index].GetComponent<UnitSpecification> ().Life.ToString ();
 		attack.text = atk [index];
 		defense.text = def [index];
 		//player.text = texts [index];
@@ -100,8 +100,8 @@ public class CharacterSelection : MonoBehaviour {
 		character [index].SetActive (true);
 		//word.text = texts [index];
 		//vida.text = health [index];
-		word.text=character[index].GetComponent<IUnitScript>().GetType();
-		vida.text=character [index].GetComponent<IUnitScript> ().Life.ToString ();
+		word.text=character[index].GetComponent<UnitSpecification>().GetType();
+		vida.text=character [index].GetComponent<UnitSpecification> ().Life.ToString ();
 		//attack.text = character [index].GetComponent<IUnitScript> ().Life.ToString ();
 		attack.text = atk [index];
 		defense.text = def [index];
@@ -118,38 +118,41 @@ public class CharacterSelection : MonoBehaviour {
 
 	public void okbutton(){
 		SoundManager.instance.PlayButtonEffect();
-		//SceneManager.LoadScene ("MainScene");
+        //SceneManager.LoadScene ("MainScene");
 
-		//player.text = texts [index];
-		//print (texts [index]);
-		if (count % 2 ==0)
-		{
-			//Text player = GameObject.Find("player");
+        //player.text = texts [index];
+        //print (texts [index]);
+        if (count > 0)
+        {
+            if (count % 2 == 0)
+            {
+                //Text player = GameObject.Find("player");
 
-			player = GameObject.Find ("player"+p1añadidos).GetComponent<Text> ();
-			player.text=character[index].GetComponent<IUnitScript>().GetType();
-			print (character[index].GetComponent<IUnitScript>().GetType());
+                player = GameObject.Find("player" + p1añadidos).GetComponent<Text>();
+                player.text = character[index].GetComponent<UnitSpecification>().GetType();
+                print(character[index].GetComponent<UnitSpecification>().GetType());
 
 
-			IUnitScript blueUnit=character[index].GetComponent<IUnitScript>();
-			//GameObject t = GameObject.Find("RawImage");
+                UnitSpecification blueUnit = character[index].GetComponent<UnitSpecification>();
+                //GameObject t = GameObject.Find("RawImage");
 
-			//t.GetComponent<RawImage>().texture = Icon3;
-			P1Characters.Add(blueUnit);
+                //t.GetComponent<RawImage>().texture = Icon3;
+                P1Characters.Add(blueUnit);
 
-			p1añadidos++;
-		}
-		else if (count % 2!=0)
-		{
-			playerred = GameObject.Find ("playerred"+p2added).GetComponent<Text> ();
-			playerred.text = character[index].GetComponent<IUnitScript>().GetType();
-			print (character[index].GetComponent<IUnitScript>().GetType());
-			IUnitScript redUnit=character[index].GetComponent<IUnitScript>();
-			P2Characters.Add (redUnit);
-			p2added++;
-			//
-		}
-
+                p1añadidos++;
+            }
+            else if (count % 2 != 0)
+            {
+                playerred = GameObject.Find("playerred" + p2added).GetComponent<Text>();
+                playerred.text = character[index].GetComponent<UnitSpecification>().GetType();
+                print(character[index].GetComponent<UnitSpecification>().GetType());
+                UnitSpecification redUnit = character[index].GetComponent<UnitSpecification>();
+                P2Characters.Add(redUnit);
+                p2added++;
+                //
+            }
+        }
+        else playbutton();
 		count--;
 
 		//show play button when player selection is complete
