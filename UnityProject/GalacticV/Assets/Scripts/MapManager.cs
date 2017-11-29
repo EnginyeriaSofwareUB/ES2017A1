@@ -82,7 +82,7 @@ public class MapManager : MonoBehaviour {
         List<Point> buffer = new List<Point>();
         buffer.Add(position);
 
-        if (gameController.GetHability() == "Move")
+        if (gameController.GetHability() == "Move" || gameController.ActualUnit.type == "tank")
         {
             while (buffer.Any())
             {
@@ -210,6 +210,7 @@ public class MapManager : MonoBehaviour {
                 coverage.GetComponent<CoverageScript>().Setup(point, Tiles[point].transform.position, map);
                 coverage.transform.Rotate(0, 0, 45);
                 Tiles[point].SetIsEmpty(false);
+                gameController.ActualUnit.SetSelected(false);
                 gameController.ActualCell = null;
                 gameController.ActualUnit = null;
                 gameController.SetAbility(" ");
