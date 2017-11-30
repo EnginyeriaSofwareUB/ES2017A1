@@ -121,6 +121,9 @@ public class TimeController : MonoBehaviour {
     {
         player1Turn = !player1Turn;
         player2Turn = !player2Turn;
+        GameObject mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        string team = player1Turn ? "Blue" : "Red";
+        mainCamera.GetComponent<CameraMovement>().SetCameraChangeTurn(team);
         CleanShields();
 		ChangeColors();
 	}
