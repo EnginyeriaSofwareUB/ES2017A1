@@ -6,7 +6,7 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField]
     private float cameraSpeed = 0f;
-    private int boundary = 50;
+    private int boundary = 15;
     private float xMax;
     private float yMin;
 
@@ -31,18 +31,34 @@ public class CameraMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector3.up * cameraSpeed * Time.deltaTime);
+            if(transform.position.y >= 20f)
+            {
+                transform.position = new Vector3(transform.position.x, 20f, transform.position.z);
+            }
         }
         if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(Vector3.left * cameraSpeed * Time.deltaTime);
+            if (transform.position.x <= -10f)
+            {
+                transform.position = new Vector3(-10f, transform.position.y, transform.position.z);
+            }
         }
         if (Input.GetKey(KeyCode.S))
         {
             transform.Translate(Vector3.down * cameraSpeed * Time.deltaTime);
+            if (transform.position.y <= -20f)
+            {
+                transform.position = new Vector3(transform.position.x, -20f, transform.position.z);
+            }
         }
         if (Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector3.right * cameraSpeed * Time.deltaTime);
+            if (transform.position.x >= 30f)
+            {
+                transform.position = new Vector3(30f,transform.position.y, transform.position.z);
+            }
         }
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
@@ -64,18 +80,34 @@ public class CameraMovement : MonoBehaviour
         if (Input.mousePosition.x > screenWidth - boundary)
         {
             transform.Translate(Vector3.right * cameraSpeed * Time.deltaTime); // move on +X axis
+            if (transform.position.x >= 30f)
+            {
+                transform.position = new Vector3(30f, transform.position.y, transform.position.z);
+            }
         }
         if (Input.mousePosition.x < 0 + boundary)
         {
             transform.Translate(Vector3.left * cameraSpeed * Time.deltaTime);
+            if (transform.position.x <= -10f)
+            {
+                transform.position = new Vector3(-10f, transform.position.y, transform.position.z);
+            }
         }
         if (Input.mousePosition.y > screenHeight - boundary)
         {
             transform.Translate(Vector3.up * cameraSpeed * Time.deltaTime);
+            if (transform.position.y >= 20f)
+            {
+                transform.position = new Vector3(transform.position.x, 20f, transform.position.z);
+            }
         }
         if (Input.mousePosition.y < 0 + boundary)
         {
             transform.Translate(Vector3.down * cameraSpeed * Time.deltaTime);
+            if (transform.position.y <= -20f)
+            {
+                transform.position = new Vector3(transform.position.x, -20f, transform.position.z);
+            }
         }
 
     }
