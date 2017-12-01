@@ -98,7 +98,7 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-        SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
+        //SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
         this.GetComponent<Animator>().SetTrigger("move");
         this.transform.parent = parent;
         this.isSelected = false;
@@ -108,8 +108,7 @@ public abstract class IUnitScript : MonoBehaviour
         this.vectorPath = vectorPath;
         this.targetTransform = this.vectorPath.First();
         this.vectorPath.Remove(this.targetTransform);
-
-    }
+	}
 
     public abstract void OnMouseOver();
 
@@ -142,7 +141,16 @@ public abstract class IUnitScript : MonoBehaviour
                         gameController.destinationPoint = this.currentPosition;
                         gameController.ActualUnit.Attack();
                         gameController.HidePlayerStats();
-                    }
+                    }else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "healer")
+					{
+						if (manager.Distance(gameController.ActualUnit.currentPosition, this.currentPosition) < gameController.ActualUnit.GetAttack + 1)
+						{
+							gameController.DestinationUnit = this;
+							gameController.ActualUnit.Attack();
+							gameController.HidePlayerStats();
+						}
+					}
+					
                     break;
                 case "Ability":
                     gameController.destinationPoint = this.currentPosition;
@@ -226,7 +234,7 @@ public abstract class IUnitScript : MonoBehaviour
                         state = Enums.UnitState.Idle;
                         this.GetComponent<Animator>().SetTrigger("idle");
                         this.currentPosition = this.targetPosition;
-                        SoundManager.instance.StopEffect();
+                        //SoundManager.instance.StopEffect();
                         gameController.FinishAction();
                     }
                 }

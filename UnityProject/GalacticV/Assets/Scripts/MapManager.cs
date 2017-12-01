@@ -82,7 +82,7 @@ public class MapManager : MonoBehaviour {
         List<Point> buffer = new List<Point>();
         buffer.Add(position);
 
-        if (gameController.GetHability() == "Move" || gameController.ActualUnit.type == "tank")
+        if (gameController.GetHability() == "Move" || gameController.ActualUnit.type == "tank" || gameController.ActualUnit.type == "healer")
         {
             while (buffer.Any())
             {
@@ -148,7 +148,7 @@ public class MapManager : MonoBehaviour {
             {
                 Tiles[point].SetColor(Color.yellow);
             }
-            else if (gameController.GetHability() == "Attack" && gameController.ActualUnit.type == "tank")
+            else if (gameController.GetHability() == "Attack" && (gameController.ActualUnit.type == "tank" || gameController.ActualUnit.type == "healer"))
             {
                 Tiles[point].SetColor(Color.blue);
             }
@@ -160,7 +160,7 @@ public class MapManager : MonoBehaviour {
         return currentRange.Any(x => Distance(x, currentPoint) == 1);
     }
 
-    private int Distance(Point p1, Point p2)
+    public int Distance(Point p1, Point p2)
     {
         //Manhattan distance
         //Note: System is called manually to not create issues with Random() calls

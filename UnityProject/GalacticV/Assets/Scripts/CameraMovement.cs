@@ -77,7 +77,7 @@ public class CameraMovement : MonoBehaviour
             }
         }
         //Mouse Movement
-        if (Input.mousePosition.x > screenWidth - boundary)
+       /* if (Input.mousePosition.x > screenWidth - boundary)
         {
             transform.Translate(Vector3.right * cameraSpeed * Time.deltaTime); // move on +X axis
             if (transform.position.x >= 30f)
@@ -108,7 +108,7 @@ public class CameraMovement : MonoBehaviour
             {
                 transform.position = new Vector3(transform.position.x, -20f, transform.position.z);
             }
-        }
+        }*/
 
     }
 

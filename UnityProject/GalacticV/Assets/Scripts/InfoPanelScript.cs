@@ -169,7 +169,7 @@ public class InfoPanelScript : MonoBehaviour
 				SetAlfa(abilityImage, 0f);
 				break;
 			case "healer":
-				attackImage.sprite = null; // TODO : quan hi hagi icona es ficara
+				attackImage.sprite = unit.team == 0 ? attackSpriteRangeUnitBlue : attackSpriteRangeUnitRed;
 				abilityImage.sprite = unit.team == 0 ? abilitySpriteHealerBlue : abilitySpriteHealerRed;
 				break;
 			default:
