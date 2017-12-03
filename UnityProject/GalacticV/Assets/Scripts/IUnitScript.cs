@@ -110,7 +110,51 @@ public abstract class IUnitScript : MonoBehaviour
         this.vectorPath.Remove(this.targetTransform);
 	}
 
-    public abstract void OnMouseOver();
+    public void OnMouseOver()
+	{
+		MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+		switch (gameController.GetHability())
+		{
+			case "Attack":
+
+				if (!manager.Tiles[currentPosition].GetIsEmpty() && gameController.ActualUnit.team == this.team && gameController.ActualUnit != this)
+				{
+					manager.Tiles[this.currentPosition].SetColor(Color.red);
+				}
+				else if (!manager.Tiles[currentPosition].GetIsEmpty() && gameController.ActualUnit.team != this.team)
+				{
+					manager.Tiles[this.currentPosition].SetColor(Color.green);
+				}
+				break;
+			case "Ability":
+				if (!manager.Tiles[currentPosition].GetIsEmpty())//si la cela es lliure
+				{
+					if (gameController.ActualUnit.type == "healer")//en el cas que sigui healer
+					{
+						if (gameController.ActualUnit.team != this.team )
+						{
+							manager.Tiles[this.currentPosition].SetColor(Color.red);
+						}
+						else if (gameController.ActualUnit.team == this.team && gameController.ActualUnit != this)
+						{
+							manager.Tiles[this.currentPosition].SetColor(Color.yellow);
+						}
+					}else{
+						if (gameController.ActualUnit.team != this.team && gameController.ActualUnit != this)
+						{
+							manager.Tiles[this.currentPosition].SetColor(Color.red);
+						}
+						else if (gameController.ActualUnit.team == this.team)
+						{
+							manager.Tiles[this.currentPosition].SetColor(Color.yellow);
+						}
+					}
+				}
+
+
+				break;
+		}
+	}
 
     public void OnMouseExit()
     {
@@ -126,22 +170,22 @@ public abstract class IUnitScript : MonoBehaviour
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         if(this.state != Enums.UnitState.Defense)
         {
-            switch (gameController.GetHability())
-            {
-                case "Move":
-                    break;
-                case "Attack":
-                    if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "ranged")
-                    {
-                        gameController.DestinationUnit = this;
-                        gameController.ActualUnit.Attack();
-                        gameController.HidePlayerStats();
-                    } else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "tank")
-                    {
-                        gameController.destinationPoint = this.currentPosition;
-                        gameController.ActualUnit.Attack();
-                        gameController.HidePlayerStats();
-                    }else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "healer")
+			switch (gameController.GetHability())
+			{
+				case "Move":
+					break;
+				case "Attack":
+					if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "ranged")
+					{
+						gameController.DestinationUnit = this;
+						gameController.ActualUnit.Attack();
+						gameController.HidePlayerStats();
+					} else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "tank")
+					{
+						gameController.destinationPoint = this.currentPosition;
+						gameController.ActualUnit.Attack();
+						gameController.HidePlayerStats();
+					} else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "healer")
 					{
 						if (manager.Distance(gameController.ActualUnit.currentPosition, this.currentPosition) < gameController.ActualUnit.GetAttack + 1)
 						{
@@ -150,12 +194,19 @@ public abstract class IUnitScript : MonoBehaviour
 							gameController.HidePlayerStats();
 						}
 					}
-					
-                    break;
-                case "Ability":
-                    gameController.destinationPoint = this.currentPosition;
-                    gameController.ActualUnit.UseAbility();
-				    gameController.HidePlayerStats();
+
+					break;
+				case "Ability":
+					if (gameController.ActualUnit.type == "healer" && this.team == gameController.ActualUnit.team && gameController.ActualUnit != this) {
+						gameController.DestinationUnit = this;
+						gameController.ActualUnit.UseAbility();
+					}
+					else if (gameController.ActualUnit.type != "healer")
+					{
+						gameController.destinationPoint = this.currentPosition;
+						gameController.ActualUnit.UseAbility();
+						gameController.HidePlayerStats();
+					}
                     break;
                 default:
                     if (gameController.ActualUnit != null && gameController.ActualUnit != this)
@@ -275,7 +326,8 @@ public abstract class IUnitScript : MonoBehaviour
     {
         GameObject bar = gameObject.transform.GetChild(0).transform.GetChild(1).gameObject;
         //TODO: mirar pq peta
-        if (bar.GetComponent<HealthBar>() != null) bar.GetComponent<HealthBar>().ReduceLife(this.lifeValue);
+        if (bar.GetComponent<HealthBar>() != null)
+			bar.GetComponent<HealthBar>().ReduceLife(this.lifeValue);
     }
 
     public void TakeDamage(double damageValue)

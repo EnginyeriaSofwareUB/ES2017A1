@@ -82,7 +82,7 @@ public class MapManager : MonoBehaviour {
         List<Point> buffer = new List<Point>();
         buffer.Add(position);
 
-        if (gameController.GetHability() == "Move" || gameController.ActualUnit.type == "tank" || gameController.ActualUnit.type == "healer")
+        if (gameController.GetHability() == "Move" || gameController.ActualUnit.type == "tank" )
         {
             while (buffer.Any())
             {
@@ -110,7 +110,8 @@ public class MapManager : MonoBehaviour {
             }
         }
         else if (gameController.GetHability() == "Attack")
-        {
+
+		{
             while (buffer.Any())
             {
                 currentPoint = buffer.First();

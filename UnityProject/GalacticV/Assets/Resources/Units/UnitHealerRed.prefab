@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 212253571649548884}
   - component: {fileID: 95047333399556558}
   m_Layer: 0
-  m_Name: ShieldBlue
+  m_Name: ShieldRed
   m_TagString: ShieldBlue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +125,7 @@ Transform:
   m_LocalScale: {x: 75, y: 75, z: 1}
   m_Children: []
   m_Father: {fileID: 224035729472485982}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &61232813408339338
 BoxCollider2D:
@@ -161,7 +161,7 @@ Animator:
   m_GameObject: {fileID: 1604810146957472}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 87c0c1babca510a4aacdeae1231573de, type: 2}
+  m_Controller: {fileID: 9100000, guid: edaba883d72ffc743b546322b29ad24d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -340,7 +340,7 @@ SpriteRenderer:
   m_SortingLayerID: -232206463
   m_SortingLayer: 1
   m_SortingOrder: 50
-  m_Sprite: {fileID: 21300000, guid: 684a0dc6c78da4d4788dcf0ec197130c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9167e9031d0a6204aa7837e4d43c0c73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -434,8 +434,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_Children:
-  - {fileID: 224557416132425542}
   - {fileID: 4772338083111184}
+  - {fileID: 224557416132425542}
   m_Father: {fileID: 4207360375727828}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -456,7 +456,7 @@ RectTransform:
   m_Children:
   - {fileID: 224995502462939360}
   m_Father: {fileID: 224035729472485982}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

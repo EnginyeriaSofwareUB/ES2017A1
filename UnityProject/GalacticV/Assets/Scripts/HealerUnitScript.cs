@@ -19,20 +19,9 @@ public class HealerUnitScript : IUnitScript
 		this.abilityCost = 3;
 	}
 
-	public override void OnMouseOver()
+	public new void OnMouseOver()
 	{
-		if (gameController.GetHability() == "Attack")
-		{
-			MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-			if (!manager.Tiles[currentPosition].GetIsEmpty() && gameController.ActualUnit.team == this.team && gameController.ActualUnit != this)
-			{
-				manager.Tiles[this.currentPosition].SetColor(Color.red);
-			}
-			else if (!manager.Tiles[currentPosition].GetIsEmpty() && gameController.ActualUnit.team != this.team)
-			{
-				manager.Tiles[this.currentPosition].SetColor(Color.green);
-			}
-		}
+		base.OnMouseOver();
 	}
 
 	public override void CancelAction(string actualAction)
@@ -100,7 +89,8 @@ public class HealerUnitScript : IUnitScript
 	public override void UseAbility()
 	{
 		MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-		manager.DamageInRange(gameController.destinationPoint, abilityRange, this.attackValue);
+		gameController.DestinationUnit.Life = Mathf.Min(gameController.DestinationUnit.Life + 10, gameController.DestinationUnit.GetMaxLifeValue);
+		gameController.DestinationUnit.ReduceLife();
 		gameController.SetAbility(" ");
 		gameController.ActualCell.SetColor(Color.white);
 		gameController.ActualCell = null;

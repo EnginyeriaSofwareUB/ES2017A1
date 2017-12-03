@@ -15,7 +15,11 @@ public class GameController : MonoBehaviour {
 
     [SerializeField]
     private Texture2D cursor;
-    private string habilitySelected;
+	[SerializeField]
+	private Texture2D cursorHealthBlue;
+	[SerializeField]
+	private Texture2D cursorHealthRed;
+	private string habilitySelected;
     private bool cancellAction;
     private TimeController timeController;
     
@@ -148,6 +152,12 @@ public class GameController : MonoBehaviour {
         }
         if (this.actualUnit != null && !cancellAction)
         {
+			
+			if (actualUnit.type == "healer")
+			{
+				Texture2D cursor = actualUnit.team == 0 ? cursorHealthBlue : cursorHealthRed;
+				Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
+			}
             if (!timeController.HasEnoughMana(this.actualUnit.abilityCost)) return;
             actualUnit.SpecialHabilityAction();
             timeController.PrepareMana(this.actualUnit.abilityCost);
