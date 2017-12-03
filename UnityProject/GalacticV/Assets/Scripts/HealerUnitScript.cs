@@ -89,6 +89,7 @@ public class HealerUnitScript : IUnitScript
 	public override void UseAbility()
 	{
 		MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+		MakeHealthAnimation();
 		gameController.DestinationUnit.Life = Mathf.Min(gameController.DestinationUnit.Life + 10, gameController.DestinationUnit.GetMaxLifeValue);
 		gameController.DestinationUnit.ReduceLife();
 		gameController.SetAbility(" ");
@@ -97,7 +98,17 @@ public class HealerUnitScript : IUnitScript
 		gameController.ActualUnit.SetSelected(false);
 		gameController.ActualUnit = null;
 		gameController.SetCancelAction(false);
+		Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 		gameController.FinishAction();
+	}
+
+	private void MakeHealthAnimation()
+	{
+		MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+		string healthAnimation = this.team == 0 ? "Objects/HealthBlue" : "Objects/HealthRed";
+		GameObject health = Instantiate(Resources.Load(healthAnimation)) as GameObject;
+		health.transform.position = gameController.DestinationUnit.transform.position;
+		Destroy(health, 1f);
 	}
 
 	public override void SpecialHabilityAction()

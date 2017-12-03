@@ -8,7 +8,7 @@ public class TankUnitScript : IUnitScript {
 
     void Start()
     {
-        base.Start(1, 2, 5, 200, 0.75, "tank");
+        base.Start(1, 20, 5, 200, 0.75, "tank");
         this.movementCost = 1;
         this.attackCost = 1;
         this.defendCost = 1;
