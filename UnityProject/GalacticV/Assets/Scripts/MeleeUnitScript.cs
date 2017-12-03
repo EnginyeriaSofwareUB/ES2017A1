@@ -73,6 +73,7 @@ public class MeleeUnitScript : IUnitScript {
         this.state = Assets.Scripts.Enums.UnitState.Skill;
 
         gameController.DestinationUnit.Life -= this.abilityDamage;
+        gameController.DestinationUnit.ReduceLife();
         gameController.SetAbility(" ");
         gameController.ActualCell.SetColor(Color.white);
         gameController.ActualCell = null;
