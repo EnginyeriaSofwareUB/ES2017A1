@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MeleeUnitScript : IUnitScript {
 
+    float abilityDamage = 15;
+
     // Use this for initialization
     void Start()
     {
@@ -50,7 +52,34 @@ public class MeleeUnitScript : IUnitScript {
     
     public override void UseAbility()
     {
+        this.targetPosition = gameController.DestinationUnit.currentPosition;
+        if (currentPosition.X == targetPosition.X)
+        {
+            if (currentPosition.Y > targetPosition.Y)
+                targetPosition.Y++;
+            else targetPosition.Y--;
+        }
+        else
+        {
+            if (currentPosition.X > targetPosition.X)
+                targetPosition.X++;
+            else targetPosition.X--;
+        }
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        //targetTransform = manager.GetPosition(targetPosition);
+        targetTransform = manager.Tiles[targetPosition].WorldPosition;
+        manager.ClearCurrentRange();
+        manager.Tiles[currentPosition].SetIsEmpty(true);
+        this.state = Assets.Scripts.Enums.UnitState.Skill;
 
+        gameController.DestinationUnit.Life -= this.abilityDamage;
+        gameController.SetAbility(" ");
+        gameController.ActualCell.SetColor(Color.white);
+        gameController.ActualCell = null;
+        gameController.ActualUnit.SetSelected(false);
+        gameController.ActualUnit = null;
+        gameController.SetCancelAction(false);
+        gameController.FinishAction();
     }
 
     public override Vector3 GetOriginRay()
@@ -83,11 +112,17 @@ public class MeleeUnitScript : IUnitScript {
 
     public override void SpecialHabilityAction()
     {
-        throw new NotImplementedException();
+        gameController.SetAbility("Special");
+        gameController.SetCancelAction(true);
+        var mapManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        mapManager.LineRange(this.currentPosition, 4);
     }
 
     public override void CancelSpecialHability()
     {
-        throw new NotImplementedException();
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        gameController.SetAbility(" ");
+        manager.ClearCurrentRange();
+        gameController.SetCancelAction(false);
     }
 }

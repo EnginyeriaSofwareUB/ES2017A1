@@ -98,7 +98,7 @@ public abstract class IUnitScript : MonoBehaviour
 
     public void MoveTo(Point point, List<Vector3> vectorPath)
     {
-        SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
+        //SoundManager.instance.PlayEffect("Effects/walk_effect_2.1", true);
         this.GetComponent<Animator>().SetTrigger("move");
         this.transform.parent = parent;
         this.isSelected = false;
@@ -148,6 +148,13 @@ public abstract class IUnitScript : MonoBehaviour
                     gameController.destinationPoint = this.currentPosition;
                     gameController.ActualUnit.UseAbility();
 				    gameController.HidePlayerStats();
+                    break;
+                case "Special":
+                    if (gameController.ActualUnit.GetType() != "melee") return;
+                    if (gameController.ActualUnit.team == this.team) return;
+                    gameController.DestinationUnit = this;
+                    gameController.ActualUnit.UseAbility();
+                    gameController.HidePlayerStats();
                     break;
                 default:
                     if (gameController.ActualUnit != null && gameController.ActualUnit != this)
@@ -226,9 +233,21 @@ public abstract class IUnitScript : MonoBehaviour
                         state = Enums.UnitState.Idle;
                         this.GetComponent<Animator>().SetTrigger("idle");
                         this.currentPosition = this.targetPosition;
-                        SoundManager.instance.StopEffect();
+                        //SoundManager.instance.StopEffect();
                         gameController.FinishAction();
                     }
+                }
+                break;
+            case Enums.UnitState.Skill:
+                step = speed * Time.deltaTime;
+                transform.position = Vector3.MoveTowards(transform.position, targetTransform, step);
+                if (transform.position == targetTransform)
+                {
+                    state = Enums.UnitState.Idle;
+                    this.GetComponent<Animator>().SetTrigger("idle");
+                    this.currentPosition = this.targetPosition;
+                    //SoundManager.instance.StopEffect();
+                    gameController.FinishAction();
                 }
                 break;
             default:

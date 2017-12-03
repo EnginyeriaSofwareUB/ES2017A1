@@ -155,6 +155,43 @@ public class MapManager : MonoBehaviour {
         }
     }
 
+    public void LineRange(Point starterPoint, int range)
+    {
+        Point currentPoint;
+        currentPoint = starterPoint;
+        do
+        {
+            currentPoint.X++;
+            currentRange.Add(currentPoint);
+        } while (IsValidTile(currentPoint) && Distance(starterPoint, currentPoint) < range);
+
+        currentPoint = starterPoint;
+        do
+        {
+            currentPoint.X--;
+            currentRange.Add(currentPoint);
+        } while (IsValidTile(currentPoint) && Distance(starterPoint, currentPoint) < range);
+
+        currentPoint = starterPoint;
+        do
+        {
+            currentPoint.Y--;
+            currentRange.Add(currentPoint);
+        } while (IsValidTile(currentPoint) && Distance(starterPoint, currentPoint) < range);
+
+        currentPoint = starterPoint;
+        do
+        {
+            currentPoint.Y++;
+            currentRange.Add(currentPoint);
+        } while (IsValidTile(currentPoint) && Distance(starterPoint, currentPoint) < range);
+
+        foreach (var point in currentRange)
+        {
+            Tiles[point].SetColor(Color.yellow);
+        }
+    }
+
     private bool CheckConnection(Point currentPoint, List<Point> currentRange)
     {
         return currentRange.Any(x => Distance(x, currentPoint) == 1);
@@ -230,6 +267,10 @@ public class MapManager : MonoBehaviour {
                 gameController.SetCancelAction(false);
                 gameController.HidePlayerStats();
                 gameController.FinishAction();
+            }
+            else if (gameController.ActualUnit.GetType() == "melee" && gameController.GetHability() == "Special")
+            {
+
             }
         }
     }
@@ -361,6 +402,11 @@ public class MapManager : MonoBehaviour {
             coverage.GetComponent<CoverageScript>().Setup(position, Tiles[position].transform.position, map);
             Tiles[position].SetIsEmpty(false);
         }   
+    }
+
+    public Vector3 GetPosition(Point point)
+    {
+        return Tiles[point].WorldPosition;
     }
 
     public void DamageInRange(Point point, int range, double damage)
