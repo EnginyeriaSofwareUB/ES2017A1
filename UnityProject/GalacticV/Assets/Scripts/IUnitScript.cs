@@ -25,7 +25,7 @@ public abstract class IUnitScript : MonoBehaviour
     protected Enums.UnitState state = Enums.UnitState.Idle;
 
     //movement values
-    protected const float speed = 1f;
+    protected const float speed = 5f;
     protected Vector3 targetTransform;
     protected List<Vector3> vectorPath;
     protected Point targetPosition;
