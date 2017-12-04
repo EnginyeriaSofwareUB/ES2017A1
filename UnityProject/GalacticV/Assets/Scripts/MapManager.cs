@@ -142,7 +142,7 @@ public class MapManager : MonoBehaviour {
         {
             if(gameController.GetHability() == "Move")
             {
-                Tiles[point].SetColor(Color.cyan);
+                Tiles[point].SetColor(Color.blue);
             }
             else if(gameController.GetHability() == "Special")
             {
