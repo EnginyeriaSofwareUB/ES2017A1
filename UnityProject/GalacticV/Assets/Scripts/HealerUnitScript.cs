@@ -107,7 +107,9 @@ public class HealerUnitScript : IUnitScript
 		MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
 		string healthAnimation = this.team == 0 ? "Objects/HealthBlue" : "Objects/HealthRed";
 		GameObject health = Instantiate(Resources.Load(healthAnimation)) as GameObject;
-		health.transform.position = gameController.DestinationUnit.transform.position;
+		Vector3 u = gameController.DestinationUnit.transform.position;
+		Vector3 v = new Vector3(u.x, u.y);
+		health.transform.position = v;
 		Destroy(health, 1f);
 	}
 
