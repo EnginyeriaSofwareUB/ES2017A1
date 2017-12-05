@@ -60,6 +60,8 @@ public class CharacterSelection : MonoBehaviour {
 		if (character [0])
 			character [0].SetActive (true);
 
+		buttonplay.SetActive(false);
+
 	}
 
 	public void ToggleLeft(){
@@ -156,11 +158,16 @@ public class CharacterSelection : MonoBehaviour {
 		count--;
 
 		//show play button when player selection is complete
-		/*
-		if (count == 0) {
+
+
+		if (count % 2 == 0) {
 			buttonplay.SetActive (true);
+		} else {
+			buttonplay.SetActive (false);
 		}
-		*/
+
+
+
 	}
 
 	public void playbutton(){
