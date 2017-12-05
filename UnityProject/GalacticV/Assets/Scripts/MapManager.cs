@@ -55,7 +55,7 @@ public class MapManager : MonoBehaviour {
 
             for (int x = 0; x < rows; x++)
             {
-                PlaceTile(newTiles[x].ToString(), x, y, worldStart);
+                PlaceTile(Converter(newTiles[x].ToString()), x, y, worldStart);
             }
         }
 
@@ -142,7 +142,7 @@ public class MapManager : MonoBehaviour {
         {
             if(gameController.GetHability() == "Move")
             {
-                Tiles[point].SetColor(Color.cyan);
+                Tiles[point].SetColor(Color.blue);
             }
             else if(gameController.GetHability() == "Special")
             {
@@ -380,7 +380,7 @@ public class MapManager : MonoBehaviour {
 
     public string[] ReadLevelText()
     {
-        TextAsset bindData = Resources.Load("the_palace") as TextAsset;
+        TextAsset bindData = Resources.Load("NewMap") as TextAsset;
         string data = bindData.text.Replace(System.Environment.NewLine, string.Empty);
         return data.Split('-');
     }
@@ -488,5 +488,69 @@ public class MapManager : MonoBehaviour {
         }
     }
 
-
+    public string Converter(string s)
+    {
+        string c = "";
+        switch (s)
+        {
+            case "A":
+                c = "10";
+                break;
+            case "B":
+                c = "11";
+                break;
+            case "C":
+                c = "12";
+                break;
+            case "D":
+                c = "13";
+                break;
+            case "E":
+                c = "14";
+                break;
+            case "F":
+                c = "15";
+                break;
+            case "G":
+                c = "16";
+                break;
+            case "H":
+                c = "17";
+                break;
+            case "I":
+                c = "18";
+                break;
+            case "J":
+                c = "19";
+                break;
+            case "K":
+                c = "20";
+                break;
+            case "L":
+                c = "21";
+                break;
+            case "M":
+                c = "22";
+                break;
+            case "N":
+                c = "23";
+                break;
+            case "O":
+                c = "24";
+                break;
+            case "P":
+                c = "25";
+                break;
+            case "Q":
+                c = "26";
+                break;
+            case "R":
+                c = "27";
+                break;
+            default:
+                c = s;
+                break;
+        }
+        return c;
+    }
 }
