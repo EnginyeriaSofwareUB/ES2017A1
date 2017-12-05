@@ -67,11 +67,11 @@ public class MeleeUnitScript : IUnitScript {
         }
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         //targetTransform = manager.GetPosition(targetPosition);
-        targetTransform = manager.Tiles[targetPosition].WorldPosition;
+        targetTransform = manager.Tiles[targetPosition].transform.position;
         manager.ClearCurrentRange();
         manager.Tiles[currentPosition].SetIsEmpty(true);
         this.state = Assets.Scripts.Enums.UnitState.Skill;
-
+        this.GetComponent<Animator>().SetTrigger("move");
         gameController.DestinationUnit.Life -= this.abilityDamage;
         gameController.DestinationUnit.ReduceLife();
         gameController.SetAbility(" ");
