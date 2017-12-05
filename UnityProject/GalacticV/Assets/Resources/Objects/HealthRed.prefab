@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212450680909257764}
   - component: {fileID: 95109468230912372}
   m_Layer: 0
-  m_Name: HealthBlue
+  m_Name: HealthRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

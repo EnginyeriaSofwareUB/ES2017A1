@@ -54,6 +54,7 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
+        if (this.actualUnit == null) return;
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             if (this.checkTurn())
