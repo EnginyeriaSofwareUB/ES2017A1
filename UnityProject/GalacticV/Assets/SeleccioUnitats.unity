@@ -210,7 +210,9 @@ MonoBehaviour:
   attackCost: 1
   defendCost: 1
   abilityCost: 1
-  lifeValue: 0
+  defenseModifier: 0.5
+  attackvalue: 1
+  lifeValue: 200
 --- !u!1 &64140217
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +424,9 @@ MonoBehaviour:
   attackCost: 1
   defendCost: 1
   abilityCost: 1
-  lifeValue: 0
+  defenseModifier: 0.5
+  attackvalue: 1
+  lifeValue: 200
 --- !u!1 &141109642
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +807,11 @@ Prefab:
       propertyPath: type
       value: RANGE
       objectReference: {fileID: 0}
+    - target: {fileID: 61844547975922136, guid: bee7388d237058848a83645eee48befc,
+        type: 2}
+      propertyPath: m_UsedByComposite
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114129521120310218, guid: bee7388d237058848a83645eee48befc, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: bee7388d237058848a83645eee48befc, type: 2}
@@ -976,7 +985,9 @@ MonoBehaviour:
   attackCost: 1
   defendCost: 1
   abilityCost: 1
-  lifeValue: 0
+  defenseModifier: 0.75
+  attackvalue: 1
+  lifeValue: 200
 --- !u!1 &646076826
 GameObject:
   m_ObjectHideFlags: 0
@@ -2198,12 +2209,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 098f98e5453ae9745909bd6018510ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: Ranged
+  type: Range
   movementCost: 1
   attackCost: 1
   defendCost: 1
   abilityCost: 1
-  lifeValue: 0
+  defenseModifier: 1
+  attackvalue: 4
+  lifeValue: 100
 --- !u!1001 &1464750023
 Prefab:
   m_ObjectHideFlags: 0
@@ -2270,7 +2283,7 @@ Prefab:
     - target: {fileID: 114501279007797846, guid: 12b3ceec86fac894bb8ccca38214f509,
         type: 2}
       propertyPath: type
-      value: Ranged
+      value: Range
       objectReference: {fileID: 0}
     - target: {fileID: 114501279007797846, guid: 12b3ceec86fac894bb8ccca38214f509,
         type: 2}
@@ -2301,12 +2314,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 098f98e5453ae9745909bd6018510ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: Ranged
+  type: Range
   movementCost: 1
   attackCost: 1
   defendCost: 1
   abilityCost: 1
-  lifeValue: 0
+  defenseModifier: 1
+  attackvalue: 4
+  lifeValue: 100
 --- !u!1 &1472970755
 GameObject:
   m_ObjectHideFlags: 0
@@ -3732,7 +3747,9 @@ MonoBehaviour:
   attackCost: 1
   defendCost: 1
   abilityCost: 1
-  lifeValue: 0
+  defenseModifier: 0.75
+  attackvalue: 1
+  lifeValue: 200
 --- !u!1001 &2035098639
 Prefab:
   m_ObjectHideFlags: 0
@@ -4197,8 +4214,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2, y: 0.2}
   m_AnchorMax: {x: 0.8, y: 0.8}
-  m_AnchoredPosition: {x: -0.000011444, y: 26.1}
-  m_SizeDelta: {x: -154.3, y: 5.8}
+  m_AnchoredPosition: {x: 11.175, y: 26.1}
+  m_SizeDelta: {x: -131.95, y: 5.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2139131649
 MonoBehaviour:
