@@ -65,14 +65,24 @@ public class CharacterSelection : MonoBehaviour {
 	}
 
 	public void ToggleLeft(){
-		SoundManager.instance.PlayButtonEffect();
+		SoundManager.instance.PlayButtonEffect ();
 		character [index].SetActive (false);
 
 		index--;
 
 
-		if (index < 0)
-			index = character.Length - 1;
+		if (index < 0 && count % 2 == 0) {
+			index = character.Length - 4;
+
+		}
+		else if (count % 2 != 0) {
+			if (index < 3) {
+				index = character.Length - 1;
+			}
+
+		}
+
+	
 
 		character [index].SetActive (true);
 		word.text=character[index].GetComponent<UnitSpecification>().GetType();
@@ -96,8 +106,13 @@ public class CharacterSelection : MonoBehaviour {
 		index++;
 
 
-		if (index == character.Length)
+		if (index > 2 && count % 2 == 0)
 			index = 0;
+		else if (count % 2 != 0) {
+			if (index == character.Length) {
+				index = 3;
+			}
+		}
 
 		character [index].SetActive (true);
 		//word.text = texts [index];
@@ -142,6 +157,9 @@ public class CharacterSelection : MonoBehaviour {
                 P1Characters.Add(blueUnit);
 
                 p1añadidos++;
+				character [index].SetActive (false);
+				index = 2;
+				character [3].SetActive (true);
             }
             else if (count % 2 != 0)
             {
@@ -151,11 +169,15 @@ public class CharacterSelection : MonoBehaviour {
                 UnitSpecification redUnit = character[index].GetComponent<UnitSpecification>();
                 P2Characters.Add(redUnit);
                 p2added++;
-                //
+				character [index].SetActive (false);
+				index = 0;
+				character [0].SetActive (true);
+                
             }
         }
         else playbutton();
 		count--;
+
 
 		//show play button when player selection is complete
 
