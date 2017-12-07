@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 212972895437696302}
   - component: {fileID: 95182667332571684}
   - component: {fileID: 114647465699260992}
-  - component: {fileID: 61787511216576600}
+  - component: {fileID: 61927212146111420}
   m_Layer: 0
   m_Name: UnitMeleeBlue
   m_TagString: Blue
@@ -121,13 +121,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1433942232193662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 263, y: 84, z: 0}
+  m_LocalPosition: {x: 263, y: 3, z: 0}
   m_LocalScale: {x: 75, y: 75, z: 1}
   m_Children: []
   m_Father: {fileID: 224733835927046658}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61787511216576600
+--- !u!61 &61927212146111420
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -139,10 +139,10 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.26099998, y: 0.75600004}
+  m_Offset: {x: 0.26099998, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.2, y: 0.2}
+    pivot: {x: 0.2, y: 0.5}
     oldSize: {x: 0.87, y: 2.52}
     newSize: {x: 0.87, y: 2.52}
     adaptiveTilingThreshold: 0.5
@@ -458,7 +458,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -44, y: 72}
+  m_AnchoredPosition: {x: -44, y: 9}
   m_SizeDelta: {x: 500, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224733835927046658
@@ -478,6 +478,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.029993653, y: 1.9700004}
-  m_SizeDelta: {x: 650, y: 488}
+  m_AnchoredPosition: {x: 0.223, y: 1.514}
+  m_SizeDelta: {x: 650, y: 113.8515}
   m_Pivot: {x: 0.5, y: 0.5}

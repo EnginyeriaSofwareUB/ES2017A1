@@ -223,6 +223,7 @@ public class MapManager : MonoBehaviour {
                 gameController.ActualCell.PaintUnselected();
                 Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
                 List<Vector3> movementPath = CalculatePath(gameController.ActualUnit.currentPosition, point);
+                gameController.MakeInteractableButtons(true);
                 gameController.ActualUnit.MoveTo(point, movementPath);
                 Tiles[point].SetIsEmpty(false);
                 gameController.ActualCell = null;
