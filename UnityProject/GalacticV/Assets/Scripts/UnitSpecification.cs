@@ -9,13 +9,15 @@ public class UnitSpecification : MonoBehaviour {
     public int attackCost = 1;
     public int defendCost = 1;
     public int abilityCost = 1;
-
+	public double defenseModifier;
+	public double attackvalue;
 
     protected Transform parent;
     [SerializeField]
     protected float lifeValue;
     protected float maxLifeValue;
-    protected double defenseModifier;
+    //protected double defenseModifier;
+
 
     // Use this for initialization
     void Start () {
@@ -37,4 +39,11 @@ public class UnitSpecification : MonoBehaviour {
     {
         return this.type;
     }
+
+
+	public double GetDefenseModifier
+	{
+		get { return defenseModifier; }
+		set { this.defenseModifier = value; }
+	}
 }
