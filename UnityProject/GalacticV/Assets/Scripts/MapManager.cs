@@ -73,7 +73,12 @@ public class MapManager : MonoBehaviour {
 
     private bool IsValidTile(Point point)
     {
-        return (point.X > 0 && point.X < columns - 1 && point.Y > 0 && point.Y < rows - 1 && Tiles[point].GetIsEmpty());
+        return (Tiles.ContainsKey(point) && Tiles[point].GetIsEmpty());
+    }
+
+    private bool IsWithinBounds(Point point)
+    {
+        return Tiles.ContainsKey(point);
     }
 
     public void ShowRange(Point position, int range)
@@ -486,6 +491,64 @@ public class MapManager : MonoBehaviour {
             case "Default":
                 break;
         }
+    }
+
+    public void MeteorInPoint(Point position)
+    {
+        Point currentPoint, newPoint;
+        List<Point> buffer = new List<Point>();
+        int range = 2;
+        buffer.Add(position);
+
+        while (buffer.Any())
+        {
+            currentPoint = buffer.First();
+            newPoint = new Point(currentPoint.X + 1, currentPoint.Y);
+            if (IsWithinBounds(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+            if (IsWithinBounds(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X, currentPoint.Y - 1);
+            if (IsWithinBounds(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+            if (IsWithinBounds(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            currentRange.Add(currentPoint);
+            buffer.Remove(currentPoint);
+        }
+
+        var unitsToRemove = new List<IUnitScript>();
+
+        foreach (var unit in units)
+        {
+            if (currentRange.Contains(unit.currentPosition))
+            {
+                Destroy(unit.transform.gameObject);
+                unitsToRemove.Add(unit);
+            }
+        }
+
+        units.RemoveAll(x => unitsToRemove.Contains(x));
+
+        foreach (var point in currentRange)
+        {
+            //if (!Tiles[point].GetIsEmpty())
+            //{
+            //    Tiles[point].
+            //}
+            if (!Tiles.ContainsKey(point)) continue;
+            Destroy(Tiles[point].transform.gameObject);
+            Tiles.Remove(point);
+        }
+        currentRange = new List<Point>();
+
+
     }
 
     public string Converter(string s)
