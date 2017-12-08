@@ -493,6 +493,42 @@ public class MapManager : MonoBehaviour {
         }
     }
 
+    public void TriggerMeteorit(int team)
+    {
+        var unitsFromTeam = units.Where(u => u.team == team);
+        var unit = unitsFromTeam.ElementAt(Random.Range(0, unitsFromTeam.Count()));
+        int distance = 2;
+        var currentPoint = unit.currentPosition;
+        while(distance > 0)
+        {
+            int rand = Random.Range(0, 4);
+            switch(rand)
+            {
+                case 0:
+                    currentPoint.X++;
+                    if (IsWithinBounds(currentPoint)) distance--;
+                    else currentPoint.X--;
+                    break;
+                case 1:
+                    currentPoint.X--;
+                    if (IsWithinBounds(currentPoint)) distance--;
+                    else currentPoint.X++;
+                    break;
+                case 2:
+                    currentPoint.Y++;
+                    if (IsWithinBounds(currentPoint)) distance--;
+                    else currentPoint.Y--;
+                    break;
+                case 3:
+                    currentPoint.Y--;
+                    if (IsWithinBounds(currentPoint)) distance--;
+                    else currentPoint.Y++;
+                    break;
+            }
+        }
+        MeteorInPoint(currentPoint);
+    }
+
     public void MeteorInPoint(Point position)
     {
         Point currentPoint, newPoint;

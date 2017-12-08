@@ -53,7 +53,7 @@ public class GameController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-            manager.MeteorInPoint(new Point(3, 4));
+            manager.TriggerMeteorit(0);
         }
         if (this.actualUnit == null) return;
         if (Input.GetKeyDown(KeyCode.Alpha1))
