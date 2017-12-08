@@ -30,11 +30,12 @@ public class CoverageScript : MonoBehaviour
 
     public void ChangeSprite()
     {
-        gameObject.GetComponent<SpriteRenderer>().sprite = halfCoverage;
+        //gameObject.GetComponent<SpriteRenderer>().sprite = halfCoverage;
         full = false;
         Destroy(gameObject.GetComponent<BoxCollider2D>());
         gameObject.AddComponent<BoxCollider2D>();
         gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
+        gameObject.GetComponent<Animator>().SetTrigger("half");
         /*
         gameObject.GetComponent<BoxCollider2D>().size = new Vector2(0.874403f, 0.7641022f);
         gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(0.0058017f, 0.5912942f);*/

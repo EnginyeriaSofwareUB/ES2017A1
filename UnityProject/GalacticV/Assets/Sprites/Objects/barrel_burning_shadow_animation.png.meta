@@ -1,17 +1,12 @@
 fileFormatVersion: 2
-guid: 5bca3f439965c6d4eb1a476d28c0cbe0
-timeCreated: 1512655281
+guid: f19f702e07429c24d9f264bbb8854c0d
+timeCreated: 1512656312
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: running_blue_0
-    21300002: running_blue_1
-    21300004: running_blue_2
-    21300006: running_blue_3
-    21300008: running_blue_4
-    21300010: running_blue_5
-    21300012: running_blue_6
-    21300014: running_blue_7
+    21300000: barrel_burning_shadow_animation_0
+    21300002: barrel_burning_shadow_animation_3
+    21300004: barrel_burning_shadow_animation_6
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -53,7 +48,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 75
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -99,113 +94,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: running_blue_0
+      name: barrel_burning_shadow_animation_0
       rect:
         serializedVersion: 2
-        x: 107
-        y: 48
-        width: 98
-        height: 201
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
+        x: 31
+        y: 16
+        width: 176
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: running_blue_1
+      name: barrel_burning_shadow_animation_3
       rect:
         serializedVersion: 2
-        x: 360
-        y: 48
-        width: 102
-        height: 198
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
+        x: 543
+        y: 16
+        width: 180
+        height: 233
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: running_blue_2
+      name: barrel_burning_shadow_animation_6
       rect:
         serializedVersion: 2
-        x: 598
-        y: 48
-        width: 126
-        height: 196
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: running_blue_3
-      rect:
-        serializedVersion: 2
-        x: 874
-        y: 48
-        width: 99
-        height: 201
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: running_blue_4
-      rect:
-        serializedVersion: 2
-        x: 1131
-        y: 48
-        width: 98
-        height: 201
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: running_blue_5
-      rect:
-        serializedVersion: 2
-        x: 1384
-        y: 48
-        width: 102
-        height: 198
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: running_blue_6
-      rect:
-        serializedVersion: 2
-        x: 1622
-        y: 48
-        width: 126
-        height: 196
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: running_blue_7
-      rect:
-        serializedVersion: 2
-        x: 1898
-        y: 48
-        width: 99
-        height: 201
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
+        x: 287
+        y: 16
+        width: 176
+        height: 231
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

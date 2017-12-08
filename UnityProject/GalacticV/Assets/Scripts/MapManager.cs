@@ -24,7 +24,7 @@ public class MapManager : MonoBehaviour {
     private List<Point> currentRange = new List<Point>();
     private int columns = 30;
     private int rows = 30;
-    private int rangeToSpawn = 3;
+    private int rangeToSpawn = 4;
 
     public float TileSize
     {
@@ -34,7 +34,25 @@ public class MapManager : MonoBehaviour {
     // Use this for initialization
     public void Init()
     {
+        GameObject infoSelection = GameObject.Find("InfoSelection");
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
+        List<string> blueUnitsName = infoSelection.GetComponent<InfoSelection>().BlueUnits;
+        List<GameObject> blueUnitsFromSelection = new List<GameObject>();
+        GameObject tmp;
+        foreach(string b in blueUnitsName)
+        {
+            tmp = Resources.Load("Units/"+b) as GameObject;
+            blueUnitsFromSelection.Add(tmp);
+        }
+        blueUnits = blueUnitsFromSelection.ToArray();
+        List<string> redUnitsName = infoSelection.GetComponent<InfoSelection>().RedUnits;
+        List<GameObject> redUnitsFromSelection = new List<GameObject>();
+        foreach(string r in redUnitsName)
+        {
+            tmp = Resources.Load("Units/" + r) as GameObject;
+            redUnitsFromSelection.Add(tmp);
+        }
+        redUnits = redUnitsFromSelection.ToArray();
         CreateLevel();
         SpawnCoverage();
         SpawnUnits();
@@ -223,6 +241,7 @@ public class MapManager : MonoBehaviour {
                 gameController.ActualCell.PaintUnselected();
                 Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
                 List<Vector3> movementPath = CalculatePath(gameController.ActualUnit.currentPosition, point);
+                gameController.MakeInteractableButtons(true);
                 gameController.ActualUnit.MoveTo(point, movementPath);
                 Tiles[point].SetIsEmpty(false);
                 gameController.ActualCell = null;
@@ -352,8 +371,8 @@ public class MapManager : MonoBehaviour {
         Point position = new Point(xRandom, yRandom);
         while (!Tiles[position].GetIsEmpty())
         {
-            yRandom = Random.Range(rows - rangeToSpawn - 1, rows - 2);
-            xRandom = Random.Range(columns - rangeToSpawn - 1, columns - 2);
+            xRandom = Random.Range(rows - rangeToSpawn - 1, rows - 2);
+            yRandom = Random.Range(columns - rangeToSpawn - 1, columns - 2);
             position = new Point(xRandom, yRandom);
         }
         newUnit.Setup(position, Tiles[position].transform.position, map);

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -235,4 +236,23 @@ public class GameController : MonoBehaviour {
 	{
 		return timeController.GetManaBuffer();
 	}
+
+    public void MakeInteractableButtons(bool _state)
+    {
+        Button[] buttons = GameObject.FindObjectsOfType<Button>();
+        if(_state)
+        {
+            foreach(Button b in buttons)
+            {
+                b.interactable = false;
+            }
+        }
+        else
+        {
+            foreach (Button b in buttons)
+            {
+                b.interactable = true;
+            }
+        }
+    }
 }

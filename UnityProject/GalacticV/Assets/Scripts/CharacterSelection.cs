@@ -31,8 +31,8 @@ public class CharacterSelection : MonoBehaviour {
 	private void Start(){
 		character=new GameObject[transform.childCount];
 
-		//P1Characters=new List<IUnitScript>();
-		//P2Characters = new List<IUnitScript> ();
+		P1Characters=new List<UnitSpecification>();
+	    P2Characters = new List<UnitSpecification> ();
 
 		for (int i = 0; i < transform.childCount; i++) {
 			character [i] = transform.GetChild (i).gameObject;
@@ -65,7 +65,7 @@ public class CharacterSelection : MonoBehaviour {
 	}
 
 	public void ToggleLeft(){
-		SoundManager.instance.PlayButtonEffect ();
+		//SoundManager.instance.PlayButtonEffect ();
 		character [index].SetActive (false);
 
 		index--;
@@ -102,7 +102,7 @@ public class CharacterSelection : MonoBehaviour {
 
 
 	public void ToggleRight(){
-		SoundManager.instance.PlayButtonEffect();
+		//SoundManager.instance.PlayButtonEffect();
 		character [index].SetActive (false);
 
 		index++;
@@ -136,7 +136,7 @@ public class CharacterSelection : MonoBehaviour {
 	}
 
 	public void okbutton(){
-		SoundManager.instance.PlayButtonEffect();
+		//SoundManager.instance.PlayButtonEffect();
         //SceneManager.LoadScene ("MainScene");
 
         //player.text = texts [index];
@@ -223,8 +223,21 @@ public class CharacterSelection : MonoBehaviour {
 	}
 
 	public void playbutton(){
-		
-		SoundManager.instance.PlayButtonEffect ();
+
+        //SoundManager.instance.PlayButtonEffect ();
+        List<string> blueUnits = new List<string>();
+        foreach(UnitSpecification s in P1Characters)
+        {
+            blueUnits.Add(s.gameObject.name);
+        }
+        List<string> redUnits = new List<string>();
+        foreach(UnitSpecification s in P2Characters)
+        {
+            redUnits.Add(s.gameObject.name);
+        }
+        GameObject.Find("InfoSelection").gameObject.GetComponent<InfoSelection>().SetBlueUnits(blueUnits);
+        GameObject.Find("InfoSelection").gameObject.GetComponent<InfoSelection>().SetRedUnits(redUnits);
+        DontDestroyOnLoad(GameObject.Find("InfoSelection").gameObject);
 		SceneManager.LoadScene ("MainScene");
 
 	}
