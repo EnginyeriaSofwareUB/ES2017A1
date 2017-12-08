@@ -81,12 +81,6 @@ MonoBehaviour:
   - {fileID: 1734460066389940, guid: 96b67cd476ba7084e9b3b17a56feeb74, type: 2}
   - {fileID: 1048586945882864, guid: c2ae7b8830da6a8479752a0bd554003b, type: 2}
   map: {fileID: 0}
-  blueUnits:
-  - {fileID: 1304330431714898, guid: bee7388d237058848a83645eee48befc, type: 2}
-  - {fileID: 1647316825745294, guid: 1fa0e9e94499b544eab8615cf43f6c38, type: 2}
-  - {fileID: 1273447160269440, guid: f84f0c4fe4e9e05439f408719a61ca5e, type: 2}
-  redUnits:
-  - {fileID: 1720627446343574, guid: 12b3ceec86fac894bb8ccca38214f509, type: 2}
-  - {fileID: 1157869639676800, guid: 4a394aaf35a301d4eb8f3c21d0868df0, type: 2}
-  - {fileID: 1406179191275762, guid: 070d33cc3c38da8409685238e5f65227, type: 2}
+  blueUnits: []
+  redUnits: []
   units: []
