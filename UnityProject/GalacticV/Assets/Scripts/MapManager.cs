@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ public class MapManager : MonoBehaviour {
     private List<Point> currentRange = new List<Point>();
     private int columns = 30;
     private int rows = 30;
-    private int rangeToSpawn = 3;
+    private int rangeToSpawn = 4;
 
     public float TileSize
     {
@@ -34,7 +35,25 @@ public class MapManager : MonoBehaviour {
     // Use this for initialization
     public void Init()
     {
+        GameObject infoSelection = GameObject.Find("InfoSelection");
         gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
+        List<string> blueUnitsName = infoSelection.GetComponent<InfoSelection>().BlueUnits;
+        List<GameObject> blueUnitsFromSelection = new List<GameObject>();
+        GameObject tmp;
+        foreach(string b in blueUnitsName)
+        {
+            tmp = Resources.Load("Units/"+b) as GameObject;
+            blueUnitsFromSelection.Add(tmp);
+        }
+        blueUnits = blueUnitsFromSelection.ToArray();
+        List<string> redUnitsName = infoSelection.GetComponent<InfoSelection>().RedUnits;
+        List<GameObject> redUnitsFromSelection = new List<GameObject>();
+        foreach(string r in redUnitsName)
+        {
+            tmp = Resources.Load("Units/" + r) as GameObject;
+            redUnitsFromSelection.Add(tmp);
+        }
+        redUnits = redUnitsFromSelection.ToArray();
         CreateLevel();
         SpawnCoverage();
         SpawnUnits();
@@ -73,7 +92,12 @@ public class MapManager : MonoBehaviour {
 
     private bool IsValidTile(Point point)
     {
-        return (point.X > 0 && point.X < columns - 1 && point.Y > 0 && point.Y < rows - 1 && Tiles[point].GetIsEmpty());
+        return (Tiles.ContainsKey(point) && Tiles[point].GetIsEmpty());
+    }
+
+    private bool IsWithinBounds(Point point)
+    {
+        return Tiles.ContainsKey(point);
     }
 
     public void ShowRange(Point position, int range)
@@ -224,6 +248,7 @@ public class MapManager : MonoBehaviour {
                 gameController.ActualCell.PaintUnselected();
                 Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
                 List<Vector3> movementPath = CalculatePath(gameController.ActualUnit.currentPosition, point);
+                gameController.MakeInteractableButtons(true);
                 gameController.ActualUnit.MoveTo(point, movementPath);
                 Tiles[point].SetIsEmpty(false);
                 gameController.ActualCell = null;
@@ -353,8 +378,8 @@ public class MapManager : MonoBehaviour {
         Point position = new Point(xRandom, yRandom);
         while (!Tiles[position].GetIsEmpty())
         {
-            yRandom = Random.Range(rows - rangeToSpawn - 1, rows - 2);
-            xRandom = Random.Range(columns - rangeToSpawn - 1, columns - 2);
+            xRandom = Random.Range(rows - rangeToSpawn - 1, rows - 2);
+            yRandom = Random.Range(columns - rangeToSpawn - 1, columns - 2);
             position = new Point(xRandom, yRandom);
         }
         newUnit.Setup(position, Tiles[position].transform.position, map);
@@ -487,6 +512,113 @@ public class MapManager : MonoBehaviour {
             case "Default":
                 break;
         }
+    }
+
+    public void TriggerMeteorit(int team)
+    {
+        var unitsFromTeam = units.Where(u => u.team == team);
+        var unit = unitsFromTeam.ElementAt(Random.Range(0, unitsFromTeam.Count()));
+        int distance = 2;
+        var currentPoint = unit.currentPosition;
+        while(distance > 0)
+        {
+            int rand = Random.Range(0, 4);
+            switch(rand)
+            {
+                case 0:
+                    currentPoint.X++;
+                    if (IsWithinBounds(currentPoint)) distance--;
+                    else currentPoint.X--;
+                    break;
+                case 1:
+                    currentPoint.X--;
+                    if (IsWithinBounds(currentPoint)) distance--;
+                    else currentPoint.X++;
+                    break;
+                case 2:
+                    currentPoint.Y++;
+                    if (IsWithinBounds(currentPoint)) distance--;
+                    else currentPoint.Y--;
+                    break;
+                case 3:
+                    currentPoint.Y--;
+                    if (IsWithinBounds(currentPoint)) distance--;
+                    else currentPoint.Y++;
+                    break;
+            }
+        }
+        StartCoroutine(MeteorInPoint(currentPoint));
+    }
+
+    IEnumerator MeteorInPoint(Point position)
+    {
+        Point currentPoint, newPoint;
+        List<Point> buffer = new List<Point>();
+        int range = 2;
+        buffer.Add(position);
+
+        GameObject meteorit = Instantiate(Resources.Load("Objects/meteorite_flames_0")) as GameObject;
+        meteorit.transform.position = new Vector3(Tiles[position].transform.position.x, Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y, 0);
+        var meteorScript = meteorit.GetComponent<MeteorObjectScript>();
+        meteorScript.targetPosition = Tiles[position].transform.position;
+        meteorScript.started = true;
+        yield return new WaitUntil(() => meteorScript.finished);
+        while (buffer.Any())
+        {
+            currentPoint = buffer.First();
+            newPoint = new Point(currentPoint.X + 1, currentPoint.Y);
+            if (IsWithinBounds(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X - 1, currentPoint.Y);
+            if (IsWithinBounds(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X, currentPoint.Y - 1);
+            if (IsWithinBounds(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            newPoint = new Point(currentPoint.X, currentPoint.Y + 1);
+            if (IsWithinBounds(newPoint) && !currentRange.Contains(newPoint) && Distance(position, newPoint) <= range)
+                buffer.Add(newPoint);
+
+            currentRange.Add(currentPoint);
+            buffer.Remove(currentPoint);
+        }
+
+        GameObject expl = Instantiate(Resources.Load("Objects/ExplosionRed")) as GameObject;
+        expl.transform.localScale += new Vector3(5f, 5f, 0);
+        expl.transform.position = meteorScript.targetPosition;
+        Destroy(meteorit);
+        Destroy(expl, 0.5f);
+
+        var unitsToRemove = new List<IUnitScript>();
+
+        foreach (var unit in units)
+        {
+            if (currentRange.Contains(unit.currentPosition))
+            {
+                Destroy(unit.transform.gameObject);
+                unitsToRemove.Add(unit);
+            }
+        }
+
+        units.RemoveAll(x => unitsToRemove.Contains(x));
+
+        foreach (var point in currentRange)
+        {
+            if (!Tiles.ContainsKey(point)) continue;
+            Destroy(Tiles[point].transform.gameObject);
+            Tiles.Remove(point);
+        }
+        
+        currentRange = new List<Point>();
+
+    }
+
+    IEnumerator Pause(MeteorObjectScript meteorScript)
+    {
+        yield return new WaitUntil(() => meteorScript.finished == true);
     }
 
     public string Converter(string s)

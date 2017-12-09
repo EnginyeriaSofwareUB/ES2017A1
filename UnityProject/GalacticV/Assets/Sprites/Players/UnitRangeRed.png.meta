@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: fa3423665ba96ee4f9a89a695eed69d9
-timeCreated: 1508436745
+timeCreated: 1512655197
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: UnitRangeRed_0
     21300002: UnitRangeRed_1
+    21300004: UnitRangeRed_2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -101,7 +102,7 @@ TextureImporter:
         width: 98
         height: 201
       alignment: 9
-      pivot: {x: 0.2, y: 0.2}
+      pivot: {x: 0.2, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -111,11 +112,25 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 365
-        y: 32
+        y: 33
         width: 99
         height: 190
       alignment: 9
-      pivot: {x: 0.2, y: 0.2}
+      pivot: {x: 0.2, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UnitRangeRed_2
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 21
+        width: 406
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

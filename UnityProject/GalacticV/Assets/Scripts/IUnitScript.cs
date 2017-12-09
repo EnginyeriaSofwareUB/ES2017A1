@@ -291,6 +291,7 @@ public abstract class IUnitScript : MonoBehaviour
                     {
                         state = Enums.UnitState.Idle;
                         this.GetComponent<Animator>().SetTrigger("idle");
+                        gameController.MakeInteractableButtons(false);
                         this.currentPosition = this.targetPosition;
                         //SoundManager.instance.StopEffect();
                         gameController.FinishAction();

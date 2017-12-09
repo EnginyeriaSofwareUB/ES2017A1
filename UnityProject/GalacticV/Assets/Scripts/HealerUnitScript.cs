@@ -16,7 +16,7 @@ public class HealerUnitScript : IUnitScript
 		this.movementCost = 1;
 		this.attackCost = 2;
 		this.defendCost = 1;
-		this.abilityCost = 3;
+		this.abilityCost = 2;
 	}
 
 	public new void OnMouseOver()

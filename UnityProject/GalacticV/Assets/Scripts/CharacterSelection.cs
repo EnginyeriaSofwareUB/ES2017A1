@@ -18,8 +18,8 @@ public class CharacterSelection : MonoBehaviour {
 	//[SerializeField] private Texture Icon3;
 	//string[]texts=new string[]{"RANGED    ATTACKER","DEFENDER"};
 	//string[]health=new string[]{"8","20"};
-	string[]atk=new string[]{"4","4", "4"};
-	string[]def=new string[]{"1","1", "1"};
+	//string[]atk=new string[]{"4","4", "4"};
+	//string[]def=new string[]{"1","1", "1"};
 
 	Text word;
 	Text vida;
@@ -31,8 +31,8 @@ public class CharacterSelection : MonoBehaviour {
 	private void Start(){
 		character=new GameObject[transform.childCount];
 
-		//P1Characters=new List<IUnitScript>();
-		//P2Characters = new List<IUnitScript> ();
+		P1Characters=new List<UnitSpecification>();
+	    P2Characters = new List<UnitSpecification> ();
 
 		for (int i = 0; i < transform.childCount; i++) {
 			character [i] = transform.GetChild (i).gameObject;
@@ -43,8 +43,8 @@ public class CharacterSelection : MonoBehaviour {
 			word.text=character[index].GetComponent<UnitSpecification>().GetType();
 			vida.text=character [index].GetComponent<UnitSpecification> ().Life.ToString ();
 			buttonplay = GameObject.Find ("ButtonPlay");
-			attack.text = atk [index];
-			defense.text = def [index];
+			attack.text = character[index].GetComponent<UnitSpecification>().attackvalue.ToString();
+			defense.text = character[index].GetComponent<UnitSpecification>().GetDefenseModifier.ToString();
 
 
 		}
@@ -60,24 +60,38 @@ public class CharacterSelection : MonoBehaviour {
 		if (character [0])
 			character [0].SetActive (true);
 
+		buttonplay.SetActive(false);
+
 	}
 
 	public void ToggleLeft(){
-		SoundManager.instance.PlayButtonEffect();
+		//SoundManager.instance.PlayButtonEffect ();
 		character [index].SetActive (false);
 
 		index--;
 
 
-		if (index < 0)
-			index = character.Length - 1;
+		if (index < 0 && count % 2 == 0) {
+			index = character.Length - 5;
+
+		}
+		else if (count % 2 != 0) {
+			if (index < 4) {
+				index = character.Length - 1;
+			}
+
+		}
+
+	
 
 		character [index].SetActive (true);
 		word.text=character[index].GetComponent<UnitSpecification>().GetType();
 		vida.text=character [index].GetComponent<UnitSpecification> ().Life.ToString ();
-		attack.text = atk [index];
-		defense.text = def [index];
+		//attack.text = atk [index];
+		//defense.text = def [index];
 		//player.text = texts [index];
+		attack.text = character[index].GetComponent<UnitSpecification>().attackvalue.ToString();
+		defense.text=character[index].GetComponent<UnitSpecification>().GetDefenseModifier.ToString();
 
 		print(vida.text);
 		print (word.text);
@@ -88,14 +102,19 @@ public class CharacterSelection : MonoBehaviour {
 
 
 	public void ToggleRight(){
-		SoundManager.instance.PlayButtonEffect();
+		//SoundManager.instance.PlayButtonEffect();
 		character [index].SetActive (false);
 
 		index++;
 
 
-		if (index == character.Length)
+		if (index > 3 && count % 2 == 0)
 			index = 0;
+		else if (count % 2 != 0) {
+			if (index == character.Length) {
+				index = 4;
+			}
+		}
 
 		character [index].SetActive (true);
 		//word.text = texts [index];
@@ -103,21 +122,21 @@ public class CharacterSelection : MonoBehaviour {
 		word.text=character[index].GetComponent<UnitSpecification>().GetType();
 		vida.text=character [index].GetComponent<UnitSpecification> ().Life.ToString ();
 		//attack.text = character [index].GetComponent<IUnitScript> ().Life.ToString ();
-		attack.text = atk [index];
-		defense.text = def [index];
-		//defense.text=character[index].GetComponent<IUnitScript>().GetDefenseModifier.ToString();
+		attack.text = character[index].GetComponent<UnitSpecification>().attackvalue.ToString();
+		//defense.text = def [index];
+		defense.text=character[index].GetComponent<UnitSpecification>().GetDefenseModifier.ToString();
 
 		print(vida.text);
 		print (word.text);
 		print (attack.text);
 
-		print (def [index]);
+		print (defense.text);
 		//print (character[index].GetComponent<IUnitScript>().GetDefenseModifier.ToString());
 
 	}
 
 	public void okbutton(){
-		SoundManager.instance.PlayButtonEffect();
+		//SoundManager.instance.PlayButtonEffect();
         //SceneManager.LoadScene ("MainScene");
 
         //player.text = texts [index];
@@ -126,20 +145,35 @@ public class CharacterSelection : MonoBehaviour {
         {
             if (count % 2 == 0)
             {
-                //Text player = GameObject.Find("player");
-
+               
                 player = GameObject.Find("player" + p1añadidos).GetComponent<Text>();
                 player.text = character[index].GetComponent<UnitSpecification>().GetType();
                 print(character[index].GetComponent<UnitSpecification>().GetType());
 
 
                 UnitSpecification blueUnit = character[index].GetComponent<UnitSpecification>();
-                //GameObject t = GameObject.Find("RawImage");
-
-                //t.GetComponent<RawImage>().texture = Icon3;
+                
                 P1Characters.Add(blueUnit);
 
                 p1añadidos++;
+				character [index].SetActive (false);
+				word.text = " ";
+				print (word.text);
+				index = 4;
+				character [index].SetActive (true);
+				word.text=character[index].GetComponent<UnitSpecification>().GetType();
+				vida.text=character [index].GetComponent<UnitSpecification> ().Life.ToString ();
+				//attack.text = atk [index];
+				//defense.text = def [index];
+				//player.text = texts [index];
+				attack.text = character[index].GetComponent<UnitSpecification>().attackvalue.ToString();
+				defense.text=character[index].GetComponent<UnitSpecification>().GetDefenseModifier.ToString();
+
+				print(vida.text);
+				print (word.text);
+				print (attack.text);
+				print (defense.text);
+
             }
             else if (count % 2 != 0)
             {
@@ -149,23 +183,61 @@ public class CharacterSelection : MonoBehaviour {
                 UnitSpecification redUnit = character[index].GetComponent<UnitSpecification>();
                 P2Characters.Add(redUnit);
                 p2added++;
-                //
+
+				//delete current unit info and show unit of another color
+				character [index].SetActive (false);
+				word.text = " ";
+				print (word.text);
+				index = 0;
+				character [index].SetActive (true);
+
+
+				word.text=character[index].GetComponent<UnitSpecification>().GetType();
+				vida.text=character [index].GetComponent<UnitSpecification> ().Life.ToString ();
+
+				attack.text = character[index].GetComponent<UnitSpecification>().attackvalue.ToString();
+				defense.text=character[index].GetComponent<UnitSpecification>().GetDefenseModifier.ToString();
+
+				print(vida.text);
+				print (word.text);
+				print (attack.text);
+				print (defense.text);
+                
             }
         }
         else playbutton();
 		count--;
 
+
 		//show play button when player selection is complete
-		/*
-		if (count == 0) {
+
+
+		if (count % 2 == 0) {
 			buttonplay.SetActive (true);
+		} else {
+			buttonplay.SetActive (false);
 		}
-		*/
+
+
+
 	}
 
 	public void playbutton(){
-		
-		SoundManager.instance.PlayButtonEffect ();
+
+        //SoundManager.instance.PlayButtonEffect ();
+        List<string> blueUnits = new List<string>();
+        foreach(UnitSpecification s in P1Characters)
+        {
+            blueUnits.Add(s.gameObject.name);
+        }
+        List<string> redUnits = new List<string>();
+        foreach(UnitSpecification s in P2Characters)
+        {
+            redUnits.Add(s.gameObject.name);
+        }
+        GameObject.Find("InfoSelection").gameObject.GetComponent<InfoSelection>().SetBlueUnits(blueUnits);
+        GameObject.Find("InfoSelection").gameObject.GetComponent<InfoSelection>().SetRedUnits(redUnits);
+        DontDestroyOnLoad(GameObject.Find("InfoSelection").gameObject);
 		SceneManager.LoadScene ("MainScene");
 
 	}
