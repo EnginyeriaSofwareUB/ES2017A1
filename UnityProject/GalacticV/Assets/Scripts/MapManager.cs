@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -545,16 +546,22 @@ public class MapManager : MonoBehaviour {
                     break;
             }
         }
-        MeteorInPoint(currentPoint);
+        StartCoroutine(MeteorInPoint(currentPoint));
     }
 
-    public void MeteorInPoint(Point position)
+    IEnumerator MeteorInPoint(Point position)
     {
         Point currentPoint, newPoint;
         List<Point> buffer = new List<Point>();
         int range = 2;
         buffer.Add(position);
 
+        GameObject meteorit = Instantiate(Resources.Load("Objects/meteorite_flames_0")) as GameObject;
+        meteorit.transform.position = new Vector3(Tiles[position].transform.position.x, Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y, 0);
+        var meteorScript = meteorit.GetComponent<MeteorObjectScript>();
+        meteorScript.targetPosition = Tiles[position].transform.position;
+        meteorScript.started = true;
+        yield return new WaitUntil(() => meteorScript.finished);
         while (buffer.Any())
         {
             currentPoint = buffer.First();
@@ -578,6 +585,12 @@ public class MapManager : MonoBehaviour {
             buffer.Remove(currentPoint);
         }
 
+        GameObject expl = Instantiate(Resources.Load("Objects/ExplosionRed")) as GameObject;
+        expl.transform.localScale += new Vector3(5f, 5f, 0);
+        expl.transform.position = meteorScript.targetPosition;
+        Destroy(meteorit);
+        Destroy(expl, 0.5f);
+
         var unitsToRemove = new List<IUnitScript>();
 
         foreach (var unit in units)
@@ -593,17 +606,18 @@ public class MapManager : MonoBehaviour {
 
         foreach (var point in currentRange)
         {
-            //if (!Tiles[point].GetIsEmpty())
-            //{
-            //    Tiles[point].
-            //}
             if (!Tiles.ContainsKey(point)) continue;
             Destroy(Tiles[point].transform.gameObject);
             Tiles.Remove(point);
         }
+        
         currentRange = new List<Point>();
 
+    }
 
+    IEnumerator Pause(MeteorObjectScript meteorScript)
+    {
+        yield return new WaitUntil(() => meteorScript.finished == true);
     }
 
     public string Converter(string s)
