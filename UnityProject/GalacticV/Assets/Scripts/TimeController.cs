@@ -185,7 +185,9 @@ public class TimeController : MonoBehaviour {
     // Function called to print mana
     public void PrintMana()
     {
-        manaText.text = string.Format("{00:00}", mana) + " / 10";
+		string mana = string.Format("{00:00}", this.mana);
+		string maxMana = string.Format("{00:00}", (((int)round) <= 10 ? (int)round : 10));
+		manaText.text = mana + " / " + maxMana;
     }
 
     //Function called when player surrender
