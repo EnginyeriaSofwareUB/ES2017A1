@@ -180,12 +180,14 @@ public abstract class IUnitScript : MonoBehaviour
 						gameController.DestinationUnit = this;
 						gameController.ActualUnit.Attack();
 						gameController.HidePlayerStats();
-					} else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "tank")
-					{
+					}
+                    else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "tank" || gameController.ActualUnit.type == "melee")
+                    {
 						gameController.destinationPoint = this.currentPosition;
 						gameController.ActualUnit.Attack();
 						gameController.HidePlayerStats();
-					} else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "healer")
+					}
+                    else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "healer")
 					{
 						if (manager.Distance(gameController.ActualUnit.currentPosition, this.currentPosition) < gameController.ActualUnit.GetAttack + 1)
 						{
@@ -194,6 +196,7 @@ public abstract class IUnitScript : MonoBehaviour
 							gameController.HidePlayerStats();
 						}
 					}
+
 
 					break;
 				case "Ability":

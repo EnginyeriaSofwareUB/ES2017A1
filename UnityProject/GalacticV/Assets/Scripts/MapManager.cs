@@ -134,7 +134,6 @@ public class MapManager : MonoBehaviour {
             }
         }
         else if (gameController.GetHability() == "Attack")
-
 		{
             while (buffer.Any())
             {
@@ -173,7 +172,7 @@ public class MapManager : MonoBehaviour {
             {
                 Tiles[point].SetColor(Color.yellow);
             }
-            else if (gameController.GetHability() == "Attack" && (gameController.ActualUnit.type == "tank" || gameController.ActualUnit.type == "healer"))
+            else if (gameController.GetHability() == "Attack" && (gameController.ActualUnit.type != "ranged"))
             {
                 Tiles[point].SetColor(Color.blue);
             }
