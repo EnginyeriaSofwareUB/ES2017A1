@@ -26,17 +26,35 @@ public class MeleeUnitScript : IUnitScript {
 
     public override void AttackAction()
     {
-       
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        gameController.SetAbility("Attack");
+        manager.LineRange(this.currentPosition, 1);
+        gameController.SetCancelAction(true);
     }
 
     public override void Attack()
     {
-        
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        manager.DamageInRangeForTank(gameController.destinationPoint, attackRange, this.attackValue);
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        gameController.SetAbility(" ");
+        gameController.ActualCell.SetColor(Color.white);
+        gameController.ActualCell = null;
+        gameController.ActualUnit.SetSelected(false);
+        gameController.ActualUnit = null;
+        gameController.SetCancelAction(false);
+        manager.ClearCurrentRange();
+        gameController.FinishAction();
     }
 
     public override void CancelAttack()
     {
-        
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+        gameController.DestinationUnit = null;
+        gameController.SetAbility(" ");
+        manager.ClearCurrentRange();
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        gameController.SetCancelAction(false);
     }
     
     public override void UseAbility()
