@@ -19,31 +19,17 @@ public class TankUnitScript : IUnitScript {
     {
         this.GetComponent<Animator>().SetTrigger("attack");
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-        //manager.DamageInRangeForTank(gameController.destinationPoint, attackRange, this.attackValue);
-        IUnitScript unit = gameController.DestinationUnit;
-        if (attackValue >= unit.Life)
-        {
-            manager.Tiles[unit.currentPosition].SetColor(Color.white);
-            manager.Tiles[unit.currentPosition].SetIsEmpty(true);
-            gameController.DestinationUnit = null;
-            Destroy(unit.transform.gameObject);
-        }
-        else
-        {
-            unit.TakeDamage(attackValue);
-            unit.ReduceLife();
-            manager.Tiles[unit.currentPosition].SetColor(Color.white);
-        }
+        manager.DamageInRangeForTank(gameController.destinationPoint, attackRange, this.attackValue);
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         gameController.SetAbility(" ");
         gameController.ActualCell.SetColor(Color.white);
         gameController.ActualCell = null;
         gameController.ActualUnit.SetSelected(false);
         gameController.ActualUnit = null;
         gameController.SetCancelAction(false);
-        manager.ClearCurrentRange();
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-        gameController.FinishAction();
         this.GetComponent<Animator>().SetTrigger("idle");
+        manager.ClearCurrentRange();
+        gameController.FinishAction();
     }
 
     public override void AttackAction()

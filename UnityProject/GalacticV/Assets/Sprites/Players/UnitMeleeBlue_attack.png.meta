@@ -1,9 +1,17 @@
 fileFormatVersion: 2
 guid: 487a2c2a67956eb4db5a351bab012be8
-timeCreated: 1512924139
+timeCreated: 1512935261
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: UnitMeleeBlue_attack_0
+    21300002: UnitMeleeBlue_attack_2
+    21300004: UnitMeleeBlue_attack_4
+    21300006: UnitMeleeBlue_attack_7
+    21300008: UnitMeleeBlue_attack_9
+    21300010: UnitMeleeBlue_attack_11
+    21300012: UnitMeleeBlue_attack_12
+    21300014: UnitMeleeBlue_attack_14
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -56,7 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -64,7 +72,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -79,9 +87,137 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Windows Store Apps
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 4096
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: UnitMeleeBlue_attack_0
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 128
+        width: 90
+        height: 258
+      alignment: 9
+      pivot: {x: 0.2, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UnitMeleeBlue_attack_2
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 128
+        width: 66
+        height: 264
+      alignment: 9
+      pivot: {x: 0.2, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UnitMeleeBlue_attack_4
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 128
+        width: 66
+        height: 272
+      alignment: 9
+      pivot: {x: 0.2, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UnitMeleeBlue_attack_7
+      rect:
+        serializedVersion: 2
+        x: 853
+        y: 128
+        width: 81
+        height: 264
+      alignment: 9
+      pivot: {x: 0.42296234, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UnitMeleeBlue_attack_9
+      rect:
+        serializedVersion: 2
+        x: 1081
+        y: 128
+        width: 104
+        height: 255
+      alignment: 9
+      pivot: {x: 0.5820383, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UnitMeleeBlue_attack_11
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 128
+        width: 115
+        height: 242
+      alignment: 9
+      pivot: {x: 0.702538, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UnitMeleeBlue_attack_12
+      rect:
+        serializedVersion: 2
+        x: 1643
+        y: 128
+        width: 66
+        height: 269
+      alignment: 9
+      pivot: {x: 0.2, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UnitMeleeBlue_attack_14
+      rect:
+        serializedVersion: 2
+        x: 1899
+        y: 128
+        width: 125
+        height: 211
+      alignment: 9
+      pivot: {x: 0.15183984, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 
