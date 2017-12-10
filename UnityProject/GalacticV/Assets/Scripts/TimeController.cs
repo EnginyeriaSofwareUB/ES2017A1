@@ -47,7 +47,7 @@ public class TimeController : MonoBehaviour {
 		Init();
 		StartTime();
 		ChangeColors();
-        this.timeDelayRemaining = 5;
+        this.timeDelayRemaining = 0.5f;
         this.isDelayActivate = false;
 	}
 
@@ -185,7 +185,9 @@ public class TimeController : MonoBehaviour {
     // Function called to print mana
     public void PrintMana()
     {
-        manaText.text = string.Format("{00:00}", mana) + " / 10";
+		string mana = string.Format("{00:00}", this.mana);
+		string maxMana = string.Format("{00:00}", (((int)round) <= 10 ? (int)round : 10));
+		manaText.text = mana + " / " + maxMana;
     }
 
     //Function called when player surrender
@@ -212,7 +214,7 @@ public class TimeController : MonoBehaviour {
     IEnumerator EndGame()
     {
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-        yield return new WaitForSecondsRealtime(2.0f);
+        yield return new WaitForSecondsRealtime(0.5f);
         if (player1Turn)
         {
             manager.KillUnits("Blue");

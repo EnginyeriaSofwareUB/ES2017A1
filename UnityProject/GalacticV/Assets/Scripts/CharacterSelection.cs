@@ -72,11 +72,11 @@ public class CharacterSelection : MonoBehaviour {
 
 
 		if (index < 0 && count % 2 == 0) {
-			index = character.Length - 4;
+			index = character.Length - 5;
 
 		}
 		else if (count % 2 != 0) {
-			if (index < 3) {
+			if (index < 4) {
 				index = character.Length - 1;
 			}
 
@@ -108,11 +108,11 @@ public class CharacterSelection : MonoBehaviour {
 		index++;
 
 
-		if (index > 2 && count % 2 == 0)
+		if (index > 3 && count % 2 == 0)
 			index = 0;
 		else if (count % 2 != 0) {
 			if (index == character.Length) {
-				index = 3;
+				index = 4;
 			}
 		}
 
@@ -159,7 +159,7 @@ public class CharacterSelection : MonoBehaviour {
 				character [index].SetActive (false);
 				word.text = " ";
 				print (word.text);
-				index = 3;
+				index = 4;
 				character [index].SetActive (true);
 				word.text=character[index].GetComponent<UnitSpecification>().GetType();
 				vida.text=character [index].GetComponent<UnitSpecification> ().Life.ToString ();
