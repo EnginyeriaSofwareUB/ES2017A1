@@ -61,7 +61,7 @@ public class MeleeUnitScript : IUnitScript {
         manager.Tiles[currentPosition].SetIsEmpty(true);
         this.state = Assets.Scripts.Enums.UnitState.Skill;
         this.GetComponent<Animator>().SetTrigger("move");
-        gameController.DestinationUnit.Life -= this.abilityDamage;
+        gameController.DestinationUnit.TakeDamage(this.abilityDamage);
         gameController.DestinationUnit.ReduceLife();
         gameController.SetAbility(" ");
         gameController.ActualCell.SetColor(Color.white);

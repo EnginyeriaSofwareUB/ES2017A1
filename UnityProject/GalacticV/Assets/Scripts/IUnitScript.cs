@@ -182,10 +182,13 @@ public abstract class IUnitScript : MonoBehaviour
 						gameController.HidePlayerStats();
 					} else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "tank")
 					{
-						gameController.destinationPoint = this.currentPosition;
-						gameController.ActualUnit.Attack();
-						gameController.HidePlayerStats();
-					} else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "healer")
+                        if (manager.Distance(gameController.ActualUnit.currentPosition, this.currentPosition) < gameController.ActualUnit.GetAttack + 1)
+                        {
+                            gameController.DestinationUnit = this;
+                            gameController.ActualUnit.Attack();
+                            gameController.HidePlayerStats();
+                        }
+                    } else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "healer")
 					{
 						if (manager.Distance(gameController.ActualUnit.currentPosition, this.currentPosition) < gameController.ActualUnit.GetAttack + 1)
 						{

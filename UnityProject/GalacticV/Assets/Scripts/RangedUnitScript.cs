@@ -114,6 +114,7 @@ public class RangedUnitScript : IUnitScript
                 else
                 {
                     unitToShoot.GetComponent<IUnitScript>().Life = unitToShoot.GetComponent<IUnitScript>().Life - this.GetAttack;
+                    unitToShoot.GetComponent<IUnitScript>().TakeDamage(this.GetAttack);
                     unitToShoot.GetComponent<IUnitScript>().ReduceLife();
                     manager.Tiles[unitToShoot.GetComponent<IUnitScript>().currentPosition].SetColor(Color.white);
                     manager.Tiles[gameController.DestinationUnit.currentPosition].SetColor(Color.white);

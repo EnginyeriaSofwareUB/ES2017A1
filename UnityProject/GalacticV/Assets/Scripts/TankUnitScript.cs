@@ -17,8 +17,23 @@ public class TankUnitScript : IUnitScript {
 
     public override void Attack()
     {
+        this.GetComponent<Animator>().SetTrigger("attack");
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-        manager.DamageInRangeForTank(gameController.destinationPoint, attackRange, this.attackValue);
+        //manager.DamageInRangeForTank(gameController.destinationPoint, attackRange, this.attackValue);
+        IUnitScript unit = gameController.DestinationUnit;
+        if (attackValue >= unit.Life)
+        {
+            manager.Tiles[unit.currentPosition].SetColor(Color.white);
+            manager.Tiles[unit.currentPosition].SetIsEmpty(true);
+            gameController.DestinationUnit = null;
+            Destroy(unit.transform.gameObject);
+        }
+        else
+        {
+            unit.TakeDamage(attackValue);
+            unit.ReduceLife();
+            manager.Tiles[unit.currentPosition].SetColor(Color.white);
+        }
         gameController.SetAbility(" ");
         gameController.ActualCell.SetColor(Color.white);
         gameController.ActualCell = null;
@@ -26,7 +41,9 @@ public class TankUnitScript : IUnitScript {
         gameController.ActualUnit = null;
         gameController.SetCancelAction(false);
         manager.ClearCurrentRange();
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         gameController.FinishAction();
+        this.GetComponent<Animator>().SetTrigger("idle");
     }
 
     public override void AttackAction()

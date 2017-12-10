@@ -449,7 +449,7 @@ public class MapManager : MonoBehaviour {
                 }
                 else
                 {
-                    unit.Life -= (float)damage;
+                    unit.TakeDamage(damage);
                     unit.ReduceLife();
                     Tiles[unit.currentPosition].SetColor(Color.white);
                 }
@@ -471,7 +471,7 @@ public class MapManager : MonoBehaviour {
                 }
                 else
                 {
-                    unit.Life -= (float)damage;
+                    unit.TakeDamage(damage);
                     unit.ReduceLife();
                     Tiles[unit.currentPosition].SetColor(Color.white);
                 }
