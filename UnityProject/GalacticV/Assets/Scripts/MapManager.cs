@@ -262,11 +262,11 @@ public class MapManager : MonoBehaviour {
                 string coverageName = "";
                 if(gameController.ActualUnit.team == 0)
                 {
-                    coverageName = "Objects/CoverageBlue";
+                    coverageName = "Objects/BarrierBlue";
                 }
                 else if(gameController.ActualUnit.team == 1)
                 {
-                    coverageName = "Objects/CoverageRed";
+                    coverageName = "Objects/BarrierRed";
                 }
                 GameObject coverage = Instantiate(Resources.Load(coverageName)) as GameObject;
                 coverage.GetComponent<CoverageScript>().Setup(point, Tiles[point].transform.position, map);
