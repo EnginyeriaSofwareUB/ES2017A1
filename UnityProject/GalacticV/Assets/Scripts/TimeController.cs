@@ -47,7 +47,7 @@ public class TimeController : MonoBehaviour {
 		Init();
 		StartTime();
 		ChangeColors();
-        this.timeDelayRemaining = 5;
+        this.timeDelayRemaining = 0.5f;
         this.isDelayActivate = false;
 	}
 
@@ -214,7 +214,7 @@ public class TimeController : MonoBehaviour {
     IEnumerator EndGame()
     {
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-        yield return new WaitForSecondsRealtime(2.0f);
+        yield return new WaitForSecondsRealtime(0.5f);
         if (player1Turn)
         {
             manager.KillUnits("Blue");
