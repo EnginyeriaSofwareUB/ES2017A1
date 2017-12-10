@@ -20,12 +20,16 @@ public class MapManager : MonoBehaviour {
     [SerializeField]
     public Dictionary<Point, CellScript> Tiles { get; set; }
 
+    private TimeController timeController;
+
     public List<IUnitScript> units;
     private GameController gameController;
     private List<Point> currentRange = new List<Point>();
     private int columns = 30;
     private int rows = 30;
     private int rangeToSpawn = 4;
+
+    private bool isPowerUp = false;
 
     public float TileSize
     {
@@ -684,5 +688,38 @@ public class MapManager : MonoBehaviour {
                 break;
         }
         return c;
+    }
+
+    public void SpawnPowerUp()
+    {
+        int xRandom = Random.Range(2, columns-1);
+        int yRandom = Random.Range(2, rows-1);
+        Point position = new Point(xRandom, yRandom);
+        while (!Tiles[position].GetIsEmpty())
+        {
+            xRandom = Random.Range(2, columns-1);
+            yRandom = Random.Range(2, rows-1);
+            position = new Point(xRandom, yRandom);
+        }
+        GameObject powerUp = Instantiate(Resources.Load("Objects/PowerUp")) as GameObject;
+        powerUp.GetComponent<PowerUpScript>().Setup(position, Tiles[position].transform.position, map);
+        this.isPowerUp = true;
+        //Tiles[position].SetIsEmpty(false);
+    }
+
+    public void GetPowerUp()
+    {
+        this.TriggerMeteorit(0);
+        GameObject powerUp = GameObject.FindGameObjectWithTag("PowerUp");
+        Destroy(powerUp);
+        this.isPowerUp = false;
+        timeController = GameObject.FindObjectOfType<TimeController>();
+        timeController.TimeForPowerUp(Random.Range(5,10));
+        timeController.SetCountDownPowerUpActivate(true);
+    }
+
+    public bool IsPowerUpActivate()
+    {
+        return this.isPowerUp;
     }
 }

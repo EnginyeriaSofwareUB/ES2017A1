@@ -8,6 +8,8 @@ using System.Collections.Generic;
 public class TimeController : MonoBehaviour {
 
     private float timeRemaining; //In seconds
+    private bool countDownPowerUpActivate;
+    private float timePowerUp; //In seconds
     private bool countdownActivate;
     private int mana;
     private int manaBuffer;
@@ -49,7 +51,9 @@ public class TimeController : MonoBehaviour {
 		ChangeColors();
         this.timeDelayRemaining = 5;
         this.isDelayActivate = false;
-	}
+        this.countDownPowerUpActivate = true;
+        this.timePowerUp = 5;
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -72,7 +76,19 @@ public class TimeController : MonoBehaviour {
             }
             
         }
-	}
+
+        if (this.countDownPowerUpActivate)
+        {
+            this.timePowerUp -= Time.deltaTime; //Decrement
+            if (this.timePowerUp <= 0)
+            {
+                this.countDownPowerUpActivate = false;
+                MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+                manager.SpawnPowerUp();
+            }
+
+        }
+    }
 
 	private void Init()
 	{
@@ -103,6 +119,7 @@ public class TimeController : MonoBehaviour {
     private void StopTime()
     {
         countdownActivate = false;
+        this.countDownPowerUpActivate = false;
         timeRemaining = 0;
     }
 
@@ -287,5 +304,15 @@ public class TimeController : MonoBehaviour {
     public bool GetIsDelayActivate()
     {
         return this.isDelayActivate;
+    }
+
+    public void TimeForPowerUp(int seconds)
+    {
+        this.timePowerUp = seconds;
+    }
+
+    public void SetCountDownPowerUpActivate(bool state)
+    {
+        this.countDownPowerUpActivate = state;
     }
 }
