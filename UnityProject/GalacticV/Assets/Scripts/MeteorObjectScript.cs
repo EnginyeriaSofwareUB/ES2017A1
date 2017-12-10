@@ -7,7 +7,7 @@ public class MeteorObjectScript : MonoBehaviour {
     public Vector3 targetPosition;
     public bool finished = false;
     public bool started = false;
-    float speed = 6f;
+    public float speed = 6f;
 
 	// Use this for initialization
 	void Start () {
