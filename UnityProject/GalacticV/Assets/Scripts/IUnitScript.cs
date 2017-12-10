@@ -168,57 +168,57 @@ public abstract class IUnitScript : MonoBehaviour
     public void OnMouseDown()
     {
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-        if(this.state != Enums.UnitState.Defense)
-        {
-			switch (gameController.GetHability())
-			{
-				case "Move":
-					break;
-				case "Attack":
-					if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "ranged")
+		switch (gameController.GetHability())
+		{
+			case "Move":
+				break;
+			case "Attack":
+				if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "ranged")
+				{
+					gameController.DestinationUnit = this;
+					gameController.ActualUnit.Attack();
+					gameController.HidePlayerStats();
+				}
+                else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "tank" || gameController.ActualUnit.type == "melee")
+                {
+					gameController.destinationPoint = this.currentPosition;
+					gameController.ActualUnit.Attack();
+					gameController.HidePlayerStats();
+				}
+                else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "healer")
+				{
+					if (manager.Distance(gameController.ActualUnit.currentPosition, this.currentPosition) < gameController.ActualUnit.GetAttack + 1)
 					{
 						gameController.DestinationUnit = this;
 						gameController.ActualUnit.Attack();
 						gameController.HidePlayerStats();
 					}
-                    else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "tank" || gameController.ActualUnit.type == "melee")
-                    {
-						gameController.destinationPoint = this.currentPosition;
-						gameController.ActualUnit.Attack();
-						gameController.HidePlayerStats();
-					}
-                    else if (this.team != gameController.ActualUnit.team && gameController.ActualUnit.type == "healer")
-					{
-						if (manager.Distance(gameController.ActualUnit.currentPosition, this.currentPosition) < gameController.ActualUnit.GetAttack + 1)
-						{
-							gameController.DestinationUnit = this;
-							gameController.ActualUnit.Attack();
-							gameController.HidePlayerStats();
-						}
-					}
+				}
 
 
-					break;
-				case "Ability":
-					if (gameController.ActualUnit.type == "healer" && this.team == gameController.ActualUnit.team && gameController.ActualUnit != this) {
-						gameController.DestinationUnit = this;
-						gameController.ActualUnit.UseAbility();
-					}
-					else if (gameController.ActualUnit.type != "healer")
-					{
-						gameController.destinationPoint = this.currentPosition;
-						gameController.ActualUnit.UseAbility();
-						gameController.HidePlayerStats();
-					}
-                    break;
-                case "Special":
-                    if (gameController.ActualUnit.GetType() != "melee") return;
-                    if (gameController.ActualUnit.team == this.team) return;
-                    gameController.DestinationUnit = this;
-                    gameController.ActualUnit.UseAbility();
-                    gameController.HidePlayerStats();
-                    break;
-                default:
+				break;
+			case "Ability":
+				if (gameController.ActualUnit.type == "healer" && this.team == gameController.ActualUnit.team && gameController.ActualUnit != this) {
+					gameController.DestinationUnit = this;
+					gameController.ActualUnit.UseAbility();
+				}
+				else if (gameController.ActualUnit.type != "healer")
+				{
+					gameController.destinationPoint = this.currentPosition;
+					gameController.ActualUnit.UseAbility();
+					gameController.HidePlayerStats();
+				}
+                break;
+            case "Special":
+                if (gameController.ActualUnit.GetType() != "melee") return;
+                if (gameController.ActualUnit.team == this.team) return;
+                gameController.DestinationUnit = this;
+                gameController.ActualUnit.UseAbility();
+                gameController.HidePlayerStats();
+                break;
+            default:
+                if (this.state != Enums.UnitState.Defense)
+                {
                     if (gameController.ActualUnit != null && gameController.ActualUnit != this)
                     {
                         gameController.ActualCell.PaintUnselected();
@@ -241,8 +241,8 @@ public abstract class IUnitScript : MonoBehaviour
                         gameController.ActualCell = null;
                         gameController.HidePlayerStats();
                     }
-                    break;
-            }
+                }
+                break;
         }
     }
 
