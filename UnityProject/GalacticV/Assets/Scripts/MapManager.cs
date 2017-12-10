@@ -437,9 +437,28 @@ public class MapManager : MonoBehaviour {
 
     public void DamageInRange(Point point, int range, double damage)
     {
+
+        StartCoroutine(GrenadeInPoint(point, range, damage));
+    }
+
+    IEnumerator GrenadeInPoint(Point position, int range, double damage)
+    {
+        GameObject meteorit = Instantiate(Resources.Load("Objects/Grenade")) as GameObject;
+        meteorit.transform.position = new Vector3(Tiles[position].transform.position.x, Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y, 0);
+        var meteorScript = meteorit.GetComponent<MeteorObjectScript>();
+        meteorScript.speed = 8f;
+        meteorScript.targetPosition = Tiles[position].transform.position;
+        meteorScript.started = true;
+        yield return new WaitUntil(() => meteorScript.finished);
+
+        GameObject expl = Instantiate(Resources.Load("Objects/ExplosionRed")) as GameObject;
+        expl.transform.position = meteorScript.targetPosition;
+        Destroy(meteorit);
+        Destroy(expl, 0.5f);
+
         foreach (var unit in units)
         {
-            if (Distance(unit.currentPosition, point) < range + 1)
+            if (Distance(unit.currentPosition, position) < range + 1)
             {
                 if (damage >= unit.Life)
                 {
