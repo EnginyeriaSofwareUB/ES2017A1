@@ -25,6 +25,7 @@ public class MapManager : MonoBehaviour {
     public List<IUnitScript> units;
     private GameController gameController;
     private List<Point> currentRange = new List<Point>();
+    private List<CoverageScript> coverages = new List<CoverageScript>();
     private int columns = 30;
     private int rows = 30;
     private int rangeToSpawn = 4;
@@ -429,6 +430,7 @@ public class MapManager : MonoBehaviour {
             }
             GameObject coverage = Instantiate(Resources.Load("Objects/Tree")) as GameObject;
             coverage.GetComponent<CoverageScript>().Setup(position, Tiles[position].transform.position, map);
+            coverages.Add(coverage.GetComponent<CoverageScript>());
             Tiles[position].SetIsEmpty(false);
         }   
     }
@@ -626,6 +628,19 @@ public class MapManager : MonoBehaviour {
         }
 
         units.RemoveAll(x => unitsToRemove.Contains(x));
+
+        var coveragesToRemove = new List<CoverageScript>();
+
+        foreach (var coverage in coverages)
+        {
+            if (currentRange.Contains(coverage.GridPosition))
+            {
+                Destroy(coverage.transform.gameObject);
+                coveragesToRemove.Add(coverage);
+            }
+        }
+
+        coverages.RemoveAll(x => coveragesToRemove.Contains(x));
 
         foreach (var point in currentRange)
         {
