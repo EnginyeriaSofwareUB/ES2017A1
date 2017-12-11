@@ -24,6 +24,7 @@ TagManager:
   - PauseButton
   - TextBlue
   - TextRed
+  - PowerUp
   layers:
   - Default
   - TransparentFX
