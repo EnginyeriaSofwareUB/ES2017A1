@@ -17,24 +17,13 @@ public class RangedUnitScript : IUnitScript
         this.defendCost = 1;
         this.abilityCost = 3;
 	}
-    
-    public override void OnMouseOver()
-    {
-        if (gameController.GetHability() == "Attack")
-        {
-            MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-            if (!manager.Tiles[currentPosition].GetIsEmpty() && gameController.ActualUnit.team == this.team && gameController.ActualUnit != this)
-            {
-                manager.Tiles[this.currentPosition].SetColor(Color.red);
-            }
-            else if (!manager.Tiles[currentPosition].GetIsEmpty() && gameController.ActualUnit.team != this.team)
-            {
-                manager.Tiles[this.currentPosition].SetColor(Color.green);
-            }
-        }
-    }
 
-    public override void CancelAction(string actualAction)
+	public new void OnMouseOver()
+	{
+		base.OnMouseOver();
+	}
+
+	public override void CancelAction(string actualAction)
     {
         switch (actualAction)
         {

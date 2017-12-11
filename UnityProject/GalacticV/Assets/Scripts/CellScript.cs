@@ -52,10 +52,17 @@ public class CellScript : MonoBehaviour {
                     spriteRenderer.color = emptyColor;
                     break;
                 case "Ability":
-                    //previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor
-                    spriteRenderer.color = Color.yellow;
-                    MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-                    manager.PaintSurrounding(this.GridPosition);
+					if (gameController.ActualUnit.type == "healer")
+					{
+						spriteRenderer.color = Color.yellow;
+					}
+					else
+					{
+						//previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor
+						spriteRenderer.color = Color.yellow;
+						MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+						manager.PaintSurrounding(this.GridPosition);
+					}
                     break;
                 default:
                     previousColor = (spriteRenderer.color != emptyColor) ? spriteRenderer.color : previousColor;

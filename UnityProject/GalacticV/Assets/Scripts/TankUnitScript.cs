@@ -8,7 +8,7 @@ public class TankUnitScript : IUnitScript {
 
     void Start()
     {
-        base.Start(1, 2, 5, 200, 0.75, "tank");
+        base.Start(1, 3, 5, 200, 0.75, "tank");
         this.movementCost = 1;
         this.attackCost = 1;
         this.defendCost = 1;
@@ -82,21 +82,10 @@ public class TankUnitScript : IUnitScript {
         throw new NotImplementedException();
     }
 
-    public override void OnMouseOver()
+    public new void OnMouseOver()
     {
-        if (gameController.GetHability() == "Attack")
-        {
-            MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-            if (!manager.Tiles[currentPosition].GetIsEmpty() && gameController.ActualUnit.team == this.team && gameController.ActualUnit != this)
-            {
-                manager.Tiles[this.currentPosition].SetColor(Color.red);
-            }
-            else if (!manager.Tiles[currentPosition].GetIsEmpty() && gameController.ActualUnit.team != this.team)
-            {
-                manager.Tiles[this.currentPosition].SetColor(Color.green);
-            }
-        }
-    }
+		base.OnMouseOver();
+	}
 
     public override void SpecialHabilityAction()
     {
