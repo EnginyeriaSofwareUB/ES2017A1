@@ -25,6 +25,8 @@ TagManager:
   - TextBlue
   - TextRed
   - PowerUp
+  - VideoRed
+  - VideoBlue
   layers:
   - Default
   - TransparentFX
