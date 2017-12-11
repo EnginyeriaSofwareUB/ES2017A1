@@ -707,14 +707,14 @@ public class MapManager : MonoBehaviour {
         //Tiles[position].SetIsEmpty(false);
     }
 
-    public void GetPowerUp()
+    public void GetPowerUp(int team)
     {
-        this.TriggerMeteorit(0);
+        this.TriggerMeteorit(team);
         GameObject powerUp = GameObject.FindGameObjectWithTag("PowerUp");
         Destroy(powerUp);
         this.isPowerUp = false;
         timeController = GameObject.FindObjectOfType<TimeController>();
-        timeController.TimeForPowerUp(Random.Range(5,10));
+        timeController.TimeForPowerUp(Random.Range(120, 300));
         timeController.SetCountDownPowerUpActivate(true);
     }
 

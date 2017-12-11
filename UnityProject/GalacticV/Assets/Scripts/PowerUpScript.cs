@@ -13,13 +13,16 @@ public class PowerUpScript : MonoBehaviour {
         transform.SetParent(parent);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Hay colision");
-    }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Hay trigger");
+        MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
+
+        if (collision.tag == "Red") {
+            manager.GetPowerUp(0);
+        } else if (collision.tag == "Blue")
+        {
+            manager.GetPowerUp(1);
+        }
+
     }
 }

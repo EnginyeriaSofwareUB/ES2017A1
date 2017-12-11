@@ -52,7 +52,7 @@ public class TimeController : MonoBehaviour {
         this.timeDelayRemaining = 5;
         this.isDelayActivate = false;
         this.countDownPowerUpActivate = true;
-        this.timePowerUp = 5;
+        this.timePowerUp = Random.Range(120,300);
     }
 
 	// Update is called once per frame
