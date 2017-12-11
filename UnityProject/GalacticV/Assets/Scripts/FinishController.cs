@@ -16,6 +16,8 @@ public class FinishController : MonoBehaviour {
     private GameObject pauseButton;
     private GameObject blueText;
     private GameObject redText;
+    private GameObject videoRed;
+    private GameObject videoBlue;
     private PauseController pauseController;
 
     // Use this for initialization
@@ -30,8 +32,12 @@ public class FinishController : MonoBehaviour {
         pauseButton = GameObject.FindGameObjectWithTag("PauseButton");
         redText = GameObject.FindGameObjectWithTag("TextRed");
         blueText = GameObject.FindGameObjectWithTag("TextBlue");
+        videoRed = GameObject.FindGameObjectWithTag("VideoRed");
+        videoBlue = GameObject.FindGameObjectWithTag("VideoBlue");
         finishMenu.SetActive(isGameFinished);
-        
+        videoRed.SetActive(false);
+        videoBlue.SetActive(false);
+
     }
 	
 	// Update is called once per frame
@@ -51,11 +57,13 @@ public class FinishController : MonoBehaviour {
                     timeController.SetIsDelayActivate(false);
                     this.isGameFinished = true;
                     finishMenu.SetActive(isGameFinished);
+                    videoRed.SetActive(true);
                     pauseController.SetIsGameFinished(isGameFinished);
                     map.SetActive(!isGameFinished);
                     hud.SetActive(!isGameFinished);
                     pauseButton.SetActive(!isGameFinished);
                     blueText.SetActive(false);
+                    
                 }
             }
         }
@@ -75,11 +83,13 @@ public class FinishController : MonoBehaviour {
                     timeController.SetIsDelayActivate(false);
                     this.isGameFinished = true;
                     finishMenu.SetActive(isGameFinished);
+                    videoBlue.SetActive(true);
                     pauseController.SetIsGameFinished(isGameFinished);
                     map.SetActive(!isGameFinished);
                     hud.SetActive(!isGameFinished);
                     pauseButton.SetActive(!isGameFinished);
                     redText.SetActive(false);
+                    
                 }
             }
         }
