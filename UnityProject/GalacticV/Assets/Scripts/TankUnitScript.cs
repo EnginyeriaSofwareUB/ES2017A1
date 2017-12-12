@@ -17,14 +17,17 @@ public class TankUnitScript : IUnitScript {
 
     public override void Attack()
     {
+        this.GetComponent<Animator>().SetTrigger("attack");
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         manager.DamageInRangeForTank(gameController.destinationPoint, attackRange, this.attackValue);
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         gameController.SetAbility(" ");
         gameController.ActualCell.SetColor(Color.white);
         gameController.ActualCell = null;
         gameController.ActualUnit.SetSelected(false);
         gameController.ActualUnit = null;
         gameController.SetCancelAction(false);
+        this.GetComponent<Animator>().SetTrigger("idle");
         manager.ClearCurrentRange();
         gameController.FinishAction();
     }

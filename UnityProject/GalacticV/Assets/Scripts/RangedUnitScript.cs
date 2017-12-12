@@ -45,7 +45,7 @@ public class RangedUnitScript : IUnitScript
     public override void Attack()
     {
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
-		//SoundManager.instance.PlayEffect("Effects/laser_effect_1");
+		SoundManager.instance.PlayEffect("Effects/laser_effect_1");
 		Vector3 origin = GetOriginRay();
         Vector3 heading = gameController.DestinationUnit.GetDestinationPointRay() - origin;
         float distance = heading.magnitude;
@@ -114,6 +114,7 @@ public class RangedUnitScript : IUnitScript
                 else
                 {
                     unitToShoot.GetComponent<IUnitScript>().Life = unitToShoot.GetComponent<IUnitScript>().Life - this.GetAttack;
+                    unitToShoot.GetComponent<IUnitScript>().TakeDamage(this.GetAttack);
                     unitToShoot.GetComponent<IUnitScript>().ReduceLife();
                     manager.Tiles[unitToShoot.GetComponent<IUnitScript>().currentPosition].SetColor(Color.white);
                     manager.Tiles[gameController.DestinationUnit.currentPosition].SetColor(Color.white);

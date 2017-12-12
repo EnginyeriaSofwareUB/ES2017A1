@@ -21,7 +21,18 @@ public class MeleeUnitScript : IUnitScript {
 
 	public override void CancelAction(string actualAction)
     {
-        
+        switch (actualAction)
+        {
+            case "Move":
+                CancelMoveAction();
+                break;
+            case "Attack":
+                CancelAttack();
+                break;
+            case "Special":
+                CancelSpecialHability();
+                break;
+        }
     }
 
     public override void AttackAction()
@@ -34,6 +45,7 @@ public class MeleeUnitScript : IUnitScript {
 
     public override void Attack()
     {
+        this.GetComponent<Animator>().SetTrigger("attack");
         MapManager manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<MapManager>();
         manager.DamageInRangeForTank(gameController.destinationPoint, attackRange, this.attackValue);
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
@@ -42,6 +54,7 @@ public class MeleeUnitScript : IUnitScript {
         gameController.ActualCell = null;
         gameController.ActualUnit.SetSelected(false);
         gameController.ActualUnit = null;
+        this.GetComponent<Animator>().SetTrigger("idle");
         gameController.SetCancelAction(false);
         manager.ClearCurrentRange();
         gameController.FinishAction();
@@ -79,7 +92,7 @@ public class MeleeUnitScript : IUnitScript {
         manager.Tiles[currentPosition].SetIsEmpty(true);
         this.state = Assets.Scripts.Enums.UnitState.Skill;
         this.GetComponent<Animator>().SetTrigger("move");
-        gameController.DestinationUnit.Life -= this.abilityDamage;
+        gameController.DestinationUnit.TakeDamage(this.abilityDamage);
         gameController.DestinationUnit.ReduceLife();
         gameController.SetAbility(" ");
         gameController.ActualCell.SetColor(Color.white);

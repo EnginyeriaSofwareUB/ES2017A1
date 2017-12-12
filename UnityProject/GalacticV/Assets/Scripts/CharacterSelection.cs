@@ -65,7 +65,7 @@ public class CharacterSelection : MonoBehaviour {
 	}
 
 	public void ToggleLeft(){
-		//SoundManager.instance.PlayButtonEffect ();
+		SoundManager.instance.PlayButtonEffect ();
 		character [index].SetActive (false);
 
 		index--;
@@ -102,7 +102,7 @@ public class CharacterSelection : MonoBehaviour {
 
 
 	public void ToggleRight(){
-		//SoundManager.instance.PlayButtonEffect();
+		SoundManager.instance.PlayButtonEffect();
 		character [index].SetActive (false);
 
 		index++;
@@ -136,7 +136,7 @@ public class CharacterSelection : MonoBehaviour {
 	}
 
 	public void okbutton(){
-		//SoundManager.instance.PlayButtonEffect();
+		SoundManager.instance.PlayButtonEffect();
         //SceneManager.LoadScene ("MainScene");
 
         //player.text = texts [index];
@@ -224,7 +224,7 @@ public class CharacterSelection : MonoBehaviour {
 
 	public void playbutton(){
 
-        //SoundManager.instance.PlayButtonEffect ();
+        SoundManager.instance.PlayButtonEffect ();
         List<string> blueUnits = new List<string>();
         foreach(UnitSpecification s in P1Characters)
         {

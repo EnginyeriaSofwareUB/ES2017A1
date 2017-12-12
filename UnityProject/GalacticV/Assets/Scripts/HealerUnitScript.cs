@@ -51,8 +51,8 @@ public class HealerUnitScript : IUnitScript
 		}
 		else
 		{
-			unit.Life -= (float)attackValue;
-			unit.ReduceLife();
+            unit.TakeDamage(attackValue);
+            unit.ReduceLife();
 			manager.Tiles[unit.currentPosition].SetColor(Color.white);
 		}
 		gameController.SetAbility(" ");
