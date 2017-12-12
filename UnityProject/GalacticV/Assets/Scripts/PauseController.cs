@@ -38,7 +38,7 @@ public class PauseController : MonoBehaviour {
     // Function called when player pause the game
     public void Pause()
     {
-        //SoundManager.instance.PlayButtonEffect();
+        SoundManager.instance.PlayButtonEffect();
         showPause = !showPause;
         finishController.SetIsGamePaused(showPause);
         pauseMenu.SetActive(showPause);
@@ -49,7 +49,7 @@ public class PauseController : MonoBehaviour {
     // Function called when player press resume game button on pause menu
     public void ResumeGame()
     {
-		//SoundManager.instance.PlayButtonEffect();
+		SoundManager.instance.PlayButtonEffect();
 		timeController.Pause();
         Pause();
     }
@@ -57,7 +57,7 @@ public class PauseController : MonoBehaviour {
     // Function called when player press quit game button on pause menu
     public void QuitGame()
     {
-		//SoundManager.instance.PlayButtonEffect();
+		SoundManager.instance.PlayButtonEffect();
 		SceneManager.LoadScene(0);
     }
 

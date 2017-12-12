@@ -247,7 +247,7 @@ public class MapManager : MonoBehaviour {
     {
         if (gameController.ActualUnit != null)
         {
-            if (currentRange.Contains(point) && gameController.GetHability() == "Move")
+            if (currentRange.Contains(point) && gameController.GetHability() == "Move" && Tiles[point].tag != "Border")
             {
                 gameController.ActualCell.PaintUnselected();
                 Tiles[gameController.ActualUnit.currentPosition].SetIsEmpty(true);
@@ -275,7 +275,15 @@ public class MapManager : MonoBehaviour {
                 }
                 GameObject coverage = Instantiate(Resources.Load(coverageName)) as GameObject;
                 coverage.GetComponent<CoverageScript>().Setup(point, Tiles[point].transform.position, map);
-                coverage.transform.Rotate(0, 0, 45);
+                Point unitPoint = gameController.ActualUnit.currentPosition;
+                if(unitPoint.X == (point.X -1) || unitPoint.X == (point.X + 1))
+                {
+                    coverage.transform.localRotation = new Quaternion(-0.35f, -0.85f, -0.14f, 0);
+                }
+                else
+                {
+                    coverage.transform.Rotate(0, 0, 45);
+                }
                 Tiles[point].SetIsEmpty(false);
                 gameController.ActualUnit.SetSelected(false);
                 gameController.ActualCell = null;
