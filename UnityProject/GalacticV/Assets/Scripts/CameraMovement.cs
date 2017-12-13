@@ -16,6 +16,9 @@ public class CameraMovement : MonoBehaviour
     private Vector3 lastPositionRed;
     private Vector3 lastPositonBlue;
 
+    private float lastZoomBlue;
+    private float lastZoomRed;
+
     public Vector3 LastPositionRed
     {
         get { return this.lastPositionRed; }
@@ -27,12 +30,26 @@ public class CameraMovement : MonoBehaviour
         set { this.lastPositonBlue = value; }
     }
 
+    public float LastZoomBlue
+    {
+        get { return this.lastZoomBlue; }
+        set { this.lastZoomBlue = value; }
+    }
+
+    public float LastZoomRed
+    {
+        get { return this.lastZoomRed; }
+        set { this.lastZoomRed = value; }
+    }
+
     // Use this for initialization
     void Start()
     {
         this.screenHeight = Screen.height;
         this.screenWidth = Screen.width;
         lastPositionRed = new Vector3(53f, 0, -10);
+        this.lastZoomRed = 5f;
+        this.lastZoomBlue = 5f;
     }
 
     // Update is called once per frame
@@ -133,16 +150,22 @@ public class CameraMovement : MonoBehaviour
     public void SetCameraChangeTurn(string team)
     {
         Vector3 newPos;
+        float newSize;
         if(team == "Blue")
         {
             lastPositionRed = Camera.main.gameObject.transform.position;
+            lastZoomRed = Camera.main.orthographicSize;
             newPos = lastPositonBlue;
+            newSize = lastZoomBlue;
         }
         else
         {
             lastPositonBlue = Camera.main.gameObject.transform.position;
             newPos = lastPositionRed;
+            lastZoomBlue = Camera.main.orthographicSize;
+            newSize = lastZoomRed;
         }
         Camera.main.gameObject.transform.position = newPos;
+        Camera.main.orthographicSize = newSize;
     }
 }
