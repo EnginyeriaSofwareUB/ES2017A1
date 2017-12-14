@@ -308,14 +308,14 @@ public class MapManager : MonoBehaviour {
             }
             else if (gameController.ActualUnit.GetType() == "melee" && gameController.GetHability() == "Special")
             {
-
+                
             }
         }
     }
 
     public void RecievedClickOnUnitCell(Point point)
     {
-        var unit = units.Where(x => x.currentPosition.Equals(point)).First();
+        var unit = units.Where(x => x.currentPosition.Equals(point)).FirstOrDefault();
         if (unit != null) unit.OnMouseDown();
     }
 

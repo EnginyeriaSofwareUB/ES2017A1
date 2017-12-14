@@ -100,6 +100,7 @@ public class MeleeUnitScript : IUnitScript {
         gameController.ActualUnit.SetSelected(false);
         gameController.ActualUnit = null;
         gameController.SetCancelAction(false);
+        manager.Tiles[targetPosition].SetIsEmpty(false);
         gameController.FinishAction();
     }
 
