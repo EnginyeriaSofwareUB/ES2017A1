@@ -313,6 +313,12 @@ public class MapManager : MonoBehaviour {
         }
     }
 
+    public void RecievedClickOnUnitCell(Point point)
+    {
+        var unit = units.Where(x => x.currentPosition.Equals(point)).First();
+        if (unit != null) unit.OnMouseDown();
+    }
+
     //Pathfinding using DFS
     private List<Vector3> CalculatePath(Point start, Point end)
     { 
