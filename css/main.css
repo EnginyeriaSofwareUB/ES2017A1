@@ -569,6 +569,7 @@ body {
     height: 100%;
     width: auto;
     margin: 0 auto;
+    padding: 0!important;
  
  
     /* probably not needed anymore, but doesn't hurt */
