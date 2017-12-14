@@ -105,7 +105,7 @@ public class CellScript : MonoBehaviour {
             spriteRenderer.color = previousColor;
             manager.ClearSurrounding(this.GridPosition, previousColor);
         }
-        else if (isEmpty)
+        if (isEmpty)
             manager.RecievedClickOnCell(GridPosition);
         else manager.RecievedClickOnUnitCell(GridPosition);
 
