@@ -80,6 +80,9 @@ public class RangedUnitScript : IUnitScript
                 }
                 else
                 {
+                    manager.Tiles[h.transform.GetComponent<CoverageScript>().GridPosition].SetIsEmpty(true);
+                    manager.Tiles[h.transform.GetComponent<CoverageScript>().GridPosition].SetColor(Color.white);
+                    manager.Tiles[gameController.DestinationUnit.currentPosition].SetColor(Color.white);
                     Destroy(h.transform.gameObject);
                 }
                 manager.Tiles[gameController.DestinationUnit.currentPosition].SetColor(Color.white);
