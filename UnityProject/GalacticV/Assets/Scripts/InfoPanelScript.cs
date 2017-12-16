@@ -9,16 +9,16 @@ using UnityEngine.UI;
 public class InfoPanelScript : MonoBehaviour
 {
 	/*Panel objects*/
-    [SerializeField]
-    private Sprite[] sprites;
-    [SerializeField]
-    private GameObject unitPreview;
-    [SerializeField]
-    private GameObject healthBar;
-    [SerializeField]
-    private GameObject attackBar;
-    [SerializeField]
-    private GameObject defenseBar;
+	[SerializeField]
+	private Sprite[] sprites;
+	[SerializeField]
+	private GameObject unitPreview;
+	[SerializeField]
+	private GameObject healthBar;
+	[SerializeField]
+	private GameObject attackBar;
+	[SerializeField]
+	private GameObject defenseBar;
 
 	#region Action Buttons
 	/*Action Buttons*/
@@ -47,14 +47,18 @@ public class InfoPanelScript : MonoBehaviour
 	private Sprite redBackgroundSprite;
 	private Sprite attackSpriteRangeUnitBlue;
 	private Sprite attackSpriteRangeUnitRed;
-	private Sprite attackSpriteCombatBlue;
-	private Sprite attackSpriteCombatRed;
+	private Sprite attackSpriteMeleeBlue;
+	private Sprite attackSpriteMeleeRed;
 	private Sprite attackSpriteTankUnit;
+	private Sprite abilitySpriteTankBlue;
+	private Sprite abilitySpriteTankRed;
 	private Sprite defenseSpriteBlue;
 	private Sprite defenseSpriteRed;
 	private Sprite abilitySpriteRangeUnit;
 	private Sprite abilitySpriteHealerBlue;
 	private Sprite abilitySpriteHealerRed;
+	private Sprite abilitySpriteMeleeBlue;
+	private Sprite abilitySpriteMeleeRed;
 	#endregion
 
 	/*Runtime attributes*/
@@ -64,13 +68,13 @@ public class InfoPanelScript : MonoBehaviour
 
 	// Use this for initialization
 	void Start()
-    {
-		
+	{
+
 		gameController = GameObject.FindGameObjectWithTag("MainController").GetComponent<GameController>();
-		LoadResources ();
+		LoadResources();
 		InitElements();
-		Hide ();
-    }
+		Hide();
+	}
 
 	private void Update()
 	{
@@ -98,11 +102,11 @@ public class InfoPanelScript : MonoBehaviour
 	}
 
 	public void ShowPanel(IUnitScript unit)
-    {
+	{
 		this.unit = unit;
 		this.gameObject.GetComponent<Image>().sprite = unit.team == 0 ? blueBackgroundSprite : redBackgroundSprite;
 		PrintStats(unit);
-		UpdateResources (unit);
+		UpdateResources(unit);
 		PrintCostActions(unit);
 		CheckActions(unit);
 		Show();
@@ -116,10 +120,10 @@ public class InfoPanelScript : MonoBehaviour
 
 
 	private void PrintStats(IUnitScript unit)
-    {
-		this.healthBar.GetComponent<StatusBar>().UpdateStatusBar((float) unit.Life, unit.GetMaxLifeValue);
+	{
+		this.healthBar.GetComponent<StatusBar>().UpdateStatusBar((float)unit.Life, unit.GetMaxLifeValue);
 		this.attackBar.GetComponent<StatusBar>().UpdateStatusBar(unit.GetAttack, unit.GetAttack);
-		this.defenseBar.GetComponent<StatusBar>().UpdateStatusBar((float) unit.GetDefenseModifier, (float)unit.GetDefenseModifier);
+		this.defenseBar.GetComponent<StatusBar>().UpdateStatusBar((float)unit.GetDefenseModifier, (float)unit.GetDefenseModifier);
 	}
 
 	private void PrintCostActions(IUnitScript unit)
@@ -147,7 +151,8 @@ public class InfoPanelScript : MonoBehaviour
 		abilityButton.interactable = mana >= abilityCost && (mana - manaBuffer) >= abilityCost;
 	}
 
-	private void UpdateResources (IUnitScript unit){
+	private void UpdateResources(IUnitScript unit)
+	{
 		SetAlfa(attackImage, 1.0f);
 		SetAlfa(defenseImage, 1.0f);
 		SetAlfa(moveImage, 1.0f);
@@ -156,21 +161,21 @@ public class InfoPanelScript : MonoBehaviour
 		{
 			case "tank":
 				attackImage.sprite = attackSpriteTankUnit;
-				abilityImage.sprite = null;// TODO : quan hi hagi icona es ficara
-				SetAlfa(abilityImage, 0f);
+				abilityImage.sprite = unit.team == 0 ? abilitySpriteTankBlue : abilitySpriteTankRed; ;// TODO : quan hi hagi icona es ficara
+				//SetAlfa(abilityImage, 0f);
 				break;
 			case "ranged":
 				attackImage.sprite = unit.team == 0 ? attackSpriteRangeUnitBlue : attackSpriteRangeUnitRed;
 				abilityImage.sprite = abilitySpriteRangeUnit;
 				break;
 			case "melee":
-				attackImage.sprite = unit.team == 0 ? attackSpriteCombatBlue : attackSpriteCombatRed;
-				abilityImage.sprite = null; // TODO : quan hi hagi icona es ficara
-				SetAlfa(abilityImage, 0f);
+				attackImage.sprite = unit.team == 0 ? attackSpriteMeleeBlue : attackSpriteMeleeRed;
+				abilityImage.sprite = unit.team == 0 ? abilitySpriteMeleeBlue : abilitySpriteMeleeRed;
+				//SetAlfa(abilityImage, 0f);
 				break;
 			case "healer":
-				attackImage.sprite = null;// TODO : quan hi hagi icona es ficara
-				SetAlfa(attackImage, 0f);
+				attackImage.sprite = attackSpriteTankUnit;// TODO : quan hi hagi icona es ficara
+				//SetAlfa(attackImage, 0f);
 				abilityImage.sprite = unit.team == 0 ? abilitySpriteHealerBlue : abilitySpriteHealerRed;
 				break;
 			default:
@@ -179,11 +184,13 @@ public class InfoPanelScript : MonoBehaviour
 		defenseImage.sprite = unit.team == 0 ? defenseSpriteBlue : defenseSpriteRed;
 	}
 
-	private void Show() {
+	private void Show()
+	{
 		gameObject.SetActive(true);
 	}
 
-	private void Hide(){
+	private void Hide()
+	{
 		gameObject.SetActive(false);
 	}
 
@@ -224,7 +231,8 @@ public class InfoPanelScript : MonoBehaviour
 		#endregion
 	}
 
-	private void LoadResources(){
+	private void LoadResources()
+	{
 		#region Panel Sprites
 		/*Panel Sprites*/
 		blueBackgroundSprite = Resources.Load<Sprite>("panel-background-blue");
@@ -239,11 +247,15 @@ public class InfoPanelScript : MonoBehaviour
 		#region Tank Unit Sprites
 		/*Tank Unit Sprites*/
 		attackSpriteTankUnit = Resources.Load<Sprite>("attack_icon_tank");
+		abilitySpriteTankBlue = Resources.Load<Sprite>("barrier_blue");
+		abilitySpriteTankRed = Resources.Load<Sprite>("barrier_red");
 		#endregion
 		#region Combat Unit Sprites
 		/*Combat Unit Sprites*/
-		attackSpriteCombatBlue = Resources.Load<Sprite>("icon_sword_blue");
-		attackSpriteCombatRed = Resources.Load<Sprite>("icon_sword_red");
+		attackSpriteMeleeBlue = Resources.Load<Sprite>("icon_sword_blue");
+		attackSpriteMeleeRed = Resources.Load<Sprite>("icon_sword_red");
+		abilitySpriteMeleeBlue = Resources.Load<Sprite>("icon_charge_blue");
+		abilitySpriteMeleeRed = Resources.Load<Sprite>("icon_charge_red");
 		#endregion
 		#region Healer Unit Sprites
 		/*Healer*/
@@ -293,7 +305,7 @@ public class InfoPanelScript : MonoBehaviour
 			UnselectButton();
 		}
 	}
-#endregion
+	#endregion
 
 
 
