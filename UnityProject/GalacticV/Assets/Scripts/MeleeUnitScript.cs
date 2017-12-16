@@ -10,7 +10,9 @@ public class MeleeUnitScript : IUnitScript {
     // Use this for initialization
     void Start()
     {
-        base.Start(1, 5, 15, 200, 0.5, "melee");
+        base.Start(1, 5, 12, 100, 0.9, "melee");
+        this.abilityCost = 3;
+        this.attackCost = 2;
     }
 
 

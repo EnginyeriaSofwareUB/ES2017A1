@@ -11,7 +11,7 @@ public class RangedUnitScript : IUnitScript
 	// Use this for initialization
 	void Start ()
     {
-		base.Start(4, 5, 10, 100, 1, "ranged");
+		base.Start(4, 5, 10, 100, 0.9, "ranged");
         this.movementCost = 1;
         this.attackCost = 2;
         this.defendCost = 1;
