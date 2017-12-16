@@ -21,7 +21,7 @@ body {
   }
   
   h1, h2, h3, h4, h5, h6 {
-    color: #333;
+    color: #00F;
   }
   
   h2 {
@@ -39,8 +39,11 @@ body {
     background-position: center;
     background-attachment: fixed;
   }
+  #videos .col-sm-6 h2.text-center {
+    color: white;
+  }
   
-  .parallax,
+  /* .parallax,
   .parallax h1,
   .parallax h2,
   .parallax h3,
@@ -48,7 +51,7 @@ body {
   .parallax h5,
   .parallax h6 {
     color: #fff;
-  }
+  } */
   
   .parallax input[type="text"],
   .parallax input[type="text"]:hover,
@@ -993,6 +996,7 @@ body {
     perspective: 600;
     position: relative;
     width: 200px;
+    margin-bottom: 10px;
     }
     .card {
     height: 100%;
@@ -1041,7 +1045,5 @@ body {
       left:2%;
       top: 25%;
     }
-  /*Presets*/
-  
   
   

@@ -18,7 +18,9 @@
 	  <link href="css/animate.min.css" rel="stylesheet">
 	  <link href="css/font-awesome.min.css" rel="stylesheet">
 	  <link href="css/lightbox.css" rel="stylesheet">
-	  <link href="css/main.css" rel="stylesheet">
+		<link href="css/main.css" rel="stylesheet">
+		<link href="css/video_gallery.css" rel="stylesheet">
+		
 	  <link id="css-preset" href="css/presets/preset1.css" rel="stylesheet">
 	  <link href="css/responsive.css" rel="stylesheet">
 	
@@ -72,7 +74,6 @@
 					<li class="scroll"><a href="#about">Acerca de</a></li>
 					<li class="scroll"><a href="#unidades">Unidades</a></li>
 					<li class="scroll"><a href="#videos">Videos</a></li>
-					<li class="scroll"><a href="#portfolio">Screens</a></li>
 					<li class="scroll"><a href="#team">Team</a></li>
 					<li class="scroll"><a href="#download">Download</a></li>
 					<li class="scroll"><a href="#contact">Contact</a></li>
@@ -108,7 +109,7 @@
 						<p>
 							Galactic V es un juego basado en turnos de 2 jugadores que compiten por dejar sin ninguna
 							unidad del equipo contrario. Al inicio del juego cada jugador escogerá un mismo número de 
-							unidades que marcará su estrategia de juego. Cada jugador tendra un contador de energia que 
+							unidades, con un máximo de hasta 5, que marcará su estrategia de juego. Cada jugador tendra un contador de energia que 
 							le permitirá realizar acciones de diferente coste. En cada turno se irá incrementando en una
 							unidad la	energia disponible.
 						</p>
@@ -119,6 +120,13 @@
 						</p>
 						</div>
 					</div>
+
+					<div class="row">
+						<div class="text-center col-sm-8 col-sm-offset-2">
+								<h2>Controles</h2>
+							<img class="img-responsive" src="images/Tutorial_empty_white.png" alt="">
+						</div>
+					</div>
 			  </div>
 			</section>
 			
@@ -127,342 +135,247 @@
 							<h2 class="text-center">Unidades</h2>
 					<div class="text-center our-services">
 							<div class="row">
+								<!-- Ranged -->
 								<div class="col-sm-4 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
 									<center>
-											<div class="card-container">
-													<div class="card">
-															<div class="side">
-																<p>Ranged</p>
-																<img src="images/unidades/ranged.png">
-															</div>
-															<div class="side back">
-																<img src="Dissenys/panel-background-red.png">
-																<p>	Vida media-baja con alta distancia de movimiento y ataque alto. Tiene la habilidad de lanzar una granada a cualquier punto del mapa.</p>
-															</div>
-													</div>
-											</div>
-									</center>
-								</div>
-								<div class="col-sm-4 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
-										<center>
-												<div class="card-container">
-														<div class="card">
-																<div class="side">
-																		<p>Tank</p>
-																	<img src="images/unidades/tank.png"></div>
-																<div class="side back">
-																	<img src="Dissenys/panel-background-red.png">
-																	<p>Vida elevada con poca distancia de movimiento y ataque bajo. Tiene la habilidad de colocar barreras protectoras</p>
-																
-																</div>
+										<div class="row card-container">
+												<div class="card">
+														<div class="side">
+															<p>Ranged</p>
+															<img src="images/unidades/ranged.png">
+														</div>
+														<div class="side back">
+															<img src="Dissenys/panel-background-red.png">
+															<p>	Vida media-baja con alta distancia de movimiento y ataque alto. Tiene la habilidad de lanzar una granada a cualquier punto del mapa.</p>
 														</div>
 												</div>
-										</center>
-									</div>
-									<div class="col-sm-4 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
-											<center>
-													<div class="card-container">
-															<div class="card">
-																	<div class="side">
-																			<p>Healer</p>
-																		<img src="images/unidades/healer.png"></div>
-																	<div class="side back">
-																		<img src="Dissenys/panel-background-red.png">
-																		<p>Vida baja con distancia de movimiento normal y ataque bajo. Tiene la habilidad de curar a sus compañeros de equipo.</p>
-																	
-																	</div>
-															</div>
-													</div>
-											</center>
 										</div>
+										<div class="row">
+												<article class="video">
+														<figure>
+														<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/z2wsog-OyWw">
+															<img class="videoThumb" src="images/fb/play.png">
+														</a>
+														</figure>
+													</article>
+												<!-- <iframe  width="300" height="200" src="https://www.youtube.com/embed/z2wsog-OyWw" frameborder="10" gesture="media" allow="encrypted-media" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe> -->
+										</div>
+									</center>
+								</div>
+								<!-- Tank -->
+								<div class="col-sm-4 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+									<center>
+										<div class="row card-container">
+												<div class="card">
+														<div class="side">
+																<p>Tank</p>
+															<img src="images/unidades/tank.png"></div>
+														<div class="side back">
+															<img src="Dissenys/panel-background-red.png">
+															<p>Vida elevada con poca distancia de movimiento y ataque bajo. Tiene la habilidad de colocar barreras protectoras</p>
+														
+														</div>
+												</div>
+										</div>
+
+										<div class="row">
+												<article class="video">
+														<figure>
+														<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/LhIF5LOJCzo">
+															<img class="videoThumb" src="images/fb/play.png"></a>
+														</figure>
+													</article>
+												<!-- <iframe width="300" height="200" src="https://www.youtube.com/embed/LhIF5LOJCzo" frameborder="10" gesture="media" allow="encrypted-media" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe> -->
+										</div>
+									</center>
+
+								</div>
+								<!-- Healer -->
+								<div class="col-sm-4 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+									<center>
+									<div class="row card-container">
+												<div class="card">
+														<div class="side">
+																<p>Healer</p>
+															<img src="images/unidades/healer.png"></div>
+														<div class="side back">
+															<img src="Dissenys/panel-background-red.png">
+															<p>Vida baja con distancia de movimiento normal y ataque bajo. Tiene la habilidad de curar a sus compañeros de equipo.</p>
+														
+														</div>
+												</div>
+										</div>
+
+										<div class="row">
+												<article class="video">
+														<figure>
+														<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/ohRGZRP76Cc">
+															<img class="videoThumb" src="images/fb/play.png">></a>
+														</figure>
+													</article>
+												<!-- <iframe width="300" height="200" src="https://www.youtube.com/embed/ohRGZRP76Cc" frameborder="10" gesture="media" allow="encrypted-media" allowfullscreen></iframe> -->
+											</div>
+										</center>	
+								</div>
 							</div>
-		
-							
 						</div>
 		
 						<div class="text-center our-services">
 								<div class="row">
-									<div class="col-sm-4 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+									<!-- Melee -->
+								<div class="col-sm-4 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
 										<center>
-												<div class="card-container">
+										<div class="row card-container">
+													<div class="card">
+															<div class="side">
+																	<p>Melee</p>
+																<img src="images/unidades/melee.png"></div>
+															<div class="side back">
+																<img src="Dissenys/panel-background-red.png">
+																<p>Vida media con distancia de movimiento alta y ataque alto. Tiene la habilidad de atacar en estampida y afectar a varias unidades.</p>
+															
+															</div>
+													</div>
+											</div>
+	
+											<div class="row">
+													<article class="video">
+															<figure>
+															<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/rEbDhnFcRbg">
+																<img class="videoThumb" src="images/fb/play.png"></a>
+															</figure>
+														</article>
+													<!-- <iframe width="300" height="200" src="https://www.youtube.com/embed/rEbDhnFcRbg" frameborder="10" gesture="media" allow="encrypted-media" allowfullscreen></iframe> -->
+											</div>
+											</center>	
+									</div>
+
+									<div class="col-sm-4 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
+											<center>
+											<div class="row card-container">
 														<div class="card">
 																<div class="side">
-																		<p>Melee</p>
-																	<img src="images/unidades/melee.png"></div>
+																		<p>Power-Up</p>
+																	<img src="images/unidades/powerup.png"></div>
 																<div class="side back">
 																	<img src="Dissenys/panel-background-red.png">
-																	<p>Vida media con distancia de movimiento alta y ataque alto. Tiene la habilidad de atacar en estampida y afectar a varias unidades.</p>
+																	<p>Los "power-ups" aparecen de vez en cuando. Pueden contener cualquier cosa!</p>
 																
 																</div>
 														</div>
 												</div>
-										</center>
-									</div>
-									<div class="col-sm-4 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
-											<center>
-													<div class="card-container">
-															<div class="card">
-																	<div class="side">
-																			<p>Power-Up</p>
-																		<img src="images/unidades/powerup.png"></div>
-																	<div class="side back">
-																		<img src="Dissenys/panel-background-red.png">
-																		<p>Los "power-ups" aparecen de vez en cuando. Pueden contener cualquier cosa!</p>
-																	
-																	</div>
-															</div>
-													</div>
-											</center>
-										</div>
 		
+												<div class="row">
+														<article class="video">
+																<figure>
+																<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/z2wsog-OyWw"><img class="videoThumb" src="images/fb/play.png"></a>
+																</figure>
+															</article>
+														<!-- <iframe width="300" height="200" src="https://www.youtube.com/embed/z2wsog-OyWw" frameborder="10" allowfullscreen=""></iframe> -->
+													</div>
+												</center>	
+										</div>	
 										<div class="col-sm-4 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInDown;">
 												<center>
-														<div class="card-container">
-																<div class="card">
-																		<div class="side">
-																				<p>Objetos</p>
-																			<img src="images/unidades/objects.png"></div>
-																		<div class="side back">
-																			<img src="Dissenys/panel-background-red.png">
-																			<p>Cualquier objeto del mapa puede convertirse en un escudo protector improvisado, pero solo te aguantará 2 golpes</p>
-																		</div>
-																</div>
+												<div class="row card-container">
+															<div class="card">
+																			<div class="side">
+																					<p>Objetos</p>
+																				<img src="images/unidades/objects.png"></div>
+																			<div class="side back">
+																				<img src="Dissenys/panel-background-red.png">
+																				<p>Cualquier objeto del mapa puede convertirse en un escudo protector improvisado, pero solo te aguantará 2 golpes</p>
+																			</div>
+																	</div>
+													</div>
+			
+													<div class="row">
+															<article class="video">
+																	<figure>
+																	<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/jfLdq1s26ME"><img class="videoThumb" src="images/fb/play.png"></a>
+																	</figure>
+																</article>
+															<!-- <iframe width="300" height="200" src="https://www.youtube.com/embed/jfLdq1s26ME" frameborder="10" gesture="media" allow="encrypted-media"></iframe> -->
 														</div>
-												</center>
-											</div>
+													</center>	
+											</div>			
 								</div>
 							</div>
 						</div>
 					</div>
 			</section>
 		
-		  <!--/#services-->
-		
-		  <section id="videos" class="parallax">
-			<div class="container">
-			  <div class="row">
-				<div class="col-sm-6">
-				  <div class="about-info wow fadeInUp animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
-					<h2>Trailer / Gameplay</h2>
-					<!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.Ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>-->
-				   <center><img class="img-responsive" src="images/icons/escudoHumanos.png"></center>
-				  </div>
-				</div>
-				<div class="col-sm-6">
-				  <iframe width="560" height="315" src="https://www.youtube.com/embed/W4y6IA-zFkE" frameborder="0" allowfullscreen=""></iframe>
-				</div>
-			  </div>
-			</div>
-			<div class="container">
-			  <div class="row">
-				<div class="col-sm-6">
-				  <div class="about-info wow fadeInUp animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
-					<h2>BSO</h2>
-					<!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.Ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>-->
-					<center><img class="img-responsive" src="images/icons/humanHero.png"></center>
-				  </div>
-				</div>
-				<div class="col-sm-6">
-				  <iframe width="560" height="315" src="https://www.youtube.com/embed/mCjtUXRJ57o?autoplay=0" frameborder="0" allowfullscreen=""></iframe>
-				</div>
-			  </div>
-			</div>
-		  </section><!--/#about-us-->
-		
-		 <center><img class="img-responsive" src="images/icons/logoMarchWars.png"> </center>
-		
-		  <section id="portfolio">
-			<div class="container">
-			  <div class="row">
-				<div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
-				  <h2>Screenshots</h2>
-				  <p>See more about March Wars</p>
-				</div>
-			  </div>
-			</div>
-			<div class="container-fluid">
-			  <div class="row">
-				<div class="col-sm-3">
-				  <div class="folio-item wow fadeInRightBig animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInRightBig;">
-					<div class="folio-image">
-					  <img class="img-responsive" src="images/portfolio/1-preview.jpg" alt="">
-					</div>
-					<div class="overlay">
-					  <div class="overlay-content">
-						<div class="overlay-text">
-						  <div class="folio-info">
-							<h3>Main Screen</h3>
-						  </div>
-						  <div class="folio-overview">
-							<span class="folio-expand"><a href="images/portfolio/1.png" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
-						  </div>
+			<!--/#services-->
+			<!-- <section class="second clearfix">		
+					<article class="video">
+						<figure>
+						<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/k3m3Z3xR6Tg"><img class="videoThumb" src="images/background.png"></a>
+						</figure>
+						<h2 class="videoTitle">Kumru Ballad</h2>
+					</article>
+			</section> -->
+			<!-- Hidden video div -->
+			<section id="videos" class="parallax">
+				<div class="container">
+					<h2 class="text-center">Videos</h2>
+						<div class="col-sm-3">
+							<div class="about-info wow fadeInUp animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
+								<article class="video">
+										<figure>
+										<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/k3m3Z3xR6Tg"><img class="videoThumb" src="images/background.png"></a>
+										</figure>
+										<h2 class="videoTitle">Selección de unidades</h2>
+									</article>
+							</div>
 						</div>
-					  </div>
-					</div>
-				  </div>
+						<div class="col-sm-3">
+								<div class="about-info wow fadeInUp animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
+									<article class="video">
+											<figure>
+											<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/EQIUv4-BZXI"><img class="videoThumb" src="images/background.png"></a>
+											</figure>
+											<h2 class="videoTitle">Créditos</h2>
+										</article>
+								</div>
+							</div>
+							<div class="col-sm-3">
+									<div class="about-info wow fadeInUp animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
+										<!-- <h2 class="text-center">Selección de unidades</h2>
+										<iframe width="560" height="315" src="https://www.youtube.com/embed/k3m3Z3xR6Tg" frameborder="10" gesture="media" allow="encrypted-media" allowfullscreen></iframe> -->
+										<article class="video">
+												<figure>
+												<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/k3m3Z3xR6Tg"><img class="videoThumb" src="images/background.png"></a>
+												</figure>
+												<h2 class="videoTitle">Selección de unidades</h2>
+											</article>
+									</div>
+								</div>
+								<div class="col-sm-3">
+										<div class="about-info wow fadeInUp animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
+											<!-- <h2 class="text-center">Selección de unidades</h2>
+											<iframe width="560" height="315" src="https://www.youtube.com/embed/k3m3Z3xR6Tg" frameborder="10" gesture="media" allow="encrypted-media" allowfullscreen></iframe> -->
+											<article class="video">
+													<figure>
+													<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/k3m3Z3xR6Tg"><img class="videoThumb" src="images/background.png"></a>
+													</figure>
+													<h2 class="videoTitle">Selección de unidades</h2>
+												</article>
+										</div>
+									</div>
+									<div class="col-sm-3">
+											<div class="about-info wow fadeInUp animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
+												<!-- <h2 class="text-center">Selección de unidades</h2>
+												<iframe width="560" height="315" src="https://www.youtube.com/embed/k3m3Z3xR6Tg" frameborder="10" gesture="media" allow="encrypted-media" allowfullscreen></iframe> -->
+												<article class="video">
+														<figure>
+														<a class="fancybox fancybox.iframe" href="https://www.youtube.com/embed/k3m3Z3xR6Tg"><img class="videoThumb" src="images/background.png"></a>
+														</figure>
+														<h2 class="videoTitle">Selección de unidades</h2>
+													</article>
+											</div>
+										</div>
 				</div>
-				<div class="col-sm-3">
-				  <div class="folio-item wow fadeInLeftBig animated" data-wow-duration="1000ms" data-wow-delay="400ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 400ms; animation-name: fadeInLeftBig;">
-					<div class="folio-image">
-					  <img class="img-responsive" src="images/portfolio/2-preview.jpg" alt="">
-					</div>
-					<div class="overlay">
-					  <div class="overlay-content">
-						<div class="overlay-text">
-						  <div class="folio-info">
-							<h3>Select Civilization</h3>
-						  </div>
-						  <div class="folio-overview">
-							<span class="folio-expand"><a href="images/portfolio/2.png" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
-						  </div>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-				<div class="col-sm-3">
-				  <div class="folio-item wow fadeInRightBig animated" data-wow-duration="1000ms" data-wow-delay="500ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 500ms; animation-name: fadeInRightBig;">
-					<div class="folio-image">
-					  <img class="img-responsive" src="images/portfolio/3-preview.jpg" alt="">
-					</div>
-					<div class="overlay">
-					  <div class="overlay-content">
-						<div class="overlay-text">
-						  <div class="folio-info">
-							<h3>Elf Civilization</h3>
-						  </div>
-						  <div class="folio-overview">
-							<span class="folio-expand"><a href="images/portfolio/3.png" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
-						  </div>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-				<div class="col-sm-3">
-				  <div class="folio-item wow fadeInLeftBig animated" data-wow-duration="1000ms" data-wow-delay="600ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 600ms; animation-name: fadeInLeftBig;">
-					<div class="folio-image">
-					  <img class="img-responsive" src="images/portfolio/4-preview.png" alt="">
-					</div>
-					<div class="overlay">
-					  <div class="overlay-content">
-						<div class="overlay-text">
-						  <div class="folio-info">
-							<h3>Elf civilization</h3>
-						  </div>
-						  <div class="folio-overview">
-							<span class="folio-expand"><a href="images/portfolio/4.png" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
-						  </div>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-				<div class="col-sm-3">
-				  <div class="folio-item wow fadeInRightBig animated" data-wow-duration="1000ms" data-wow-delay="700ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 700ms; animation-name: fadeInRightBig;">
-					<div class="folio-image">
-					  <img class="img-responsive" src="images/portfolio/5-preview.png" alt="">
-					</div>
-					<div class="overlay">
-					  <div class="overlay-content">
-						<div class="overlay-text">
-						  <div class="folio-info">
-							<h3>Elf civilization</h3>
-						  </div>
-						  <div class="folio-overview">
-							<span class="folio-expand"><a href="images/portfolio/5.png" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
-						  </div>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-				<div class="col-sm-3">
-				  <div class="folio-item wow fadeInLeftBig animated" data-wow-duration="1000ms" data-wow-delay="800ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 800ms; animation-name: fadeInLeftBig;">
-					<div class="folio-image">
-					  <img class="img-responsive" src="images/portfolio/6-preview.png" alt="">
-					</div>
-					<div class="overlay">
-					  <div class="overlay-content">
-						<div class="overlay-text">
-						  <div class="folio-info">
-							<h3>Elf Stronghold</h3>
-						  </div>
-						  <div class="folio-overview">
-							<span class="folio-expand"><a href="images/portfolio/6.png" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
-						  </div>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-				<div class="col-sm-3">
-				  <div class="folio-item wow fadeInRightBig animated" data-wow-duration="1000ms" data-wow-delay="900ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 900ms; animation-name: fadeInRightBig;">
-					<div class="folio-image">
-					  <img class="img-responsive" src="images/portfolio/7-preview.png" alt="">
-					</div>
-					<div class="overlay">
-					  <div class="overlay-content">
-						<div class="overlay-text">
-						  <div class="folio-info">
-							<h3>Human Gryphon Building</h3>
-						  </div>
-						  <div class="folio-overview">
-							<span class="folio-expand"><a href="images/portfolio/7.png" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
-						  </div>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-				<div class="col-sm-3">
-				  <div class="folio-item wow fadeInLeftBig animated" data-wow-duration="1000ms" data-wow-delay="1000ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 1000ms; animation-name: fadeInLeftBig;">
-					<div class="folio-image">
-					  <img class="img-responsive" src="images/portfolio/9-preview.png" alt="">
-					</div>
-					<div class="overlay">
-					  <div class="overlay-content">
-						<div class="overlay-text">
-						  <div class="folio-info">
-							<h3>Human civilization</h3>
-						  </div>
-						  <div class="folio-overview">
-							<span class="folio-expand"><a href="images/portfolio/9.png" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
-						  </div>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-				<div class="col-sm-3">
-				  <div class="folio-item wow fadeInLeftBig animated" data-wow-duration="1000ms" data-wow-delay="1000ms" style="visibility: visible; animation-duration: 1000ms; animation-delay: 1000ms; animation-name: fadeInLeftBig;">
-					<div class="folio-image">
-					  <img class="img-responsive" src="images/portfolio/10-preview.png" alt="">
-					</div>
-					<div class="overlay">
-					  <div class="overlay-content">
-						<div class="overlay-text">
-						  <div class="folio-info">
-							<h3>Human Fight</h3>
-						  </div>
-						  <div class="folio-overview">
-							<span class="folio-expand"><a href="images/portfolio/10.png" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
-						  </div>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			</div>
-			<div id="portfolio-single-wrap">
-			  <div id="portfolio-single">
-			  </div>
-			</div><!-- /#portfolio-single-wrap -->
-		  </section><!--/#portfolio-->
-		
+			</section>		
 		
 		  <section id="features" class="parallax">
 			<div class="container">
@@ -1018,7 +931,10 @@
 		  <script type="text/javascript" src="js/smoothscroll.js"></script>
 		  <script type="text/javascript" src="js/jquery.countTo.js"></script>
 		  <script type="text/javascript" src="js/lightbox.min.js"></script>
-		  <script type="text/javascript" src="js/main.js"></script>
+			<script type="text/javascript" src="js/main.js"></script>
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+			<script src="js/jquery.fancybox.min.js"></script>
+			<script src="js/global.min.js"></script>
 		
 		
 		
